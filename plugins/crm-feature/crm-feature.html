@@ -403,10 +403,14 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <li><a href="#crm-feature-plugin">2. CRM Feature Plugin</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#feature-dsl">2.1. Feature DSL</a></li>
-<li><a href="#feature-permissions">2.2. Feature Permissions</a></li>
-<li><a href="#required-default-features">2.3. Required/Default Features</a></li>
-<li><a href="#hidden-features">2.4. Hidden Features</a></li>
+<li><a href="#adding-features-to-an-application">2.1. Adding features to an application</a></li>
+<li><a href="#feature-dsl">2.2. Feature DSL</a></li>
+<li><a href="#feature-permissions">2.3. Feature Permissions</a></li>
+<li><a href="#required-default-features">2.4. Required/Default Features</a></li>
+<li><a href="#hidden-features">2.5. Hidden Features</a></li>
+<li><a href="#enabling-disabling-features-programatically">2.6. Enabling/disabling features programatically</a></li>
+<li><a href="#check-if-feature-is-enabled">2.7. Check if feature is enabled</a></li>
+<li><a href="#get-metadata-for-a-feature">2.8. Get metadata for a feature</a></li>
 </ul>
 </li>
 <li><a href="#services">3. Services</a></li>
@@ -462,7 +466,73 @@ enabled or disabled per user role. Application code can check if a feature is en
 Typically one GR8 CRM plugin provides one feature but there is no limit to the number of features a plugin can provide.</p>
 </div>
 <div class="sect2">
-<h3 id="feature-dsl">2.1. Feature DSL</h3>
+<h3 id="adding-features-to-an-application">2.1. Adding features to an application</h3>
+<div class="paragraph">
+<p>Features can be added to an application in two ways.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add a feature property to the plugin descriptor</p>
+</li>
+<li>
+<p>Adding features using CrmFeatureService</p>
+</li>
+</ol>
+</div>
+<div class="sect3">
+<h4 id="add-a-feature-property-to-the-plugin-descriptor">2.1.1. Add a feature property to the plugin descriptor</h4>
+<div class="paragraph">
+<p>If a plugin provides a feature, the easiest way to add it to the application is by adding
+a property called @feature@ to the plugin descriptor. The feature property must return a Map or a Closure.
+The Map should contain feature metadata as described in the [metadata|guide:feature-metadata] section.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint"><code class="groovy language-groovy">class CrmContactGrailsPlugin {
+
+    ...
+
+    def features = [name: "crmContact", description: "Contact Management",
+                        enabled: true, main: [controller: 'crmContact']]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you prefer the Closure variant it follows the same structure.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint"><code class="groovy language-groovy">class CrmAgreementGrailsPlugin {
+
+    ....
+
+    def features = {
+        crmAgreement {
+            description "Agreement Management"
+            main        controller: "crmAgreement", action: "index"
+            enabled     false // this is default
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="adding-features-using-crmfeatureservice">2.1.2. Adding features using CrmFeatureService</h4>
+<div class="paragraph">
+<p>You can also add features to the application by calling <code>crmFeatureService.addApplicationFeature(Map metadata)</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint"><code class="groovy language-groovy">def metadata = [name:"awesome", description: "This feature is awesome", controller: "awesome", action: "index"]
+crmFeatureService.addApplicationFeature(metadata)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="feature-dsl">2.2. Feature DSL</h3>
 <div class="paragraph">
 <p>The feature plugin scans all installed plugins and look for a <code>feature</code> property in the plugin descriptor.
 If the plugin has a <code>feature</code> property it is parsed by the <strong>Feature DSL</strong> parser. The following example is from the
@@ -489,7 +559,7 @@ installed in the application. The feature DSL also specifies standard permission
 </div>
 </div>
 <div class="sect2">
-<h3 id="feature-permissions">2.2. Feature Permissions</h3>
+<h3 id="feature-permissions">2.3. Feature Permissions</h3>
 <div class="paragraph">
 <p>In the above example the <strong>crmTag</strong> feature DSL specifies a set of standard permissions that will be declared in th application.
 Users with the role <strong>guest</strong> will only get permission to call the <strong>list</strong> action on the <strong>crmTag</strong> controller.
@@ -501,16 +571,67 @@ permissions during application startup.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="required-default-features">2.3. Required/Default Features</h3>
+<h3 id="required-default-features">2.4. Required/Default Features</h3>
 <div class="paragraph">
 <p>The <code>required true</code> statement specifies that this feature is required, it will be enabled for all users and roles automatically.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="hidden-features">2.4. Hidden Features</h3>
+<h3 id="hidden-features">2.5. Hidden Features</h3>
 <div class="paragraph">
 <p>The <code>hidden true</code> statement specifies that this feature should not be displayed in any <strong>feature settings</strong> pages.
 It&#8217;s a default/required feature so there is no reason to let the application administrator enable or disable it.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enabling-disabling-features-programatically">2.6. Enabling/disabling features programatically</h3>
+<div class="paragraph">
+<p>Although many features can be available in an application, features are normally not enabled by default.
+Application code can enable features for specific user roles and/or tenants.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint"><code class="groovy language-groovy">Long tenant = grails.crm.core.TenantUtils.tenant
+String role = "VIP_ROLE"
+crmFeatureService.enableFeature("awesome", role, tenant)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also make it possible for system administrators to enable features on-demand,
+this is however application specific and can be implemented with code like above.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="check-if-feature-is-enabled">2.7. Check if feature is enabled</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint"><code class="groovy language-groovy">Long tenant = grails.crm.core.TenantUtils.tenant
+if(crmFeatureService.hasFeature("awesome", null, tenant)) {
+    // The "awesome" feature is installed and enabled for all roles, great!
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="get-metadata-for-a-feature">2.8. Get metadata for a feature</h3>
+<div class="paragraph">
+<p>Each feature provide a set of [metadata|guide:feature-metadata] properties.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint"><code class="groovy language-groovy">Map metadata = crmFeatureService.getFeature("awesome");
+assert metadata.description == "This feature is awesome"
+
+// null is returned if the feature is not installed
+assert crmFeatureService.getFeature("not installed") == null</code></pre>
+</div>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>You can read metadata for a feature even though the feature is not enabled.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -528,13 +649,105 @@ This service contains methods for enabling/disabling features for users and role
 <p><code>List&lt;Feature&gt; getApplicationFeatures()</code></p>
 </div>
 <div class="paragraph">
-<p>Returns all the features that are available in the application.</p>
+<p>Returns all the features that are available in the application, even disabled features are included.</p>
 </div>
 <div class="paragraph">
 <p><code>Feature getApplicationFeature(final String name)</code></p>
 </div>
 <div class="paragraph">
-<p>Returns metadata for a specific application feature.</p>
+<p>Returns metadata for a specific application feature. A metadata instance has the following properties:</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 100%;">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Attribute</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The unique name of the feature</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">description</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Short text that describes the feature</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If <strong>true</strong> the feature will be enabled by default, otherwise features are disabled by default.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">role</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If <code>enabled</code> is <strong>true</strong> the feature can optionally be enabled for a specific role (String)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tenant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If <code>enabled</code> is <strong>true</strong> the feature can optionally be enabled for a specific tenant (Long)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">info</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(recommended) Map with parameters to createLink() to access this feature&#8217;s information page</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">admin</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(optional) Map with parameters to createLink() to access this feature&#8217;s administration page</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">main</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(optional) Map with parameters to createLink() to access this feature&#8217;s start page</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The properties <code>info</code>, <code>help</code>, <code>admin</code> and <code>main</code> contains a Map with the following properties:</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 100%;">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Property</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">controller</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>controller</strong> attribute for createLink()</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">action</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(optional) <strong>action</strong> attribute for createLink()</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mapping</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(optional) named URL mapping to use to rewrite the link</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">params</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(optional) <strong>params</strong> attribute for createLink()</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><code>removeApplicationFeature(String name)</code></p>
+</div>
+<div class="paragraph">
+<p>To remove a feature you normally disable it instead of removing it.
+If an unwanted feature is the only feature provided by a plugin, it&#8217;s probably better to uninstall the plugin completely.
+But there may be occasions where you want one feature from a plugin that provides several features. In that
+case you can remove unwanted features at application startup. For example in BootStrap.groovy.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 1. BootStrap.groovy</div>
+<div class="content">
+<div class="paragraph">
+<p>crmFeatureService.removeApplicationFeature("facebook")</p>
+</div>
+</div>
 </div>
 <div class="paragraph">
 <p><code>void enableFeature(def features, Long tenant = null, String role = null, Date expires = null)</code></p>
@@ -579,7 +792,7 @@ If no <code>role</code> is specified then all features enabled in the tenant wil
 <h2 id="tag-libraries">4. Tag Libraries</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>crm-feature</code> plugins provides a few GSP tags under the <code>crm</code> namespace.</p>
+<p>The <code>crm-feature</code> plugin provides a few GSP tags under the <code>crm</code> namespace.</p>
 </div>
 <div class="sect2">
 <h3 id="featurelink">4.1. featureLink</h3>
@@ -724,7 +937,7 @@ in application code, but you should avoid checking for features in plugin code. 
 <div id="footer">
 <div id="footer-text">
 Version 1.2.1<br>
-Last updated 2014-07-14 19:14:39 CEST
+Last updated 2014-07-14 19:36:59 CEST
 </div>
 </div>
 </body>
