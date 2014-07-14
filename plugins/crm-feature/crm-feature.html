@@ -401,34 +401,32 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </ul>
 </li>
 <li><a href="#crm-feature-plugin">2. CRM Feature Plugin</a></li>
+<li><a href="#adding-features-to-an-application">3. Adding features to an application</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#adding-features-to-an-application">2.1. Adding features to an application</a></li>
-<li><a href="#feature-dsl">2.2. Feature DSL</a></li>
-<li><a href="#feature-permissions">2.3. Feature Permissions</a></li>
-<li><a href="#required-default-features">2.4. Required/Default Features</a></li>
-<li><a href="#hidden-features">2.5. Hidden Features</a></li>
-<li><a href="#enabling-disabling-features-programatically">2.6. Enabling/disabling features programatically</a></li>
-<li><a href="#check-if-feature-is-enabled">2.7. Check if feature is enabled</a></li>
-<li><a href="#get-metadata-for-a-feature">2.8. Get metadata for a feature</a></li>
+<li><a href="#add-a-feature-property-to-the-plugin-descriptor">3.1. Add a feature property to the plugin descriptor</a></li>
+<li><a href="#adding-features-using-crmfeatureservice">3.2. Adding features using CrmFeatureService</a></li>
+<li><a href="#enabling-disabling-features-programatically">3.3. Enabling/disabling features programatically</a></li>
+<li><a href="#check-if-feature-is-enabled">3.4. Check if feature is enabled</a></li>
+<li><a href="#get-metadata-for-a-feature">3.5. Get metadata for a feature</a></li>
 </ul>
 </li>
-<li><a href="#services">3. Services</a></li>
+<li><a href="#services">4. Services</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#crmfeatureservice">3.1. CrmFeatureService</a></li>
+<li><a href="#crmfeatureservice">4.1. CrmFeatureService</a></li>
 </ul>
 </li>
-<li><a href="#tag-libraries">4. Tag Libraries</a></li>
+<li><a href="#tag-libraries">5. Tag Libraries</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#featurelink">4.1. featureLink</a></li>
-<li><a href="#hasfeature">4.2. hasFeature</a></li>
-<li><a href="#eachfeature">4.3. eachFeature</a></li>
+<li><a href="#featurelink">5.1. featureLink</a></li>
+<li><a href="#hasfeature">5.2. hasFeature</a></li>
+<li><a href="#eachfeature">5.3. eachFeature</a></li>
 </ul>
 </li>
-<li><a href="#license">5. License</a></li>
-<li><a href="#source-code">6. Source Code</a></li>
+<li><a href="#license">6. License</a></li>
+<li><a href="#source-code">7. Source Code</a></li>
 </ul>
 </div>
 </div>
@@ -465,8 +463,11 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 enabled or disabled per user role. Application code can check if a feature is enabled before doing some work.
 Typically one GR8 CRM plugin provides one feature but there is no limit to the number of features a plugin can provide.</p>
 </div>
-<div class="sect2">
-<h3 id="adding-features-to-an-application">2.1. Adding features to an application</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="adding-features-to-an-application">3. Adding features to an application</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Features can be added to an application in two ways.</p>
 </div>
@@ -480,19 +481,16 @@ Typically one GR8 CRM plugin provides one feature but there is no limit to the n
 </li>
 </ol>
 </div>
-<div class="sect3">
-<h4 id="add-a-feature-property-to-the-plugin-descriptor">2.1.1. Add a feature property to the plugin descriptor</h4>
+<div class="sect2">
+<h3 id="add-a-feature-property-to-the-plugin-descriptor">3.1. Add a feature property to the plugin descriptor</h3>
 <div class="paragraph">
 <p>If a plugin provides a feature, the easiest way to add it to the application is by adding
-a property called @feature@ to the plugin descriptor. The feature property must return a Map or a Closure.
-The Map should contain feature metadata as described in the [metadata|guide:feature-metadata] section.</p>
+a property called <code>feature</code> to the plugin descriptor. The feature property must return a Map or a Closure.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint"><code class="groovy language-groovy">class CrmContactGrailsPlugin {
-
     ...
-
     def features = [name: "crmContact", description: "Contact Management",
                         enabled: true, main: [controller: 'crmContact']]
 }</code></pre>
@@ -504,9 +502,7 @@ The Map should contain feature metadata as described in the [metadata|guide:feat
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint"><code class="groovy language-groovy">class CrmAgreementGrailsPlugin {
-
     ....
-
     def features = {
         crmAgreement {
             description "Agreement Management"
@@ -517,25 +513,11 @@ The Map should contain feature metadata as described in the [metadata|guide:feat
 }</code></pre>
 </div>
 </div>
-</div>
 <div class="sect3">
-<h4 id="adding-features-using-crmfeatureservice">2.1.2. Adding features using CrmFeatureService</h4>
+<h4 id="feature-dsl">3.1.1. Feature DSL</h4>
 <div class="paragraph">
-<p>You can also add features to the application by calling <code>crmFeatureService.addApplicationFeature(Map metadata)</code>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint"><code class="groovy language-groovy">def metadata = [name:"awesome", description: "This feature is awesome", controller: "awesome", action: "index"]
-crmFeatureService.addApplicationFeature(metadata)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="feature-dsl">2.2. Feature DSL</h3>
-<div class="paragraph">
-<p>The feature plugin scans all installed plugins and look for a <code>feature</code> property in the plugin descriptor.
-If the plugin has a <code>feature</code> property it is parsed by the <strong>Feature DSL</strong> parser. The following example is from the
+<p>The feature plugin scans all installed plugins and look for a <code>features</code> property in the plugin descriptor.
+If the plugin has a <code>features</code> property it is parsed by the <strong>Feature DSL</strong> parser. The following example is from the
 <code>crm-tags</code> plugin. It provides tagging support in a GR8 CRM application. A feature with name <strong>crmTag</strong> will be
 installed in the application. The feature DSL also specifies standard permissions for common user roles.</p>
 </div>
@@ -558,8 +540,8 @@ installed in the application. The feature DSL also specifies standard permission
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="feature-permissions">2.3. Feature Permissions</h3>
+<div class="sect3">
+<h4 id="feature-permissions">3.1.2. Feature Permissions</h4>
 <div class="paragraph">
 <p>In the above example the <strong>crmTag</strong> feature DSL specifies a set of standard permissions that will be declared in th application.
 Users with the role <strong>guest</strong> will only get permission to call the <strong>list</strong> action on the <strong>crmTag</strong> controller.
@@ -570,21 +552,34 @@ Users with role <strong>user</strong> call all actions on the <strong>crmTag</st
 permissions during application startup.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="required-default-features">2.4. Required/Default Features</h3>
+<div class="sect3">
+<h4 id="required-default-features">3.1.3. Required/Default Features</h4>
 <div class="paragraph">
 <p>The <code>required true</code> statement specifies that this feature is required, it will be enabled for all users and roles automatically.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="hidden-features">2.5. Hidden Features</h3>
+<div class="sect3">
+<h4 id="hidden-features">3.1.4. Hidden Features</h4>
 <div class="paragraph">
 <p>The <code>hidden true</code> statement specifies that this feature should not be displayed in any <strong>feature settings</strong> pages.
 It&#8217;s a default/required feature so there is no reason to let the application administrator enable or disable it.</p>
 </div>
 </div>
+</div>
 <div class="sect2">
-<h3 id="enabling-disabling-features-programatically">2.6. Enabling/disabling features programatically</h3>
+<h3 id="adding-features-using-crmfeatureservice">3.2. Adding features using CrmFeatureService</h3>
+<div class="paragraph">
+<p>You can also add features to the application by calling <code>crmFeatureService.addApplicationFeature(Map metadata)</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint"><code class="groovy language-groovy">def metadata = [name:"awesome", description: "This feature is awesome", controller: "awesome", action: "index"]
+crmFeatureService.addApplicationFeature(metadata)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enabling-disabling-features-programatically">3.3. Enabling/disabling features programatically</h3>
 <div class="paragraph">
 <p>Although many features can be available in an application, features are normally not enabled by default.
 Application code can enable features for specific user roles and/or tenants.</p>
@@ -602,7 +597,7 @@ this is however application specific and can be implemented with code like above
 </div>
 </div>
 <div class="sect2">
-<h3 id="check-if-feature-is-enabled">2.7. Check if feature is enabled</h3>
+<h3 id="check-if-feature-is-enabled">3.4. Check if feature is enabled</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint"><code class="groovy language-groovy">Long tenant = grails.crm.core.TenantUtils.tenant
@@ -613,7 +608,7 @@ if(crmFeatureService.hasFeature("awesome", null, tenant)) {
 </div>
 </div>
 <div class="sect2">
-<h3 id="get-metadata-for-a-feature">2.8. Get metadata for a feature</h3>
+<h3 id="get-metadata-for-a-feature">3.5. Get metadata for a feature</h3>
 <div class="paragraph">
 <p>Each feature provide a set of [metadata|guide:feature-metadata] properties.</p>
 </div>
@@ -637,14 +632,14 @@ assert crmFeatureService.getFeature("not installed") == null</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="services">3. Services</h2>
+<h2 id="services">4. Services</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <strong>crm-feature</strong> plugin provide a service called <code>CrmFeatureService</code>.
 This service contains methods for enabling/disabling features for users and roles.</p>
 </div>
 <div class="sect2">
-<h3 id="crmfeatureservice">3.1. CrmFeatureService</h3>
+<h3 id="crmfeatureservice">4.1. CrmFeatureService</h3>
 <div class="paragraph">
 <p><code>List&lt;Feature&gt; getApplicationFeatures()</code></p>
 </div>
@@ -789,13 +784,13 @@ If no <code>role</code> is specified then all features enabled in the tenant wil
 </div>
 </div>
 <div class="sect1">
-<h2 id="tag-libraries">4. Tag Libraries</h2>
+<h2 id="tag-libraries">5. Tag Libraries</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>crm-feature</code> plugin provides a few GSP tags under the <code>crm</code> namespace.</p>
 </div>
 <div class="sect2">
-<h3 id="featurelink">4.1. featureLink</h3>
+<h3 id="featurelink">5.1. featureLink</h3>
 <div class="paragraph">
 <p>This tag renders a hyperlink to the main controller of a feature, if the feature is enabled for the current user.</p>
 </div>
@@ -833,7 +828,7 @@ If no <code>role</code> is specified then all features enabled in the tenant wil
 </table>
 </div>
 <div class="sect2">
-<h3 id="hasfeature">4.2. hasFeature</h3>
+<h3 id="hasfeature">5.2. hasFeature</h3>
 <div class="paragraph">
 <p>Check if a feature is enabled and render the tag body if it is.</p>
 </div>
@@ -863,7 +858,7 @@ If no <code>role</code> is specified then all features enabled in the tenant wil
 </table>
 </div>
 <div class="sect2">
-<h3 id="eachfeature">4.3. eachFeature</h3>
+<h3 id="eachfeature">5.3. eachFeature</h3>
 <div class="paragraph">
 <p>Iterate over all enabled features and render tag body for each iteration.</p>
 </div>
@@ -895,11 +890,11 @@ If no <code>role</code> is specified then all features enabled in the tenant wil
 </tr>
 </tbody>
 </table>
-<div class="admonitionblock note">
+<div class="admonitionblock important">
 <table>
 <tr>
 <td class="icon">
-<i class="icon-note" title="Note"></i>
+<i class="icon-important" title="Important"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -918,7 +913,7 @@ in application code, but you should avoid checking for features in plugin code. 
 </div>
 </div>
 <div class="sect1">
-<h2 id="license">5. License</h2>
+<h2 id="license">6. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -926,7 +921,7 @@ in application code, but you should avoid checking for features in plugin code. 
 </div>
 </div>
 <div class="sect1">
-<h2 id="source-code">6. Source Code</h2>
+<h2 id="source-code">7. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/goeh/grails-crm-feature">https://github.com/goeh/grails-crm-feature</a></p>
@@ -937,7 +932,7 @@ in application code, but you should avoid checking for features in plugin code. 
 <div id="footer">
 <div id="footer-text">
 Version 1.2.1<br>
-Last updated 2014-07-14 19:36:59 CEST
+Last updated 2014-07-14 20:06:20 CEST
 </div>
 </div>
 </body>
