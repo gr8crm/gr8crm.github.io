@@ -5,6 +5,8 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.0.preview.7">
+<meta name="description" content="Official documentation for the GR8 CRM Twitter Bootstrap User Interface Plugin">
+<meta name="keywords" content="groovy, grails, crm, gr8crm, documentation">
 <meta name="author" content="Göran Ehrsson">
 <title>GR8 CRM - Twitter Bootstrap UI Plugin</title>
 <style>
@@ -394,50 +396,56 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#introduction">1. Introduction</a></li>
+<li><a href="#crm-introduction">1. Introduction</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#customer-relationship-management">1.1. Customer relationship management</a></li>
+<li><a href="#crm-customer-relationship-management">1.1. Customer relationship management</a></li>
 </ul>
 </li>
-<li><a href="#crm-twitter-bootstrap-ui-plugin">2. CRM Twitter Bootstrap UI Plugin</a></li>
-<li><a href="#tag-libraries">3. Tag Libraries</a></li>
+<li><a href="#crm-gr8-crm-twitter-bootstrap-ui-plugin">2. GR8 CRM Twitter Bootstrap UI Plugin</a></li>
+<li><a href="#crm-layouts">3. Layouts</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#logo">3.1. logo</a></li>
-<li><a href="#submenu">3.2. submenu</a></li>
-<li><a href="#selectionmenu">3.3. selectionMenu</a></li>
-<li><a href="#header">3.4. header</a></li>
-<li><a href="#favoriteicon">3.5. favoriteIcon</a></li>
-<li><a href="#button">3.6. button</a></li>
-<li><a href="#paginate">3.7. paginate</a></li>
-<li><a href="#sortablecolumn">3.8. sortableColumn</a></li>
-<li><a href="#alert">3.9. alert</a></li>
-<li><a href="#datepicker">3.10. datepicker</a></li>
-<li><a href="#weeknumber">3.11. weekNumber</a></li>
-<li><a href="#plugintab">3.12. pluginTab</a></li>
-<li><a href="#countindicator">3.13. countIndicator</a></li>
-<li><a href="#prettytime">3.14. prettyTime</a></li>
-<li><a href="#printedby">3.15. printedBy</a></li>
-<li><a href="#timestamp">3.16. timestamp</a></li>
+<li><a href="#crm-layout-main">3.1. Layout: main</a></li>
 </ul>
 </li>
-<li><a href="#configuration">4. Configuration</a></li>
-<li><a href="#license">5. License</a></li>
-<li><a href="#source-code">6. Source Code</a></li>
+<li><a href="#crm-tag-libraries">4. Tag Libraries</a></li>
+<li>
+<ul class="sectlevel2">
+<li><a href="#crm-logo">4.1. logo</a></li>
+<li><a href="#crm-submenu">4.2. submenu</a></li>
+<li><a href="#crm-selectionmenu">4.3. selectionMenu</a></li>
+<li><a href="#crm-header">4.4. header</a></li>
+<li><a href="#crm-favoriteicon">4.5. favoriteIcon</a></li>
+<li><a href="#crm-button">4.6. button</a></li>
+<li><a href="#crm-paginate">4.7. paginate</a></li>
+<li><a href="#crm-sortablecolumn">4.8. sortableColumn</a></li>
+<li><a href="#crm-alert">4.9. alert</a></li>
+<li><a href="#crm-datepicker">4.10. datepicker</a></li>
+<li><a href="#crm-weeknumber">4.11. weekNumber</a></li>
+<li><a href="#crm-plugintab">4.12. pluginTab</a></li>
+<li><a href="#crm-countindicator">4.13. countIndicator</a></li>
+<li><a href="#crm-prettytime">4.14. prettyTime</a></li>
+<li><a href="#crm-printedby">4.15. printedBy</a></li>
+<li><a href="#crm-timestamp">4.16. timestamp</a></li>
+</ul>
+</li>
+<li><a href="#crm-configuration">5. Configuration</a></li>
+<li><a href="#crm-license">6. License</a></li>
+<li><a href="#crm-source-code">7. Source Code</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="introduction">1. Introduction</h2>
+<h2 id="crm-introduction">1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>GR8 CRM is a set of <a href="http://www.grails.org/">Grails Web Application Framework</a>
 plugins that makes it easy to develop web applications with CRM functionality.</p>
 </div>
 <div class="sect2">
-<h3 id="customer-relationship-management">1.1. Customer relationship management</h3>
+<h3 id="crm-customer-relationship-management">1.1. Customer relationship management</h3>
 <div class="paragraph">
 <p>Customer relationship management (CRM) is a system for managing a company’s interactions with current and future customers.
 It involves using technology to organize, automate and synchronize sales, marketing, customer service, and technical support.
@@ -454,126 +462,137 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-twitter-bootstrap-ui-plugin">2. CRM Twitter Bootstrap UI Plugin</h2>
+<h2 id="crm-gr8-crm-twitter-bootstrap-ui-plugin">2. GR8 CRM Twitter Bootstrap UI Plugin</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This plugin provides a Twitter Bootstrap user Interface for GR8 CRM applications. It contains layouts and GRP tags
-that makes it easy to build user interfaces for GR8 CRM applications.</p>
+<p>This plugin provides a <a href="http://getbootstrap.com/2.3.2/" target="_blank">Twitter Bootstrap</a> user Interface for GR8 CRM applications.
+It contains layouts and GRP tags that makes it easy to build user interfaces for GR8 CRM applications.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="tag-libraries">3. Tag Libraries</h2>
+<h2 id="crm-layouts">3. Layouts</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="crm-layout-main">3.1. Layout: main</h3>
+<div class="paragraph">
+<p>The main layout &#8230;</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-tag-libraries">4. Tag Libraries</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin provide several useful tags under the <code>crm</code> namespace.</p>
 </div>
 <div class="sect2">
-<h3 id="logo">3.1. logo</h3>
+<h3 id="crm-logo">4.1. logo</h3>
 <div class="paragraph">
 <p>Renders a logo picture based on current theme.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="submenu">3.2. submenu</h3>
+<h3 id="crm-submenu">4.2. submenu</h3>
 <div class="paragraph">
 <p>Renders a sub menu.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="selectionmenu">3.3. selectionMenu</h3>
+<h3 id="crm-selectionmenu">4.3. selectionMenu</h3>
 <div class="paragraph">
 <p>Renders a selection menu.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="header">3.4. header</h3>
+<h3 id="crm-header">4.4. header</h3>
 <div class="paragraph">
 <p>Render a page header.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="favoriteicon">3.5. favoriteIcon</h3>
+<h3 id="crm-favoriteicon">4.5. favoriteIcon</h3>
 <div class="paragraph">
 <p>Renders a favorite icon (star) if a bean is tagged as favorite.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="button">3.6. button</h3>
+<h3 id="crm-button">4.6. button</h3>
 <div class="paragraph">
 <p>Renders a button or anchor with Twitter Bootstrap style.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="paginate">3.7. paginate</h3>
+<h3 id="crm-paginate">4.7. paginate</h3>
 <div class="paragraph">
 <p>Creates next/previous links to support pagination for the current controller.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="sortablecolumn">3.8. sortableColumn</h3>
+<h3 id="crm-sortablecolumn">4.8. sortableColumn</h3>
 <div class="paragraph">
 <p>Renders a sortable column to support sorting in list views.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="alert">3.9. alert</h3>
+<h3 id="crm-alert">4.9. alert</h3>
 <div class="paragraph">
 <p>Renders an alert box.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="datepicker">3.10. datepicker</h3>
+<h3 id="crm-datepicker">4.10. datepicker</h3>
 <div class="paragraph">
 <p>Render javascript code for initializing a datepicker on the page.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="weeknumber">3.11. weekNumber</h3>
+<h3 id="crm-weeknumber">4.11. weekNumber</h3>
 <div class="paragraph">
 <p>Render week number.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="plugintab">3.12. pluginTab</h3>
+<h3 id="crm-plugintab">4.12. pluginTab</h3>
 <div class="paragraph">
 <p>Renders a tab list item.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="countindicator">3.13. countIndicator</h3>
+<h3 id="crm-countindicator">4.13. countIndicator</h3>
 <div class="paragraph">
 <p>Renders a number enclosed by parenthesis, but only if the number is greater than zero.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="prettytime">3.14. prettyTime</h3>
+<h3 id="crm-prettytime">4.14. prettyTime</h3>
 <div class="paragraph">
-<p>Renders a date using the prettytime library.</p>
+<p>Renders a date using Ocpsoft&#8217;s <a href="http://ocpsoft.org/prettytime/" target="_blank">prettytime</a> library.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="printedby">3.15. printedBy</h3>
+<h3 id="crm-printedby">4.15. printedBy</h3>
 <div class="paragraph">
-<p>Renders "Printed on September 7 10:09:12 by Liza User"</p>
+<p>Renders <strong>Printed on September 7 10:09:12 by Liza User</strong></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="timestamp">3.16. timestamp</h3>
+<h3 id="crm-timestamp">4.16. timestamp</h3>
 <div class="paragraph">
-<p>Renders <code>dateCreated</code> and <code>lastUpdated</code> timestamps with CSS class <em>muted timestamp</em>.</p>
+<p>Renders <code>dateCreated</code> and <code>lastUpdated</code> timestamps with CSS class <code>muted timestamp</code>.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="configuration">4. Configuration</h2>
+<h2 id="crm-configuration">5. Configuration</h2>
 <div class="sectionbody">
 
 </div>
 </div>
 <div class="sect1">
-<h2 id="license">5. License</h2>
+<h2 id="crm-license">6. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -581,7 +600,7 @@ that makes it easy to build user interfaces for GR8 CRM applications.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="source-code">6. Source Code</h2>
+<h2 id="crm-source-code">7. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/goeh/grails-crm-security">https://github.com/goeh/grails-crm-security</a></p>
@@ -592,7 +611,7 @@ that makes it easy to build user interfaces for GR8 CRM applications.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.2.14<br>
-Last updated 2014-07-15 12:35:01 CEST
+Last updated 2014-07-15 12:59:50 CEST
 </div>
 </div>
 </body>
