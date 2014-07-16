@@ -390,43 +390,47 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <h1>GR8 CRM - i18n Plugin</h1>
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 1.2.2</span>
+<span id="revnumber">version 2.0.0</span>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#introduction">1. Introduction</a></li>
+<li><a href="#crm-introduction">1. Introduction</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#customer-relationship-management">1.1. Customer relationship management</a></li>
+<li><a href="#crm-customer-relationship-management">1.1. Customer relationship management</a></li>
 </ul>
 </li>
-<li><a href="#crm-i18n-plugin">2. CRM i18n Plugin</a></li>
+<li><a href="#crm-crm-i18n-plugin">2. CRM i18n Plugin</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#message-key-fallback">2.1. Message key fallback</a></li>
+<li><a href="#crm-message-key-fallback">2.1. Message key fallback</a></li>
 </ul>
 </li>
-<li><a href="#services">3. Services</a></li>
+<li><a href="#crm-services">3. Services</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#crmmessageservice">3.1. CrmMessageService</a></li>
+<li><a href="#crm-crmmessageservice">3.1. CrmMessageService</a></li>
 </ul>
 </li>
-<li><a href="#license">4. License</a></li>
-<li><a href="#source-code">5. Source Code</a></li>
+<li><a href="#crm-caching">4. Caching</a></li>
+<li><a href="#crm-license">5. License</a></li>
+<li><a href="#crm-source-code">6. Source Code</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="introduction">1. Introduction</h2>
+<h2 id="crm-introduction">1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>GR8 CRM is a set of <a href="http://www.grails.org/">Grails Web Application Framework</a>
 plugins that makes it easy to develop web applications with CRM functionality.</p>
 </div>
+<div class="paragraph">
+<p>You can find more information about GR8 CRM on the main documentation site <a href="http://gr8crm.github.io">http://gr8crm.github.io</a>.</p>
+</div>
 <div class="sect2">
-<h3 id="customer-relationship-management">1.1. Customer relationship management</h3>
+<h3 id="crm-customer-relationship-management">1.1. Customer relationship management</h3>
 <div class="paragraph">
 <p>Customer relationship management (CRM) is a system for managing a company’s interactions with current and future customers.
 It involves using technology to organize, automate and synchronize sales, marketing, customer service, and technical support.
@@ -443,7 +447,7 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-i18n-plugin">2. CRM i18n Plugin</h2>
+<h2 id="crm-crm-i18n-plugin">2. CRM i18n Plugin</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>crm-i18n</code> plugin installs a custom Spring <strong>MessageSource</strong> <code>grails.plugins.crm.i18n.CrmMessageSource</code> that provide two main features.</p>
@@ -460,7 +464,7 @@ This reduces the number of message keys needed in an application if it&#8217;s p
 </ol>
 </div>
 <div class="sect2">
-<h3 id="message-key-fallback">2.1. Message key fallback</h3>
+<h3 id="crm-message-key-fallback">2.1. Message key fallback</h3>
 <div class="paragraph">
 <p>The crm-i18n plugin implements a custom message lookup algorithm that makes it possible to reduce the number of message
 keys in message bundles (.properties files). The algorithm is best explained with an example:</p>
@@ -529,14 +533,14 @@ you can add the key <strong>crmContact.button.save.label = Save Contact Informat
 </div>
 </div>
 <div class="sect1">
-<h2 id="services">3. Services</h2>
+<h2 id="crm-services">3. Services</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <strong>crm-i18n</strong> plugin provide a service called <code>CrmMessageService</code>.
 This service contains methods for retrieving and updating messages and also methods that import and exports messages.</p>
 </div>
 <div class="sect2">
-<h3 id="crmmessageservice">3.1. CrmMessageService</h3>
+<h3 id="crm-crmmessageservice">3.1. CrmMessageService</h3>
 <div class="paragraph">
 <p><code>void setMessage(String key, String value, Locale locale = null)</code></p>
 </div>
@@ -574,7 +578,32 @@ A <code>Locale</code> instance can be specified to set the text for a specific l
 </div>
 </div>
 <div class="sect1">
-<h2 id="license">4. License</h2>
+<h2 id="crm-caching">4. Caching</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This plugin can use EhCache to cache messages retrieved from database (recommended).
+To enable caching, configure a bean named <code>messageCache</code> in <code>resources.groovy</code></p>
+</div>
+<div class="listingblock">
+<div class="title">resources.groovy</div>
+<div class="content">
+<pre class="prettyprint"><code class="groovy language-groovy">import org.springframework.cache.ehcache.EhCacheFactoryBean
+
+beans = {
+    messageCache(EhCacheFactoryBean) {
+        timeToLive = 3600
+        timeToIdle = 1800
+        maxElementsInMemory = 5000
+        eternal = false
+        overflowToDisk = false
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-license">5. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -582,7 +611,7 @@ A <code>Locale</code> instance can be specified to set the text for a specific l
 </div>
 </div>
 <div class="sect1">
-<h2 id="source-code">5. Source Code</h2>
+<h2 id="crm-source-code">6. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/goeh/grails-crm-i18n">https://github.com/goeh/grails-crm-i18n</a></p>
@@ -592,8 +621,8 @@ A <code>Locale</code> instance can be specified to set the text for a specific l
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.2.2<br>
-Last updated 2014-07-12 22:33:53 CEST
+Version 2.0.0<br>
+Last updated 2014-07-16 09:44:38 CEST
 </div>
 </div>
 </body>

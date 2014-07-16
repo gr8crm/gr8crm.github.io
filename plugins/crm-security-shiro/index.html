@@ -390,35 +390,38 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <h1>GR8 CRM - Apache Shiro Security Plugin</h1>
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 1.2.7</span>
+<span id="revnumber">version 2.0.0</span>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#introduction">1. Introduction</a></li>
+<li><a href="#crm-introduction">1. Introduction</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#customer-relationship-management">1.1. Customer relationship management</a></li>
+<li><a href="#crm-customer-relationship-management">1.1. Customer relationship management</a></li>
 </ul>
 </li>
-<li><a href="#apache-shiro-security-plugin">2. Apache Shiro Security Plugin</a></li>
-<li><a href="#authcontroller">3. AuthController</a></li>
-<li><a href="#shirodbrealm">4. ShiroDbRealm</a></li>
-<li><a href="#configuration">5. Configuration</a></li>
-<li><a href="#license">6. License</a></li>
-<li><a href="#source-code">7. Source Code</a></li>
+<li><a href="#crm-apache-shiro-security-plugin">2. Apache Shiro Security Plugin</a></li>
+<li><a href="#crm-authcontroller">3. AuthController</a></li>
+<li><a href="#crm-shirodbrealm">4. ShiroDbRealm</a></li>
+<li><a href="#crm-configuration">5. Configuration</a></li>
+<li><a href="#crm-license">6. License</a></li>
+<li><a href="#crm-source-code">7. Source Code</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="introduction">1. Introduction</h2>
+<h2 id="crm-introduction">1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>GR8 CRM is a set of <a href="http://www.grails.org/">Grails Web Application Framework</a>
 plugins that makes it easy to develop web applications with CRM functionality.</p>
 </div>
+<div class="paragraph">
+<p>You can find more information about GR8 CRM on the main documentation site <a href="http://gr8crm.github.io">http://gr8crm.github.io</a>.</p>
+</div>
 <div class="sect2">
-<h3 id="customer-relationship-management">1.1. Customer relationship management</h3>
+<h3 id="crm-customer-relationship-management">1.1. Customer relationship management</h3>
 <div class="paragraph">
 <p>Customer relationship management (CRM) is a system for managing a company’s interactions with current and future customers.
 It involves using technology to organize, automate and synchronize sales, marketing, customer service, and technical support.
@@ -435,7 +438,7 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 </div>
 </div>
 <div class="sect1">
-<h2 id="apache-shiro-security-plugin">2. Apache Shiro Security Plugin</h2>
+<h2 id="crm-apache-shiro-security-plugin">2. Apache Shiro Security Plugin</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>crm-security-shiro</code> plugin is a sub-plugin to <code>crm-security</code>. It implements application security using the Apache Shiro web security framework.</p>
@@ -446,7 +449,7 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 </div>
 </div>
 <div class="sect1">
-<h2 id="authcontroller">3. AuthController</h2>
+<h2 id="crm-authcontroller">3. AuthController</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This controller have <code>login()</code> and <code>logout()</code> actions that are called when users login and logout of the application.</p>
@@ -454,7 +457,7 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 </div>
 </div>
 <div class="sect1">
-<h2 id="shirodbrealm">4. ShiroDbRealm</h2>
+<h2 id="crm-shirodbrealm">4. ShiroDbRealm</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This realm is used when a user tries to login to the application. The database is queried for the user and password is checked.</p>
@@ -462,7 +465,7 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 </div>
 </div>
 <div class="sect1">
-<h2 id="configuration">5. Configuration</h2>
+<h2 id="crm-configuration">5. Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>No configuration needed for this plugin.</p>
@@ -470,7 +473,7 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 </div>
 </div>
 <div class="sect1">
-<h2 id="license">6. License</h2>
+<h2 id="crm-license">6. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -478,7 +481,7 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 </div>
 </div>
 <div class="sect1">
-<h2 id="source-code">7. Source Code</h2>
+<h2 id="crm-source-code">7. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/goeh/grails-crm-security-shiro">https://github.com/goeh/grails-crm-security-shiro</a></p>
@@ -488,8 +491,8 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.2.7<br>
-Last updated 2014-07-15 12:05:40 CEST
+Version 2.0.0<br>
+Last updated 2014-07-16 09:54:57 CEST
 </div>
 </div>
 </body>
