@@ -5,10 +5,10 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.0.preview.7">
-<meta name="description" content="Official documentation for the GR8 CRM Contact Management Plugin">
+<meta name="description" content="Official documentation for the GR8 CRM Contact Management User Interface Plugin">
 <meta name="keywords" content="groovy, grails, crm, gr8crm, documentation">
 <meta name="author" content="Göran Ehrsson">
-<title>GR8 CRM - Contact Management Plugin</title>
+<title>GR8 CRM - Contact Management User Interface Plugin</title>
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
@@ -389,10 +389,10 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </head>
 <body class="article">
 <div id="header">
-<h1>GR8 CRM - Contact Management Plugin</h1>
+<h1>GR8 CRM - Contact Management User Interface Plugin</h1>
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.0.0</span>
+<span id="revnumber">version 2.0.0-SNAPSHOT</span>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -402,26 +402,17 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <li><a href="#crm-customer-relationship-management">1.1. Customer Relationship Management</a></li>
 </ul>
 </li>
-<li><a href="#crm-contact-management-plugin">2. Contact Management Plugin</a></li>
-<li><a href="#crm-domain-model">3. Domain Model</a></li>
+<li><a href="#crm-contact-management-user-interface-plugin">2. Contact Management User Interface Plugin</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#crm-crmcontact">3.1. CrmContact</a></li>
-<li><a href="#crm-crmcontactrelation">3.2. CrmContactRelation</a></li>
+<li><a href="#crm-search-contacts">2.1. Search Contacts</a></li>
+<li><a href="#crm-contact-details">2.2. Contact Details</a></li>
+<li><a href="#crm-edit-contact-details">2.3. Edit Contact Details</a></li>
+<li><a href="#crm-vcard-as-qrcode">2.4. vCard as QRCode</a></li>
 </ul>
 </li>
-<li><a href="#crm-crmcontactservice">4. CrmContactService</a></li>
-<li><a href="#crm-code-samples">5. Code Samples</a></li>
-<li>
-<ul class="sectlevel2">
-<li><a href="#crm-create-a-company">5.1. Create a company</a></li>
-<li><a href="#crm-create-a-person">5.2. Create a person</a></li>
-<li><a href="#crm-relations">5.3. Relations</a></li>
-<li><a href="#crm-search-contacts">5.4. Search Contacts</a></li>
-</ul>
-</li>
-<li><a href="#crm-license">6. License</a></li>
-<li><a href="#crm-source-code">7. Source Code</a></li>
+<li><a href="#crm-license">3. License</a></li>
+<li><a href="#crm-source-code">4. Source Code</a></li>
 </ul>
 </div>
 </div>
@@ -454,268 +445,95 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-contact-management-plugin">2. Contact Management Plugin</h2>
+<h2 id="crm-contact-management-user-interface-plugin">2. Contact Management User Interface Plugin</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>crm-contact</code> plugin is the most frequently used plugin in GR8 CRM applications.
-CRM is about managing customers and customer interactions. This plugin provides storage and services for managing
+<p>The <code>crm-contact-ui</code> plugin is a companion plugin to the <code>crm-contact</code> plugin. It provides user interfaces for managing
 companies, people and relationships between them. You can use it as a simple address book or as the base of a complex
 customer relationship management system. The plugin is generic but flexible, it has proven support for many different use-cases.</p>
 </div>
+<div class="sect2">
+<h3 id="crm-search-contacts">2.1. Search Contacts</h3>
 <div class="paragraph">
-<p>Note that this plugin does not contain any user interface components. This plugin contains domain classes and services only.
-The plugin <a href="http://gr8crm.github.io/plugins/crm-contact-ui/">crm-contact-ui</a> provides a Twitter Bootstrap based user interface
-for managing contacts and relations. <code>crm-contact-ui</code> depends on <code>crm-contact</code> so you only need to include <code>crm-contact-ui</code>
-in your BuildConfig.groovy if you want end-user contact management features.</p>
+<p>To query for contacts you visit <code>crmContact/index</code> which will show the query form.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="crm-domain-model">3. Domain Model</h2>
-<div class="sectionbody">
-<div class="imageblock">
+<div class="imageblock thumb">
 <div class="content">
-<img src="./images/domain-model.png" alt="Contact Management Domain Model">
+<img src="./images/crm-contact-find.png" alt="The contact query form">
 </div>
-</div>
-<div class="sect2">
-<h3 id="crm-crmcontact">3.1. CrmContact</h3>
-<div class="paragraph">
-<p>This is the main domain class that stores contacts. It stored companies and individuals in the same domain class.
-A person uses <code>firstName</code> and <code>lastName</code> properties but companies uses only the <code>name</code> property.</p>
-</div>
-<table class="tableblock frame-all grid-all" style="width: 100%;">
-<colgroup>
-<col style="width: 33%;">
-<col style="width: 33%;">
-<col style="width: 33%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Property</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Type</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">firstName</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Given name(s) for person, null for company.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">lastName</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Family name for person, null for company.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">firstName + lastName (set in beforeValidate) for individuals and complete name for company</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">number</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Customer number</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">number2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Extra customer number</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ssn</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Social Security Number (personnr/orgnr in Sweden)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">duns</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">D&amp;B D-U-N-S(tm) identification number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">description</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description or short notes about the contact</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">title</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Business title</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">email</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Main email address</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">telephone</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Main telephone number</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">mobile</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Cellular phone number</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">fax</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Fax number</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">url</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The contact&#8217;s web site</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="crm-crmcontactrelation">3.2. CrmContactRelation</h3>
-<div class="paragraph">
-<p>This domain class links two contacts together. An example would be to link an employee to it&#8217;s employer.
-The type of relation is specified by the <code>type</code> property that references a <code>CrmContactRelationType</code>.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="crm-crmcontactservice">4. CrmContactService</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><code>CrmContact getContact(Long id)</code></p>
 </div>
 <div class="paragraph">
-<p>Find a contact based on primary key.</p>
+<p>You can enter query values in any field and then hit the <code>Search</code> button to search for contacts matching your query.
+If you don&#8217;t enter any query value all contacts will be included in the search result.</p>
 </div>
 <div class="paragraph">
-<p><code>CrmContact findByNumber(String number)</code></p>
+<p>If the query result contains more than one contact, a contact list will be displayed. If the query result contains
+exactly one contact, then details for that contact will be displayed.
+I.e. it will skip the <code>list</code> view and go directly to the <code>show</code> view.</p>
 </div>
-<div class="paragraph">
-<p>Find a contact based on customer number.</p>
-</div>
-<div class="paragraph">
-<p><code>CrmContact findByName(String name)</code></p>
-</div>
-<div class="paragraph">
-<p>Find a contact based on name.</p>
-</div>
-<div class="paragraph">
-<p><code>PagedResultList&lt;CrmContact&gt; list(Map query, Map params)</code></p>
-</div>
-<div class="paragraph">
-<p>List contacts using query by example parameters.</p>
-</div>
-<div class="paragraph">
-<p><code>CrmContact createCompany(Map&lt;String, Object&gt; params, boolean save = false)</code></p>
-</div>
-<div class="paragraph">
-<p>Create a new company.</p>
-</div>
-<div class="paragraph">
-<p><code>CrmContact createPerson(Map&lt;String, Object&gt; params, boolean save = false)</code></p>
-</div>
-<div class="paragraph">
-<p>Create a new person.</p>
-</div>
-<div class="paragraph">
-<p><code>String deleteContact(CrmContact crmContact)</code></p>
-</div>
-<div class="paragraph">
-<p>Delete an existing contact.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="crm-code-samples">5. Code Samples</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="crm-create-a-company">5.1. Create a company</h3>
-<div class="paragraph">
-<p>To create a new company and store it in the database you use <code>crmContactService.createCompany(Map, boolean)</code></p>
-</div>
-<div class="listingblock">
-<div class="title">CreateCompanyExample.groovy</div>
+<div class="imageblock thumb">
 <div class="content">
-<pre class="prettyprint"><code class="groovy language-groovy">def technipelago = crmContactService.createCompany(name: "Technipelago AB", email: "info@technipelago.se",
-                       url: "www.technipelago.se", address: [postalCode: "13973", city: "Djurhamn", country: "Sweden"], true)</code></pre>
+<img src="./images/crm-contact-list.png" alt="The contact list">
 </div>
 </div>
 <div class="paragraph">
-<p>The last parameter is <code>true</code>, this means that the company should be persisted (saved) to the database.
-If the last parameter is false or omitted all properties will be set from the specified Map but the company
-will not be persisted. You can later call <code>save()</code> on the instance if you need to perform extra steps before persisting.</p>
+<p>You can click on any contact to show details for that contact.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="crm-create-a-person">5.2. Create a person</h3>
+<h3 id="crm-contact-details">2.2. Contact Details</h3>
 <div class="paragraph">
-<p>To create a new person and store it in the database you use <code>crmContactService.createPerson(Map, boolean)</code></p>
+<p>The contact details page <code>crmContact/show</code> shows all the details for a selected contact.
+Here you will find contact name, address and telefon numbers.</p>
 </div>
-<div class="listingblock">
-<div class="title">CreatePersonExample.groovy</div>
+<div class="imageblock thumb">
 <div class="content">
-<pre class="prettyprint"><code class="groovy language-groovy">def goran = crmContactService.createPerson(firstName: "Göran", lastName: "Ehrsson",
-                email: "goran@technipelago.se", title: "Developer", true)</code></pre>
+<img src="./images/crm-contact-show.png" alt="Contact details">
 </div>
 </div>
 <div class="paragraph">
-<p>The last parameter is <code>true</code>, this means that the person should be persisted (saved) to the database.
-If the last parameter is false or omitted all properties will be set from the specified Map but the person
-will not be persisted. You can later call <code>save()</code> on the instance if you need to perform extra steps before persisting.</p>
+<p>If the <code>crm-tags</code> plugin is installed you can see existing tags and add new tags to a contact.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="crm-relations">5.3. Relations</h3>
+<h3 id="crm-edit-contact-details">2.3. Edit Contact Details</h3>
 <div class="paragraph">
-<p>Relations are used to connect contacts together. To connect an employee with it&#8217;s employer you create a <code>CrmContactRelation</code>
-between them. The domain class <code>CrmContactRelation</code> has a property called <code>primary</code> that specifies what relation is the primary
-relation for that contact. A contact can have many relations but only one primary relation. A good example is the
-employee&#8592;&#8594;employer relation, were the relation from the person to it&#8217;s employer (company) has the primary property set to true.
-This affects things like address management and display of contact information.</p>
+<p>To edit contact details you hit the <code>Edit</code> button. This will display the edit page <code>crmContact/edit</code>.
+Here you can alter values and then hit <code>Save</code> to store the new values in the database.</p>
 </div>
-<div class="listingblock">
-<div class="title">CreateRelationExample.groovy</div>
+<div class="imageblock thumb">
 <div class="content">
-<pre class="prettyprint"><code class="groovy language-groovy">def relation = crmContactService.addRelation(goran, technipelago, 'employer', true)</code></pre>
+<img src="./images/crm-contact-edit.png" alt="Edit contact details">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="crm-search-contacts">5.4. Search Contacts</h3>
+<h3 id="crm-vcard-as-qrcode">2.4. vCard as QRCode</h3>
 <div class="paragraph">
-<p>To query the database for contact you can use <code>crmContactService.list(Map, Map)</code>. This first parameter accepts
-a map of query values. The second parameter is a map with pagination parameters (offset, max, sort, order).</p>
+<p>A nice feature in the <code>crmContact/show</code> page is the possibility to show contact details in vCard/QRCode format.
+The <code>View</code> button has a sub menu called <strong>Show vCard</strong>. This option will open a modal frame that displays contact
+information in a QRCode image. This image can be scanned with a smartphone and imported to the telephone&#8217;s address book
+just by holding the telephone in front of the computer screen.</p>
 </div>
-<div class="listingblock">
-<div class="title">SearchContactsExample.groovy</div>
+<div class="imageblock thumb">
 <div class="content">
-<pre class="prettyprint"><code class="groovy language-groovy">def result
-result = crmContactService.list([name: "Göran"], [:]) <i class="conum" data-value="1"></i><b>(1)</b>
-println result
-[Göran Ehrsson]
-
-result = crmContactService.list([name: "Tech"], [:]) <i class="conum" data-value="2"></i><b>(2)</b>
-println result
-[Technipelago AB]
-
-result = crmContactService.list([person: true, related: "Tech"], [:]) <i class="conum" data-value="3"></i><b>(3)</b>
-println result
-[Göran Ehrsson]</code></pre>
+<img src="./images/crm-contact-vcard.png" alt="vCard as QRCode image">
 </div>
 </div>
-<div class="colist arabic">
+<div class="paragraph">
+<p>A simple but powerful address book integration!</p>
+</div>
+<div class="admonitionblock note">
 <table>
 <tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Find contacts who&#8217;s name begins with "Göran"</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Find contacts who&#8217;s name begins with "Tech"</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Find contacts of type person that have a relation to a contact who&#8217;s name begins with "Tech"</td>
+<td class="icon">
+<i class="icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>iOS does not have built-in support for scanning QRCode images, but you can download scanner apps from App Store.</p>
+</div>
+</td>
 </tr>
 </table>
 </div>
@@ -723,7 +541,7 @@ println result
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-license">6. License</h2>
+<h2 id="crm-license">3. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -731,18 +549,18 @@ println result
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">7. Source Code</h2>
+<h2 id="crm-source-code">4. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The source code for this plugin is available at <a href="https://github.com/goeh/grails-crm-contact">https://github.com/goeh/grails-crm-contact</a></p>
+<p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-contact-ui">https://github.com/technipelago/grails-crm-contact-ui</a></p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.0.0<br>
-Last updated 2014-07-18 22:54:14 CEST
+Version 2.0.0-SNAPSHOT<br>
+Last updated 2014-07-18 23:00:45 CEST
 </div>
 </div>
 </body>
