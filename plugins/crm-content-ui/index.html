@@ -5,10 +5,10 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.0.preview.7">
-<meta name="description" content="Official documentation for the GR8 CRM Content Management Plugin">
+<meta name="description" content="Official documentation for the GR8 CRM Content Management UI Plugin">
 <meta name="keywords" content="groovy, grails, crm, gr8crm, documentation">
 <meta name="author" content="Göran Ehrsson">
-<title>GR8 CRM - Content Management Plugin</title>
+<title>GR8 CRM - Content Management UI Plugin</title>
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
@@ -389,10 +389,10 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </head>
 <body class="article">
 <div id="header">
-<h1>GR8 CRM - Content Management Plugin</h1>
+<h1>GR8 CRM - Content Management UI Plugin</h1>
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.0.0</span>
+<span id="revnumber">version 1.2.16</span>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -402,26 +402,9 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <li><a href="#crm-customer-relationship-management">1.1. Customer Relationship Management</a></li>
 </ul>
 </li>
-<li><a href="#crm-content-management-plugin">2. Content Management Plugin</a></li>
-<li><a href="#crm-storage">3. Storage</a></li>
-<li><a href="#crm-attachments">4. Attachments</a></li>
-<li><a href="#crm-crmcontentservice">5. CrmContentService</a></li>
-<li><a href="#crm-crmfreemarkerservice">6. CrmFreeMarkerService</a></li>
-<li>
-<ul class="sectlevel2">
-<li><a href="#crm-events">6.1. Events</a></li>
-</ul>
-</li>
-<li><a href="#crm-code-samples">7. Code Samples</a></li>
-<li>
-<ul class="sectlevel2">
-<li><a href="#crm-create-a-folder">7.1. Create a folder</a></li>
-<li><a href="#crm-create-a-file">7.2. Create a file</a></li>
-</ul>
-</li>
-<li><a href="#crm-configuration">8. Configuration</a></li>
-<li><a href="#crm-license">9. License</a></li>
-<li><a href="#crm-source-code">10. Source Code</a></li>
+<li><a href="#crm-content-management-ui-plugin">2. Content Management UI Plugin</a></li>
+<li><a href="#crm-license">3. License</a></li>
+<li><a href="#crm-source-code">4. Source Code</a></li>
 </ul>
 </div>
 </div>
@@ -454,303 +437,15 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-content-management-plugin">2. Content Management Plugin</h2>
+<h2 id="crm-content-management-ui-plugin">2. Content Management UI Plugin</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This plugin provide storage and services for managing content in GR8 CRM applications.
-Content can be any type of media like plain text, Microsoft Word, PDF, and images.
-Content can be stored in folders or attached to domain instances.
-Content can be shared with users of the application or shared publicly to the world.</p>
-</div>
-<div class="paragraph">
-<p>Note that this plugin does not contain any user interface components. This plugin contains domain classes and services only.
-The plugin <a href="http://gr8crm.github.io/plugins/crm-content-ui/">crm-content-ui</a> provides a Twitter Bootstrap based user interface
-for managing files, folders and attachments. <code>crm-content-ui</code> depends on <code>crm-content</code> so you only need to include <code>crm-content-ui</code>
-in your BuildConfig.groovy if you want end-user content management features.</p>
-</div>
-<div class="paragraph">
-<p>The Content Management plugin is very generic and flexible. It can be used to provide content in any form.
-Here are some real-wold examples on what type of content that can be stored and managed by this plugin.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>System HTML email templates that can be edited by an administrator</p>
-</li>
-<li>
-<p>Attach documents to customer records, like contracts, tenders or spreadsheets</p>
-</li>
-<li>
-<p>User guides in PDF or other eReader formats</p>
-</li>
-<li>
-<p>HTML page fragments to be included in Groovy Server Pages</p>
-</li>
-<li>
-<p>Complete HTML pages to be rendered as part of a web site</p>
-</li>
-</ul>
+<p>This plugin provide a Twitter Bootstrap user interface for authoring content in GR8 CRM applications.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-storage">3. Storage</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The <code>crm-content</code> plugin has configurable <strong>storage providers</strong>. The default storage provider store
-content in the web server filesystem. Files on disk can optionally be encrypted for increased security.
-Custom storage providers can be developed to integrate with content services like Amazon S3, Google Drive or Dropbox.
-One application can have multiple storage providers and select the best storage provides based on some business logic.
-Maybe HTML files should be stored in a S3 bucket and customer contracts encrypted on  a local disk.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="crm-attachments">4. Attachments</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Content is usually stored in folders but content can also be attached to domain instances.
-In fact when content is stored in a folder, it is actually "attached" to a <code>CrmResourceFolder</code> domain instance.
-So there is no technical difference between files stored in folders and files attached to domain instances.</p>
-</div>
-<div class="paragraph">
-<p>A <code>CrmResourceRef</code> instance is used to attach content to a domain instance. The <code>ref</code> property references
-the domain instance using a <strong>Resource Identifier</strong> and the <code>res</code> property contains the provider specific URI to the content.
-This is nothing that you need to care about, the framework takes care about setting these properties when you create and attach content.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="crm-crmcontentservice">5. CrmContentService</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>This is the main service that you use to create, find, edit and delete files and folders with.</p>
-</div>
-<div class="paragraph">
-<p><code>CrmResourceRef createResource(InputStream inputStream, String filename, Long length, String contentType, Object reference, Map params = [:])</code></p>
-</div>
-<div class="paragraph">
-<p>Create a new file.</p>
-</div>
-<div class="paragraph">
-<p><code>def withInputStream(URI uri, Closure work)</code></p>
-</div>
-<div class="paragraph">
-<p>For content referenced by a <code>URI</code> create a new InputStream and pass it into a closure. This method ensures the stream is closed after the closure returns.</p>
-</div>
-<div class="paragraph">
-<p><code>Map&lt;String, Object&gt; getMetadata(URI resource)</code></p>
-</div>
-<div class="paragraph">
-<p>Get metadata for the content specified by <code>resource</code>. The metadata Map contains the following keys:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>uri</strong> the provider specific URI for the content</p>
-</li>
-<li>
-<p><strong>contentType</strong> = MIME content type</p>
-</li>
-<li>
-<p><strong>bytes</strong> = length in bytes</p>
-</li>
-<li>
-<p><strong>size</strong> = formatted length</p>
-</li>
-<li>
-<p><strong>icon</strong> = name of icon that best described the content</p>
-</li>
-<li>
-<p><strong>created</strong> = Date instance when content was created</p>
-</li>
-<li>
-<p><strong>modified</strong> = Date instance when content was last updated</p>
-</li>
-<li>
-<p><strong>hash</strong> = MD5 hash of the content</p>
-</li>
-<li>
-<p><strong>encrypted</strong> = type of encrypted storage (0 = no encryption)</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><code>long updateResource(CrmResourceRef resource, InputStream inputStream, String contentType = null)</code></p>
-</div>
-<div class="listingblock">
-<div class="title">UpdateContent.groovy</div>
-<div class="content">
-<pre class="prettyprint"><code class="groovy language-groovy">def folder = crmContentService.createFolder(null, "test")
-def bytes = "This is a test".getBytes()
-def inputStream = new ByteArrayInputStream(bytes)
-def ref = crmContentService.createResource(inputStream, "test1.txt", bytes.length, "text/plain", folder) <i class="conum" data-value="1"></i><b>(1)</b>
-bytes = "This is an updated test".getBytes()
-inputStream = new ByteArrayInputStream(bytes)
-crmContentService.updateResource(ref, inputStream) <i class="conum" data-value="2"></i><b>(2)</b>
-def result = new ByteArrayOutputStream()
-ref.writeTo(result)
-def s = new String(result.toByteArray())
-assert s == "This is an updated test"</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Create a file with content "This is a test"</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Update the content to "This is an updated test"</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="crm-crmfreemarkerservice">6. CrmFreeMarkerService</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The <strong>FreeMarker</strong> service is used when you want to store FreeMarker templates with the <code>crm-content</code> plugin.
-You can use FreeMarker templates when you send email or render HTML pages.
-If used together with the <code>crm-content-ui</code> plugin you can let administrators edit templates.</p>
-</div>
-<div class="paragraph">
-<p><code>void process(String templatePath, Map binding, Writer out)</code></p>
-</div>
-<div class="paragraph">
-<p>Let FreeMarker parse the template located at <code>templatePath</code> in the current tenant.
-Values in <code>binding</code> can be referenced from the template. The output is written to <code>out</code>.</p>
-</div>
-<div class="paragraph">
-<p><code>void process(Long tenant, String templatePath, Map binding, Writer out)</code></p>
-</div>
-<div class="paragraph">
-<p>Same as above but a tenant can be specified from which templates will be retrieved.</p>
-</div>
-<div class="paragraph">
-<p><code>void process(CrmResourceRef ref, Map binding, Writer out)</code></p>
-</div>
-<div class="paragraph">
-<p>Same as above but an instance of <code>CrmResourceRef</code> will be used as template.</p>
-</div>
-<div class="sect2">
-<h3 id="crm-events">6.1. Events</h3>
-<div class="paragraph">
-<p>You can also send an asynchronous event that results in a FreeMarker template being parsed.</p>
-</div>
-<div class="listingblock">
-<div class="title">EventBasedTemplateParsingTests.groovy</div>
-<div class="content">
-<pre class="prettyprint"><code class="groovy language-groovy">def reply = event(namespace: 'crm', topic: 'parseTemplate', data: [template: '/templates/hello.txt', greet: 'Groovy'])
-assert reply.value == 'Hello Groovy World'</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="crm-code-samples">7. Code Samples</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="crm-create-a-folder">7.1. Create a folder</h3>
-<div class="listingblock">
-<div class="title">CreateFolders.groovy</div>
-<div class="content">
-<pre class="prettyprint"><code class="groovy language-groovy">def rootFolder = crmContentService.createFolder(null, "templates")
-def subFolder = crmContentService.createFolder(rootFolder, "powerpoint")</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="crm-create-a-file">7.2. Create a file</h3>
-<div class="listingblock groovy">
-<div class="title">CreateFile.groovy</div>
-<div class="content">
-<pre class="prettyprint"><code>def bytes = "Hello World".getBytes()
-def inputStream = new ByteArrayInputStream(bytes) <i class="conum" data-value="1"></i><b>(1)</b>
-def folder = crmContentService.createFolder(null, "files")
-def doc = crmContentService.createResource(inputStream, "hello.txt", bytes.length, "text/plain", folder)
-assert doc.title == "test1"
-assert doc.name == "test1.txt"
-assert doc.text == "Hello World"</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The stream is closed by createResource(&#8230;)</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="crm-configuration">8. Configuration</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><code>crm.content.encryption.algorithm</code></p>
-</div>
-<div class="paragraph">
-<p>This property defines what encryption algorithm to use when storing files.
-File are by default stored in the filesystem on the application server.
-One of the following algorithms can be used:</p>
-</div>
-<div class="paragraph">
-<p><code>grails.plugins.crm.content.CrmFileResource.NO_ENCRYPTION</code> (default)</p>
-</div>
-<div class="paragraph">
-<p>Files are not encrypted, they are stored in original form.</p>
-</div>
-<div class="paragraph">
-<p><code>grails.plugins.crm.content.CrmFileResource.AES_ENCRYPTION</code></p>
-</div>
-<div class="paragraph">
-<p>Files are encrypted with AES encryption</p>
-</div>
-<div class="paragraph">
-<p><code>crm.content.encryption.password = <em>1234567890123456</em></code></p>
-</div>
-<div class="paragraph">
-<p>Encryption key. Must be 16 bytes!</p>
-</div>
-<div class="paragraph">
-<p><code>crm.content.cache.expires = 60 * 10</code></p>
-</div>
-<div class="paragraph">
-<p>Browser cache expiration (in seconds) for public content.</p>
-</div>
-<div class="paragraph">
-<p><code>crm.content.include.tenant = 1L</code></p>
-</div>
-<div class="paragraph">
-<p>Default tenant for content rendered with the render tag.</p>
-</div>
-<div class="paragraph">
-<p><code>crm.content.include.path = <em>/templates</em></code></p>
-</div>
-<div class="paragraph">
-<p>Default path for content rendered with the render tag.</p>
-</div>
-<div class="paragraph">
-<p><code>crm.content.include.parser = <em>freemarker</em></code></p>
-</div>
-<div class="paragraph">
-<p>Default parser for content rendered with the render tag.</p>
-</div>
-<div class="paragraph">
-<p><code>crm.content.freemarker.template.updateDelay = 60</code></p>
-</div>
-<div class="paragraph">
-<p>The FreeMarker service checks if templates has been updated with this interval (in seconds).</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="crm-license">9. License</h2>
+<h2 id="crm-license">3. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -758,18 +453,18 @@ One of the following algorithms can be used:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">10. Source Code</h2>
+<h2 id="crm-source-code">4. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-content">https://github.com/technipelago/grails-crm-content</a></p>
+<p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-content-ui">https://github.com/technipelago/grails-crm-content-ui</a></p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.0.0<br>
-Last updated 2014-07-25 23:30:53 CEST
+Version 1.2.16<br>
+Last updated 2014-07-25 23:36:04 CEST
 </div>
 </div>
 </body>
