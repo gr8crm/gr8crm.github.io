@@ -406,6 +406,12 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <li><a href="#crm-storage">3. Storage</a></li>
 <li><a href="#crm-attachments">4. Attachments</a></li>
 <li><a href="#crm-security">5. Security</a></li>
+<li>
+<ul class="sectlevel2">
+<li><a href="#crm-access-control">5.1. Access Control</a></li>
+<li><a href="#crm-encryption">5.2. Encryption</a></li>
+</ul>
+</li>
 <li><a href="#crm-crmcontentservice">6. CrmContentService</a></li>
 <li>
 <ul class="sectlevel2">
@@ -542,7 +548,12 @@ This is nothing that you need to care about, the framework takes care about sett
 <div class="paragraph">
 <p>Content can contain sensitive information, therefore security is a very important in GR8 CRM applications.
 All access to content is checked to make sure the user accessing content has the right privileges.
-An instance of the domain class <code>CrmResourceRef</code> is always involved when working with content. It represents a "handle"
+Files on disk can optionally be encrypted for increased security.</p>
+</div>
+<div class="sect2">
+<h3 id="crm-access-control">5.1. Access Control</h3>
+<div class="paragraph">
+<p>An instance of the domain class <code>CrmResourceRef</code> is always involved when working with content. It represents a "handle"
 to the content. It has properties like <code>filename</code>, <code>title</code> and <code>description</code>. Another important property is <code>status</code> that
 specifies the status and access rights for the content. The class <code>CrmResourceRef</code> has one static <code>int</code> constant for each
 possible status a content instance can have. The constants are listed below.</p>
@@ -561,12 +572,12 @@ possible status a content instance can have. The constants are listed below.</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CrmResourceRef.STATUS_ARCHIVED</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Content is archived and only accessible by authenticated users</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CrmResourceRef.STATUS_DRAFT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Content is in draft state and only accessible by authenticated users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmResourceRef.STATUS_ARCHIVED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Content is archived and only accessible by authenticated users</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CrmResourceRef.STATUS_PUBLISHED</p></td>
@@ -578,6 +589,57 @@ possible status a content instance can have. The constants are listed below.</p>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="sect2">
+<h3 id="crm-encryption">5.2. Encryption</h3>
+<div class="paragraph">
+<p>Content can be encrypted before it&#8217;s stored in the server filesystem.</p>
+</div>
+<div class="paragraph">
+<p>The class <code>CrmFileResource</code> has static <code>int</code> constants for all supported encryption algorithms.</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 100%;">
+<caption class="title">Table 2. Content Encryption</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Constant</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmFileResource.NO_ENCRYPTION</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Content is not encrypted (default)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmFileResource.AES_ENCRYPTION</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Content is encrypted with AES encryption</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>You configure the application wide encryption key in Config.groovy. The encryption key must be 16 bytes long.</p>
+</div>
+<div class="paragraph">
+<p><code>crm.content.encryption.password = "1234567890123456"</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="icon-note" title="Note"></i>
+</td>
+<td class="content">
+The current implementation of <code>CrmFileResource</code> encrypts <strong>all</strong> content if <code>crm.content.encryption.password</code> is set.
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -754,7 +816,7 @@ crmContentService.withInputStream(content.resource) { inputStream -&gt;
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">icon</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">name of icon that best described the content</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name of icon that best describes the content</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">created</p></td>
@@ -779,6 +841,9 @@ crmContentService.withInputStream(content.resource) { inputStream -&gt;
 <h3 id="crm-updateresource">6.5. updateResource</h3>
 <div class="paragraph">
 <p><code>long updateResource(CrmResourceRef resource, InputStream inputStream, String contentType = null)</code></p>
+</div>
+<div class="paragraph">
+<p>Update/overwrite existing content.</p>
 </div>
 <div class="listingblock">
 <div class="title">UpdateContent.groovy</div>
@@ -935,7 +1000,7 @@ One of the following algorithms can be used:</p>
 <p>Files are encrypted with AES encryption</p>
 </div>
 <div class="paragraph">
-<p><code>crm.content.encryption.password = <em>1234567890123456</em></code></p>
+<p><code>crm.content.encryption.password = "1234567890123456"</code></p>
 </div>
 <div class="paragraph">
 <p>Encryption key. Must be 16 bytes!</p>
@@ -992,7 +1057,7 @@ One of the following algorithms can be used:</p>
 <div id="footer">
 <div id="footer-text">
 Version 2.0.0<br>
-Last updated 2014-07-26 12:34:12 CEST
+Last updated 2014-07-26 12:52:26 CEST
 </div>
 </div>
 </body>
