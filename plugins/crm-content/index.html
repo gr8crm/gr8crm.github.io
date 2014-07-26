@@ -412,38 +412,39 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <li><a href="#crm-encryption">5.2. Encryption</a></li>
 </ul>
 </li>
-<li><a href="#crm-crmcontentservice">6. CrmContentService</a></li>
+<li><a href="#crm-web-access">6. Web Access</a></li>
+<li><a href="#crm-crmcontentservice">7. CrmContentService</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#crm-createresource">6.1. createResource</a></li>
-<li><a href="#crm-withinputstream">6.2. withInputStream</a></li>
-<li><a href="#crm-writeto">6.3. writeTo</a></li>
-<li><a href="#crm-getmetadata">6.4. getMetadata</a></li>
-<li><a href="#crm-updateresource">6.5. updateResource</a></li>
+<li><a href="#crm-createresource">7.1. createResource</a></li>
+<li><a href="#crm-withinputstream">7.2. withInputStream</a></li>
+<li><a href="#crm-writeto">7.3. writeTo</a></li>
+<li><a href="#crm-getmetadata">7.4. getMetadata</a></li>
+<li><a href="#crm-updateresource">7.5. updateResource</a></li>
 </ul>
 </li>
-<li><a href="#crm-crmfreemarkerservice">7. CrmFreeMarkerService</a></li>
+<li><a href="#crm-crmfreemarkerservice">8. CrmFreeMarkerService</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#crm-process">7.1. process</a></li>
+<li><a href="#crm-process">8.1. process</a></li>
 </ul>
 </li>
-<li><a href="#crm-events">8. Events</a></li>
+<li><a href="#crm-events">9. Events</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#crm-parsetemplate">8.1. parseTemplate</a></li>
+<li><a href="#crm-parsetemplate">9.1. parseTemplate</a></li>
 </ul>
 </li>
-<li><a href="#crm-code-samples">9. Code Samples</a></li>
+<li><a href="#crm-code-samples">10. Code Samples</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#crm-create-a-folder">9.1. Create a folder</a></li>
-<li><a href="#crm-create-a-file">9.2. Create a file</a></li>
+<li><a href="#crm-create-a-folder">10.1. Create a folder</a></li>
+<li><a href="#crm-create-a-file">10.2. Create a file</a></li>
 </ul>
 </li>
-<li><a href="#crm-configuration">10. Configuration</a></li>
-<li><a href="#crm-license">11. License</a></li>
-<li><a href="#crm-source-code">12. Source Code</a></li>
+<li><a href="#crm-configuration">11. Configuration</a></li>
+<li><a href="#crm-license">12. License</a></li>
+<li><a href="#crm-source-code">13. Source Code</a></li>
 </ul>
 </div>
 </div>
@@ -520,10 +521,10 @@ Here are some real-wold examples on what type of content that can be stored and 
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>crm-content</code> plugin has configurable <strong>storage providers</strong>. The default storage provider store
-content in the web server filesystem. Files on disk can optionally be encrypted for increased security.
+content in the web server filesystem. Files on disc can optionally be encrypted for increased security.
 Custom storage providers can be developed to integrate with content services like Amazon S3, Google Drive or Dropbox.
 One application can have multiple storage providers and select the best storage provides based on some business logic.
-Maybe HTML files should be stored in a S3 bucket and customer contracts encrypted on  a local disk.</p>
+Maybe HTML files should be stored in a S3 bucket and customer contracts encrypted on  a local disc.</p>
 </div>
 </div>
 </div>
@@ -546,9 +547,9 @@ This is nothing that you need to care about, the framework takes care about sett
 <h2 id="crm-security">5. Security</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Content can contain sensitive information, therefore security is a very important in GR8 CRM applications.
+<p>Content be sensitive information, therefore security is a very important in GR8 CRM applications.
 All access to content is checked to make sure the user accessing content has the right privileges.
-Files on disk can optionally be encrypted for increased security.</p>
+Content can optionally be encrypted before it is stored on disc or sent over a network for increased security.</p>
 </div>
 <div class="sect2">
 <h3 id="crm-access-control">5.1. Access Control</h3>
@@ -617,7 +618,7 @@ possible status a content instance can have. The constants are listed below.</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CrmFileResource.AES_ENCRYPTION</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Content is encrypted with AES encryption</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Content is encrypted with AES-128 encryption</p></td>
 </tr>
 </tbody>
 </table>
@@ -643,13 +644,60 @@ The current implementation of <code>CrmFileResource</code> encrypts <strong>all<
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-crmcontentservice">6. CrmContentService</h2>
+<h2 id="crm-web-access">6. Web Access</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Content can be accessed via a URL and the <code>crm-content</code> plugin configures a set of URL mappings for this purpose.
+Note that access control restrictions apply.</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 100%;">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">URL Pattern</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/s/$t/$domain/$id/$file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Content attached to a domain instance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://appname/s/1/crmProduct/1/icon-144.png">http://appname/s/1/crmProduct/1/icon-144.png</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/r/$t/$uri**</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Content stored in a folder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://appname/r/1/rootfolder/subfolder/file.pdf">http://appname/r/1/rootfolder/subfolder/file.pdf</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/f/$t/$uri**</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List all files in a folder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://appname/f/1/rootfolder/subfolder">http://appname/f/1/rootfolder/subfolder</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>t</strong> &#8594; Tenant ID<br>
+<strong>domain</strong> &#8594; Domain name in short (property name) format<br>
+<strong>id</strong> &#8594; ID of domain instance<br>
+<strong>file</strong> &#8594; filename<br>
+<strong>uri</strong> &#8594; any path<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-crmcontentservice">7. CrmContentService</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This is the main service that you use to create, find, edit and delete files and folders with.</p>
 </div>
 <div class="sect2">
-<h3 id="crm-createresource">6.1. createResource</h3>
+<h3 id="crm-createresource">7.1. createResource</h3>
 <div class="paragraph">
 <p><code>CrmResourceRef createResource(InputStream inputStream, String filename, Long length, String contentType, Object reference, Map params = [:])</code></p>
 </div>
@@ -726,7 +774,7 @@ assert pdf.name == "presentation.pdf"</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="crm-withinputstream">6.2. withInputStream</h3>
+<h3 id="crm-withinputstream">7.2. withInputStream</h3>
 <div class="paragraph">
 <p><code>def withInputStream(URI uri, Closure work)</code></p>
 </div>
@@ -746,7 +794,7 @@ crmContentService.withInputStream(content.resource) { inputStream -&gt;
 </div>
 </div>
 <div class="sect2">
-<h3 id="crm-writeto">6.3. writeTo</h3>
+<h3 id="crm-writeto">7.3. writeTo</h3>
 <div class="paragraph">
 <p><code>long writeTo(URI uri, OutputStream out)</code></p>
 </div>
@@ -779,7 +827,7 @@ crmContentService.withInputStream(content.resource) { inputStream -&gt;
 </div>
 </div>
 <div class="sect2">
-<h3 id="crm-getmetadata">6.4. getMetadata</h3>
+<h3 id="crm-getmetadata">7.4. getMetadata</h3>
 <div class="paragraph">
 <p><code>Map&lt;String, Object&gt; getMetadata(URI resource)</code></p>
 </div>
@@ -838,7 +886,7 @@ crmContentService.withInputStream(content.resource) { inputStream -&gt;
 </table>
 </div>
 <div class="sect2">
-<h3 id="crm-updateresource">6.5. updateResource</h3>
+<h3 id="crm-updateresource">7.5. updateResource</h3>
 <div class="paragraph">
 <p><code>long updateResource(CrmResourceRef resource, InputStream inputStream, String contentType = null)</code></p>
 </div>
@@ -877,7 +925,7 @@ assert s == "This is an updated test"</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-crmfreemarkerservice">7. CrmFreeMarkerService</h2>
+<h2 id="crm-crmfreemarkerservice">8. CrmFreeMarkerService</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <strong>FreeMarker</strong> service is used when you want to store <a href="http://freemarker.org" target="_blank">FreeMarker</a> templates with the <code>crm-content</code> plugin.
@@ -885,7 +933,7 @@ You can use FreeMarker templates when you send email or render HTML pages.
 If used together with the <code>crm-content-ui</code> plugin you can let administrators edit templates with an HTML editor.</p>
 </div>
 <div class="sect2">
-<h3 id="crm-process">7.1. process</h3>
+<h3 id="crm-process">8.1. process</h3>
 <div class="paragraph">
 <p><code>void process(String templatePath, Map binding, Writer out)</code></p>
 </div>
@@ -909,13 +957,13 @@ Values in <code>binding</code> can be referenced from the template. The output i
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-events">8. Events</h2>
+<h2 id="crm-events">9. Events</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You can also send an asynchronous event that results in a template being parsed.</p>
 </div>
 <div class="sect2">
-<h3 id="crm-parsetemplate">8.1. parseTemplate</h3>
+<h3 id="crm-parsetemplate">9.1. parseTemplate</h3>
 <div class="listingblock">
 <div class="title">EventBasedTemplateParsingTests.groovy</div>
 <div class="content">
@@ -927,10 +975,10 @@ assert reply.value == 'Hello Groovy World'</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-code-samples">9. Code Samples</h2>
+<h2 id="crm-code-samples">10. Code Samples</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="crm-create-a-folder">9.1. Create a folder</h3>
+<h3 id="crm-create-a-folder">10.1. Create a folder</h3>
 <div class="listingblock">
 <div class="title">CreateFolders.groovy</div>
 <div class="content">
@@ -940,7 +988,7 @@ def subFolder = crmContentService.createFolder(rootFolder, "powerpoint")</code><
 </div>
 </div>
 <div class="sect2">
-<h3 id="crm-create-a-file">9.2. Create a file</h3>
+<h3 id="crm-create-a-file">10.2. Create a file</h3>
 <div class="listingblock groovy">
 <div class="title">CreateFile.groovy</div>
 <div class="content">
@@ -977,7 +1025,7 @@ You can look at the source code for the <a href="https://github.com/technipelago
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-configuration">10. Configuration</h2>
+<h2 id="crm-configuration">11. Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><code>crm.content.encryption.algorithm</code></p>
@@ -1038,7 +1086,7 @@ One of the following algorithms can be used:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-license">11. License</h2>
+<h2 id="crm-license">12. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -1046,7 +1094,7 @@ One of the following algorithms can be used:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">12. Source Code</h2>
+<h2 id="crm-source-code">13. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-content">https://github.com/technipelago/grails-crm-content</a></p>
@@ -1057,7 +1105,7 @@ One of the following algorithms can be used:</p>
 <div id="footer">
 <div id="footer-text">
 Version 2.0.0<br>
-Last updated 2014-07-26 12:52:26 CEST
+Last updated 2014-07-26 13:20:27 CEST
 </div>
 </div>
 </body>
