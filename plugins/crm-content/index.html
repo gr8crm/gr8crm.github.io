@@ -405,23 +405,39 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <li><a href="#crm-content-management-plugin">2. Content Management Plugin</a></li>
 <li><a href="#crm-storage">3. Storage</a></li>
 <li><a href="#crm-attachments">4. Attachments</a></li>
-<li><a href="#crm-crmcontentservice">5. CrmContentService</a></li>
-<li><a href="#crm-crmfreemarkerservice">6. CrmFreeMarkerService</a></li>
+<li><a href="#crm-security">5. Security</a></li>
+<li><a href="#crm-crmcontentservice">6. CrmContentService</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#crm-events">6.1. Events</a></li>
+<li><a href="#crm-createresource">6.1. createResource</a></li>
+<li><a href="#crm-withinputstream">6.2. withInputStream</a></li>
+<li><a href="#crm-writeto">6.3. writeTo</a></li>
+<li><a href="#crm-getmetadata">6.4. getMetadata</a></li>
+<li><a href="#crm-updateresource">6.5. updateResource</a></li>
 </ul>
 </li>
-<li><a href="#crm-code-samples">7. Code Samples</a></li>
+<li><a href="#crm-crmfreemarkerservice">7. CrmFreeMarkerService</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#crm-create-a-folder">7.1. Create a folder</a></li>
-<li><a href="#crm-create-a-file">7.2. Create a file</a></li>
+<li><a href="#crm-process">7.1. process</a></li>
 </ul>
 </li>
-<li><a href="#crm-configuration">8. Configuration</a></li>
-<li><a href="#crm-license">9. License</a></li>
-<li><a href="#crm-source-code">10. Source Code</a></li>
+<li><a href="#crm-events">8. Events</a></li>
+<li>
+<ul class="sectlevel2">
+<li><a href="#crm-parsetemplate">8.1. parseTemplate</a></li>
+</ul>
+</li>
+<li><a href="#crm-code-samples">9. Code Samples</a></li>
+<li>
+<ul class="sectlevel2">
+<li><a href="#crm-create-a-folder">9.1. Create a folder</a></li>
+<li><a href="#crm-create-a-file">9.2. Create a file</a></li>
+</ul>
+</li>
+<li><a href="#crm-configuration">10. Configuration</a></li>
+<li><a href="#crm-license">11. License</a></li>
+<li><a href="#crm-source-code">12. Source Code</a></li>
 </ul>
 </div>
 </div>
@@ -521,60 +537,246 @@ This is nothing that you need to care about, the framework takes care about sett
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-crmcontentservice">5. CrmContentService</h2>
+<h2 id="crm-security">5. Security</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Content can contain sensitive information, therefore security is a very important in GR8 CRM applications.
+All access to content is checked to make sure the user accessing content has the right privileges.
+An instance of the domain class <code>CrmResourceRef</code> is always involved when working with content. It represents a "handle"
+to the content. It has properties like <code>filename</code>, <code>title</code> and <code>description</code>. Another important property is <code>status</code> that
+specifies the status and access rights for the content. The class <code>CrmResourceRef</code> has one static <code>int</code> constant for each
+possible status a content instance can have. The constants are listed below.</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 100%;">
+<caption class="title">Table 1. Content Status</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Constant</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmResourceRef.STATUS_ARCHIVED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Content is archived and only accessible by authenticated users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmResourceRef.STATUS_DRAFT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Content is in draft state and only accessible by authenticated users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmResourceRef.STATUS_PUBLISHED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Content is active/current but only accessible by authenticated users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmResourceRef.STATUS_SHARED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Content is accessible by anyone, no authentication needed = <strong>public access if URL is known!</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-crmcontentservice">6. CrmContentService</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This is the main service that you use to create, find, edit and delete files and folders with.</p>
 </div>
+<div class="sect2">
+<h3 id="crm-createresource">6.1. createResource</h3>
 <div class="paragraph">
 <p><code>CrmResourceRef createResource(InputStream inputStream, String filename, Long length, String contentType, Object reference, Map params = [:])</code></p>
 </div>
 <div class="paragraph">
-<p>Create a new file.</p>
+<p>Create a new file from an InputStream.</p>
 </div>
+<table class="tableblock frame-all grid-all" style="width: 100%;">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">inputStream</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The input stream to read content from</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">filename</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of content, this is later used when accessing this content</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">length</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Content length in bytes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">contentType</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MIME content type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reference</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a domain instance or a reference identifier to attach the content to</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">params</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optional parameters like <code>status</code>, <code>title</code> and <code>description</code> for the content</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>If the content creation succeeds an instance of <code>CrmResourceRef</code> is returned. This is an active "handle" to the content.</p>
+</div>
+<div class="paragraph">
+<p>The <code>resource</code> property on CrmResourceRef return a <code>URI</code> instance. This URI is used by other service methods, for example when reading and writing content.</p>
+</div>
+<div class="paragraph">
+<p>The following code copies (moves) a PDF file from the server to a <strong>/presentations</strong> folder in GR8 CRM.</p>
+</div>
+<div class="listingblock">
+<div class="title">CreateContent.groovy</div>
+<div class="content">
+<pre class="prettyprint"><code class="groovy language-groovy">def folder = crmContentService.createFolder(null, "presentations")
+def serverFile = new File("presentation.pdf")
+def pdf = serverFile.withInputStream{inputStream-&gt;
+    crmContentService.createResource(inputStream, serverFile.name, serverFile.length(), "application/pdf", folder)
+}
+serverFile.delete() <i class="conum" data-value="1"></i><b>(1)</b>
+
+assert pdf.name == "presentation.pdf"</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The server file is copied into, and managed by GR8 CRM so it&#8217;s not needed anymore.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-withinputstream">6.2. withInputStream</h3>
 <div class="paragraph">
 <p><code>def withInputStream(URI uri, Closure work)</code></p>
 </div>
 <div class="paragraph">
 <p>For content referenced by a <code>URI</code> create a new InputStream and pass it into a closure. This method ensures the stream is closed after the closure returns.</p>
 </div>
+<div class="listingblock">
+<div class="title">CopyContentToServerFile.groovy</div>
+<div class="content">
+<pre class="prettyprint"><code class="groovy language-groovy">def content = crmContentService.getContentByPath("/presentations/2014/gr8conf/eu/goeh-feature-plugins.pdf")
+crmContentService.withInputStream(content.resource) { inputStream -&gt;
+    new File("/tmp/feature-plugins.pdf").withOutputStream{ outputStream -&gt;
+        outputStream &lt;&lt; inputStream
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-writeto">6.3. writeTo</h3>
+<div class="paragraph">
+<p><code>long writeTo(URI uri, OutputStream out)</code></p>
+</div>
+<div class="paragraph">
+<p>Write content to an OutputStream.</p>
+</div>
+<div class="listingblock">
+<div class="title">MyDocController.groovy</div>
+<div class="content">
+<pre class="prettyprint"><code class="groovy language-groovy">def show(Long id) {
+    def content = crmContentService.getResourceRef(id) <i class="conum" data-value="1"></i><b>(1)</b>
+    def metadata = content.metadata
+    response.setContentType(metadata.contentType)
+    response.setContentLength(metadata.bytes.intValue())
+    crmContentService.writeTo(content.resource, response.outputStream) <i class="conum" data-value="2"></i><b>(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Lookup content by ID</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Render content to the response stream. This line can be shortened to: <code>content.writeTo(response.outputStream)</code></td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-getmetadata">6.4. getMetadata</h3>
 <div class="paragraph">
 <p><code>Map&lt;String, Object&gt; getMetadata(URI resource)</code></p>
 </div>
 <div class="paragraph">
 <p>Get metadata for the content specified by <code>resource</code>. The metadata Map contains the following keys:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>uri</strong> the provider specific URI for the content</p>
-</li>
-<li>
-<p><strong>contentType</strong> = MIME content type</p>
-</li>
-<li>
-<p><strong>bytes</strong> = length in bytes</p>
-</li>
-<li>
-<p><strong>size</strong> = formatted length</p>
-</li>
-<li>
-<p><strong>icon</strong> = name of icon that best described the content</p>
-</li>
-<li>
-<p><strong>created</strong> = Date instance when content was created</p>
-</li>
-<li>
-<p><strong>modified</strong> = Date instance when content was last updated</p>
-</li>
-<li>
-<p><strong>hash</strong> = MD5 hash of the content</p>
-</li>
-<li>
-<p><strong>encrypted</strong> = type of encrypted storage (0 = no encryption)</p>
-</li>
-</ul>
+<table class="tableblock frame-all grid-all" style="width: 100%;">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Key</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">uri</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the provider specific URI for the content</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">contentType</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MIME content type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bytes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">length in bytes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">size</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">formatted length</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">icon</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name of icon that best described the content</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">created</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Date instance when content was created</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">modified</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Date instance when content was last updated</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hash</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MD5 hash of the content</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">encrypted</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type of encrypted storage (0 = no encryption)</p></td>
+</tr>
+</tbody>
+</table>
 </div>
+<div class="sect2">
+<h3 id="crm-updateresource">6.5. updateResource</h3>
 <div class="paragraph">
 <p><code>long updateResource(CrmResourceRef resource, InputStream inputStream, String contentType = null)</code></p>
 </div>
@@ -608,14 +810,17 @@ assert s == "This is an updated test"</code></pre>
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="crm-crmfreemarkerservice">6. CrmFreeMarkerService</h2>
+<h2 id="crm-crmfreemarkerservice">7. CrmFreeMarkerService</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <strong>FreeMarker</strong> service is used when you want to store FreeMarker templates with the <code>crm-content</code> plugin.
+<p>The <strong>FreeMarker</strong> service is used when you want to store <a href="http://freemarker.org" target="_blank">FreeMarker</a> templates with the <code>crm-content</code> plugin.
 You can use FreeMarker templates when you send email or render HTML pages.
-If used together with the <code>crm-content-ui</code> plugin you can let administrators edit templates.</p>
+If used together with the <code>crm-content-ui</code> plugin you can let administrators edit templates with an HTML editor.</p>
 </div>
+<div class="sect2">
+<h3 id="crm-process">7.1. process</h3>
 <div class="paragraph">
 <p><code>void process(String templatePath, Map binding, Writer out)</code></p>
 </div>
@@ -635,11 +840,17 @@ Values in <code>binding</code> can be referenced from the template. The output i
 <div class="paragraph">
 <p>Same as above but an instance of <code>CrmResourceRef</code> will be used as template.</p>
 </div>
-<div class="sect2">
-<h3 id="crm-events">6.1. Events</h3>
-<div class="paragraph">
-<p>You can also send an asynchronous event that results in a FreeMarker template being parsed.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-events">8. Events</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can also send an asynchronous event that results in a template being parsed.</p>
+</div>
+<div class="sect2">
+<h3 id="crm-parsetemplate">8.1. parseTemplate</h3>
 <div class="listingblock">
 <div class="title">EventBasedTemplateParsingTests.groovy</div>
 <div class="content">
@@ -651,10 +862,10 @@ assert reply.value == 'Hello Groovy World'</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-code-samples">7. Code Samples</h2>
+<h2 id="crm-code-samples">9. Code Samples</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="crm-create-a-folder">7.1. Create a folder</h3>
+<h3 id="crm-create-a-folder">9.1. Create a folder</h3>
 <div class="listingblock">
 <div class="title">CreateFolders.groovy</div>
 <div class="content">
@@ -664,7 +875,7 @@ def subFolder = crmContentService.createFolder(rootFolder, "powerpoint")</code><
 </div>
 </div>
 <div class="sect2">
-<h3 id="crm-create-a-file">7.2. Create a file</h3>
+<h3 id="crm-create-a-file">9.2. Create a file</h3>
 <div class="listingblock groovy">
 <div class="title">CreateFile.groovy</div>
 <div class="content">
@@ -685,11 +896,23 @@ assert doc.text == "Hello World"</code></pre>
 </tr>
 </table>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can look at the source code for the <a href="https://github.com/technipelago/grails-crm-content/tree/master/test/integration/grails/plugins/crm/content" target="_blank">integration tests</a> to find more code examples.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-configuration">8. Configuration</h2>
+<h2 id="crm-configuration">10. Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><code>crm.content.encryption.algorithm</code></p>
@@ -750,7 +973,7 @@ One of the following algorithms can be used:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-license">9. License</h2>
+<h2 id="crm-license">11. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -758,7 +981,7 @@ One of the following algorithms can be used:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">10. Source Code</h2>
+<h2 id="crm-source-code">12. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-content">https://github.com/technipelago/grails-crm-content</a></p>
@@ -769,7 +992,7 @@ One of the following algorithms can be used:</p>
 <div id="footer">
 <div id="footer-text">
 Version 2.0.0<br>
-Last updated 2014-07-25 23:30:53 CEST
+Last updated 2014-07-26 12:34:12 CEST
 </div>
 </div>
 </body>
