@@ -392,7 +392,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <h1>GR8 CRM - Content Management UI Plugin</h1>
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 1.2.16</span>
+<span id="revnumber">version 2.0.0</span>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -403,8 +403,16 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </ul>
 </li>
 <li><a href="#crm-content-management-ui-plugin">2. Content Management UI Plugin</a></li>
-<li><a href="#crm-license">3. License</a></li>
-<li><a href="#crm-source-code">4. Source Code</a></li>
+<li><a href="#crm-groovy-server-pages">3. Groovy Server Pages</a></li>
+<li>
+<ul class="sectlevel2">
+<li><a href="#crm-attach-documents-to-domain-instances">3.1. Attach documents to domain instances</a></li>
+<li><a href="#crm-working-with-folders-and-files">3.2. Working with folders and files</a></li>
+<li><a href="#crm-create-a-new-html-file">3.3. Create a new HTML file</a></li>
+</ul>
+</li>
+<li><a href="#crm-license">4. License</a></li>
+<li><a href="#crm-source-code">5. Source Code</a></li>
 </ul>
 </div>
 </div>
@@ -445,7 +453,127 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-license">3. License</h2>
+<h2 id="crm-groovy-server-pages">3. Groovy Server Pages</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section describes some useful Groovy Server Pages (GSP) included in this plugin, pages used for Content Management.</p>
+</div>
+<div class="sect2">
+<h3 id="crm-attach-documents-to-domain-instances">3.1. Attach documents to domain instances</h3>
+<div class="paragraph">
+<p><code>crmContent/_embedded.gsp</code></p>
+</div>
+<div class="paragraph">
+<p>If you have a page that shows information in tabs you can add an extra tab that display attachments.
+In this tab you can also let users upload files and even create new files attached to a domain instance.</p>
+</div>
+<div class="paragraph">
+<p>The tab looks like this:</p>
+</div>
+<div class="imageblock thumb">
+<div class="content">
+<img src="./images/crm-content-tab.png" alt="The content tab">
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see the <strong>Files (5)</strong> tab displays existing attachments and also has buttons for creating and uploading new content.</p>
+</div>
+<div class="paragraph">
+<p>To insert the extra tab in a .gsp page without modifying the .gsp source you include the following code in <code>BootStrap.groovy</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">BootStrap.groovy</div>
+<div class="content">
+<pre class="prettyprint"><code class="groovy language-groovy">class BootStrap {
+
+    def crmCoreService
+    def crmPluginService
+    def crmContentService
+
+    def init = { servletContext -&gt;
+
+        crmPluginService.registerView('crmContact', 'show', 'tabs',   <i class="conum" data-value="1"></i><b>(1)</b>
+            [id: "documents",
+                index: 500,     <i class="conum" data-value="2"></i><b>(2)</b>
+                label: "crmContact.tab.documents.label",
+                template: '/crmContent/embedded',
+                plugin: "crm-content-ui",
+                model: {
+                    def id = crmCoreService.getReferenceIdentifier(crmContact)  <i class="conum" data-value="3"></i><b>(3)</b>
+                    def result = crmContentService.findResourcesByReference(crmContact) <i class="conum" data-value="4"></i><b>(4)</b>
+                    return [bean: crmContact, list: result, totalCount: result.size(),
+                            reference: id, openAction: 'show']
+                } <i class="conum" data-value="5"></i><b>(5)</b>
+            ]
+        )
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Add the tab to crmContact/show.gsp</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Tab order, lower number tabs are inserted to the left of higher number tabs.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The reference identifier is used to create a <strong>dynamic relation</strong> between the attachment and the domain instance.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Find existing files attached to the domain instance so the inserted view/tab can list them.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The <code>model</code> Closure have access to page scope in crmContact/show.gsp and can therefore reference the domain instance <strong>crmContact</strong>.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-working-with-folders-and-files">3.2. Working with folders and files</h3>
+<div class="paragraph">
+<p><code>crmFolder/list.gsp</code></p>
+</div>
+<div class="paragraph">
+<p>Included in this plugin is a simple File Manager. The <code>list</code> action in <code>CrmFolderController</code> displays folders and files.
+Users can create new folders and upload files. It is also possible to create new TEXT and HTML files using an embedded Rich Text editor.</p>
+</div>
+<div class="imageblock thumb">
+<div class="content">
+<img src="./images/crm-filemanager.png" alt="The file manager">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-create-a-new-html-file">3.3. Create a new HTML file</h3>
+<div class="paragraph">
+<p><code>crmContent/create.gsp</code></p>
+</div>
+<div class="paragraph">
+<p>The <code>create</code> action in <code>CrmContentController</code> displays an embedded Rich Text editor (ckEditor) that lets the user create
+a new HTML document.</p>
+</div>
+<div class="imageblock thumb">
+<div class="content">
+<img src="./images/crm-html-editor.png" alt="Rich Text Editor">
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>create</code> action takes a parameter <code>ref</code> that should contain a <strong>Reference Identifier</strong> to the domain instance
+that the new content should be attached to.
+For example <code>crmContent/create?ref=crmResourceFolder@42</code> would attach the newly created file to a folder with id 42.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-license">4. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -453,7 +581,7 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">4. Source Code</h2>
+<h2 id="crm-source-code">5. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-content-ui">https://github.com/technipelago/grails-crm-content-ui</a></p>
@@ -463,8 +591,8 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.2.16<br>
-Last updated 2014-07-25 23:36:04 CEST
+Version 2.0.0<br>
+Last updated 2014-07-26 09:38:01 CEST
 </div>
 </div>
 </body>
