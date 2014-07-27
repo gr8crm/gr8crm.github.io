@@ -419,8 +419,9 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </ul>
 </li>
 <li><a href="#crm-alarms">5. Alarms</a></li>
-<li><a href="#crm-license">6. License</a></li>
-<li><a href="#crm-source-code">7. Source Code</a></li>
+<li><a href="#crm-recurring-tasks">6. Recurring tasks</a></li>
+<li><a href="#crm-license">7. License</a></li>
+<li><a href="#crm-source-code">8. Source Code</a></li>
 </ul>
 </div>
 </div>
@@ -973,7 +974,28 @@ def alarm(data) {
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-license">6. License</h2>
+<h2 id="crm-recurring-tasks">6. Recurring tasks</h2>
+<div class="sectionbody">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="icon-important" title="Important"></i>
+</td>
+<td class="content">
+Recurring tasks are not implemented in the <code>crm-task</code> plugin yet. The domain class <code>CrmTask</code> have
+all required properties to support recurring tasks (I hope), but the logic to handle them is not implemented.
+My initial goal was to learn from Craig Burke and implement it like he describes in his blog post
+<a href="http://www.craigburke.com/2012/02/09/google-calendar-in-grails-part1-the-model.html" target="_blank">GOOGLE CALENDAR IN GRAILS</a>.
+Contributions are welcome!
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-license">7. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -981,7 +1003,7 @@ def alarm(data) {
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">7. Source Code</h2>
+<h2 id="crm-source-code">8. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-task">https://github.com/technipelago/grails-crm-task</a></p>
@@ -992,7 +1014,7 @@ def alarm(data) {
 <div id="footer">
 <div id="footer-text">
 Version 2.0.0<br>
-Last updated 2014-07-27 22:48:03 CEST
+Last updated 2014-07-27 23:03:25 CEST
 </div>
 </div>
 </body>
