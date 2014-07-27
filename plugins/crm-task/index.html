@@ -403,15 +403,24 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </ul>
 </li>
 <li><a href="#crm-task-management-plugin">2. Task Management Plugin</a></li>
-<li><a href="#crm-domain-model">3. Domain model</a></li>
+<li><a href="#crm-domain-model">3. Domain Model</a></li>
+<li>
+<ul class="sectlevel2">
+<li><a href="#crm-crmtask">3.1. CrmTask</a></li>
+</ul>
+</li>
 <li><a href="#crm-crmtaskservice">4. CrmTaskService</a></li>
 <li>
 <ul class="sectlevel2">
 <li><a href="#crm-create-a-task">4.1. Create a task</a></li>
+<li><a href="#crm-search-for-tasks">4.2. Search for tasks</a></li>
+<li><a href="#crm-setting-task-status">4.3. Setting task status</a></li>
+<li><a href="#crm-task-duration">4.4. Task duration</a></li>
 </ul>
 </li>
-<li><a href="#crm-license">5. License</a></li>
-<li><a href="#crm-source-code">6. Source Code</a></li>
+<li><a href="#crm-alarms">5. Alarms</a></li>
+<li><a href="#crm-license">6. License</a></li>
+<li><a href="#crm-source-code">7. Source Code</a></li>
 </ul>
 </div>
 </div>
@@ -479,7 +488,7 @@ Because tasks are so generic and flexible, GR8 CRM applications can use tasks in
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-domain-model">3. Domain model</h2>
+<h2 id="crm-domain-model">3. Domain Model</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In the center of the domain model is the <code>CrmTask</code> domain class. It has a reference to <code>CrmTaskType</code> that specifies
@@ -493,20 +502,185 @@ plugin have a compile-time dependency on the <code>crm-contact</code> plugin.</p
 <img src="./images/task-domain.png" alt="task domain">
 </div>
 </div>
+<div class="sect2">
+<h3 id="crm-crmtask">3.1. CrmTask</h3>
+<table class="tableblock frame-all grid-all" style="width: 100%;">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The task&#8217;s natural ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">startTime</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Start time</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">endTime</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">End time</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">alarmTime</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alarm/reminder time</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">busy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show as busy in calendar</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hidden</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hide from calendar</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">displayDate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Custom date format, typically used when duration spans multiple days, i.e. "4-6 October"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scope</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scope is typically used when duration spans multiple days, i.e. "3 days"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">username</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User that "owns" this task</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name/Title for the task</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">description</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A longer description of the task (max 2000 characters)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">location</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Location can be the name of a conference room, venue or a street address</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">priority</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Task priority, 0-100 where 0 is lowest and 100 is highest priority</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">complete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Task completion percent (0-100)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmTaskType</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type of task</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ref</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reference identifier (entityName@id) if the task is connected to a domain instance</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmEmbeddedAddress</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Extended address information, if location is not enough</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">referenceProperty</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used by dynamic dates</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">offsetType</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used by dynamic dates</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">offset</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used by dynamic dates</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">alarms</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of alarms triggered for this task</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">alarmType</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type of alarm set</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">alarmOffset</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alarm offset in minutes from startTime</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">isRecurring</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">True if this task is recurring</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">recurType</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">["daily", "weekly", "monthly", "yearly"]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">recurInterval</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: If recurType is "weekly" and recurInterval is 1, task will repeat every week</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">recurUntil</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.sql.Date</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Task will repeat until this date</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">recurCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Task will repeat this many times</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sourceTask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmTask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Back link to original recurring task this task was created from</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="crm-crmtaskservice">4. CrmTaskService</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>CrmTaskService</code> provides methods for task management.</p>
+<p><code>CrmTaskService</code> provides lots of useful methods for task management.</p>
 </div>
 <div class="sect2">
 <h3 id="crm-create-a-task">4.1. Create a task</h3>
 <div class="paragraph">
-<p>To create a new task you use <code>crmTaskService.createTask(Map values, boolean save)</code>. The only mandatory properties in <code>CrmTask</code> are <code>name</code>, <code>type</code>, <code>startTime</code> and <code>endTime</code>.
-Name is title of the task and type specifies the task type. Start time and end time can be set in a few different ways,
-the most common way is to set them both to <code>Date</code> instances. Another option is to set <code>startTime</code> and <code>duration</code> in minutes.
+<p>To create a new task you use <code>crmTaskService.createTask(Map values, boolean save)</code>. Mandatory properties in <code>CrmTask</code> are <code>name</code>, <code>type</code>, <code>startTime</code> and <code>endTime</code>.
+Name is the title of the task and is displayed in lists and reports. Type specifies the task type and must exist prior to creating a task.
+Start time and end time can be set in a few different ways, the most common way is to set them both to <code>Date</code> instances.
+Another option is to set <code>startTime</code> to a <code>Date</code> instance and <code>duration</code> in (int) minutes.
 Setting the transient property <code>duration</code> will set <code>endTime</code> automatically.</p>
 </div>
 <div class="listingblock">
@@ -517,10 +691,262 @@ def task = crmTaskService.createTask(number: 42, name: "Call Sam and schedule me
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="crm-search-for-tasks">4.2. Search for tasks</h3>
+<div class="paragraph">
+<p>As usual in GR8 CRM plugins the main service has a <code>list()</code> method that performs a query.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The <code>list()</code> method is <code>@Selectable</code> which means you can use the <code>selection</code> plugin to query for tasks.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>def list(Map query, Map params)</code></p>
+</div>
+<div class="paragraph">
+<p>To search for tasks you initialize the <code>query</code> map with query values. With the <code>params</code> map you can specify things like
+sort order and pagination. The following query keys can be used in the <code>query</code> map.</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 100%;">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Key</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Task number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String (wildcard supported)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Task name/title</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String (wildcard supported)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">location</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Task location</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String (wildcard supported)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Task type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String (wildcard supported)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">username</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Task owner/user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">priority</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Task priority</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer (0, 20, 40, 60, 80, 100)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">complete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Task completion %</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer (0-100)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fromDate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Task start/end time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Date or String (yyyy-MM-dd)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">toDate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Task start/end time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Date or String (yyyy-MM-dd)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reference</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Task reference</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain instance or <strong>reference identifier</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">referenceType</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type of reference</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain class (property) name</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The following example will find all tasks that refer to contacts (crmContact), starts or ends during July 2014
+and are not started. As you can see you can combine several query values when you search for domain instances.</p>
+</div>
+<div class="listingblock">
+<div class="title">FindSummerTasks.groovy</div>
+<div class="content">
+<pre class="prettyprint"><code class="groovy language-groovy">def result = crmTaskService.list([referenceType: 'crmContact',
+    fromDate: '2014-07-01', toDate: '2014-07-31', complete: 0], [:])</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-setting-task-status">4.3. Setting task status</h3>
+<div class="paragraph">
+<p>A task keep track if it&#8217;s completed or not. The <code>completed</code> property is an <code>int</code> constrained to 0-100 which represents
+how many percent completed the task is. The <code>CrmTask</code> domain class has three constants that defines common/simple states of completion.
+These constants can be used when you don&#8217;t need fine grained control of how many percent is complete.</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 100%;">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmTask.STATUS_PLANNED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The task is not started (it&#8217;s zero percent complete)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmTask.STATUS_ACTIVE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">50</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The task is started but not yet completed (it&#8217;s 50 % complete)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmTask.STATUS_COMPLETED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">100</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The task is completed (it&#8217;s 100 % complete)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>To set status for a task you use one of the three setStatusXxxx() methods in CrmTaskService.</p>
+</div>
+<div class="listingblock">
+<div class="title">SetTaskStatus.groovy</div>
+<div class="content">
+<pre class="prettyprint"><code class="groovy language-groovy">def task = crmTaskService.createTask(name: "Fix BUG-1234", type: bug, startTime: new Date(), duration: 60, true)
+
+crmTaskService.setStatusPlanned(task)   // Planned (0 %) is the default so this call does nothing
+crmTaskService.setStatusActive(task)    // Do some work
+crmTaskService.setStatusCompleted(task) // We are finished!</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To check if a task is completed you can call <code>isCompleted()</code> on the <code>CrmTask</code> instance.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-task-duration">4.4. Task duration</h3>
+<div class="paragraph">
+<p>The time between a task&#8217;s <code>startTime</code> and <code>endTime</code> is the task&#8217;s duration.
+The transient property <code>duration</code> returns the task&#8217;s duration as a <code>groovy.time.Duration</code> instance.
+You can also set the duration property to a <code>groovy.time.Duration</code> instance or minutes as an <code>Integer</code>.
+One of <code>startTime</code> or <code>endTime</code> must be set before you can set the duration property, this is because
+setDuration() simply calculates and sets <code>startTime</code> or <code>endTime</code> for you.</p>
+</div>
+<div class="paragraph">
+<p>If you want to calculate the total duration for a set of tasks you can call <code>crmTaskService.getTotalDuration(Collection&lt;CrmTask&gt;)</code>.
+It will return a <code>groovy.time.Duration</code> instance that is the sum of all task durations.</p>
+</div>
+<div class="listingblock">
+<div class="title">MyTimeSheet.groovy</div>
+<div class="content">
+<pre class="prettyprint"><code class="groovy language-groovy">def tasks = crmTaskService.list([username: 'me', reference: theProject], [:])
+def duration = crmTaskService.getTotalDuration(tasks)
+println "I spent $duration on the project"</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-license">5. License</h2>
+<h2 id="crm-alarms">5. Alarms</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can set an alarm for a task. A <strong>quartz</strong> job <code>CrmTaskAlarmJob</code> will monitor alarms and trigger an application event when the time is up.
+To do something useful (like sending an email or text message) when the alarm is triggered you must add an event listener in your application
+that listens for the <code>crmTask.alarm</code> event and take appropriate action.</p>
+</div>
+<div class="paragraph">
+<p>To set an alarm for a task you just have to set two properties on the task instance. Set <code>alarmTime</code> to a <code>Date</code> instance and <code>alarmType</code> to an <code>Integer</code>.
+The <code>CrmTask</code> domain class defines <code>Integer</code> constants for common alarm types.</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 100%;">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Constant</th>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmTask.ALARM_NONE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No alarm will be triggered</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmTask.ALARM_EMAIL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Send an email to the user that owns the task</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmTask.ALARM_SMS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Send a text message to the user that owns the task</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmTask.ALARM_RESERVED_1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for future use</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmTask.ALARM_RESERVED_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for future use</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmTask.ALARM_RESERVED_3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for future use</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmTask.ALARM_CUSTOM_1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Application defined alarm type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmTask.ALARM_CUSTOM_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Application defined alarm type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmTask.ALARM_CUSTOM_3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Application defined alarm type</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-license">6. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -528,7 +954,7 @@ def task = crmTaskService.createTask(number: 42, name: "Call Sam and schedule me
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">6. Source Code</h2>
+<h2 id="crm-source-code">7. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-task">https://github.com/technipelago/grails-crm-task</a></p>
@@ -539,7 +965,7 @@ def task = crmTaskService.createTask(number: 42, name: "Call Sam and schedule me
 <div id="footer">
 <div id="footer-text">
 Version 2.0.0<br>
-Last updated 2014-07-26 23:25:51 CEST
+Last updated 2014-07-27 21:14:34 CEST
 </div>
 </div>
 </body>
