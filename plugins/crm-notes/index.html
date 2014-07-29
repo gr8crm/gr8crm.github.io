@@ -403,8 +403,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <li><a href="#crm-notes-plugin">2. Notes Plugin</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#crm-whats-the-difference-between-notes-and-tasks">2.1. Whats the difference between notes and tasks?</a></li>
-<li><a href="#crm-inject-notes-in-gsps">2.2. Inject notes in GSPs</a></li>
+<li><a href="#crm-inject-notes-in-gsps">2.1. Inject notes in GSPs</a></li>
 </ul>
 </li>
 <li><a href="#crm-crmnotesservice">3. CrmNotesService</a></li>
@@ -468,18 +467,7 @@ Notes are automatically stamped with date/time and user that created the note.</
 Application code can also add notes automatically when emails are sent or other important events happened.</p>
 </div>
 <div class="sect2">
-<h3 id="crm-whats-the-difference-between-notes-and-tasks">2.1. Whats the difference between notes and tasks?</h3>
-<div class="paragraph">
-<p>Some might argue that there is an overlap between notes and tasks. Tasks are provided by the <code>crm-task</code> plugin
-and also contains a subject and message. Tasks are more complex and can certainly be used for logging purposes
-but notes are simple and easy to use. If both <code>crm-notes</code> and <code>crm-task-ui</code> plugins are used in the same application
-users might also be confused over what to use. For example when a user called a contact and talked about something important.
-Should that be logged as a simple note on the contact or as a completed tasks associated with the contact?
-There is no simple answer, it depends on the requirements and something you have to discuss with your users.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="crm-inject-notes-in-gsps">2.2. Inject notes in GSPs</h3>
+<h3 id="crm-inject-notes-in-gsps">2.1. Inject notes in GSPs</h3>
 <div class="paragraph">
 <p>The plugin provides a GSP view that can be embedded in tabbed GR8 CRM pages.
 To inject the note view in <strong>Contact Details</strong> page from the <code>crm-contact-ui</code> plugin, add the following code to <code>BootStrap.groovy</code>.</p>
@@ -628,6 +616,31 @@ Therefore you can configure an <strong>edit window</strong> that makes it possib
 <pre class="prettyprint"><code class="groovy language-groovy">crm.notes.editWindow = 2 // enables editing during two hours after the note was created.</code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>What&#8217;s the difference between notes and tasks?</strong></p>
+</div>
+<div class="paragraph">
+<p>Some might argue that there is an overlap between notes and completed tasks. Tasks are provided by the <code>crm-task</code> plugin
+and also contains a subject (task title) and message (task description). Tasks can certainly be used for logging purposes
+but they are more complex than notes. Notes only contain a subject and a message body and are very easy for users to create.</p>
+</div>
+<div class="paragraph">
+<p>If both <code>crm-notes</code> and <code>crm-task-ui</code> plugins are used in the same application users might also be confused over what to use.
+For example when a user called a contact and talked about something important.
+Should that be logged as a simple note on the contact or as a completed tasks associated with the contact?
+There is no simple answer, it depends on the requirements and something you have to discuss with your users.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -651,7 +664,7 @@ Therefore you can configure an <strong>edit window</strong> that makes it possib
 <div id="footer">
 <div id="footer-text">
 Version 2.0.0<br>
-Last updated 2014-07-29 18:13:40 CEST
+Last updated 2014-07-29 18:28:25 CEST
 </div>
 </div>
 </body>
