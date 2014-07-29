@@ -407,9 +407,10 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <li><a href="#crm-search-for-tasks">4. Search for tasks</a></li>
 <li><a href="#crm-task-details">5. Task details</a></li>
 <li><a href="#crm-edit-task-details">6. Edit task details</a></li>
-<li><a href="#crm-calendar">7. Calendar</a></li>
-<li><a href="#crm-license">8. License</a></li>
-<li><a href="#crm-source-code">9. Source Code</a></li>
+<li><a href="#crm-attenders">7. Attenders</a></li>
+<li><a href="#crm-calendar">8. Calendar</a></li>
+<li><a href="#crm-license">9. License</a></li>
+<li><a href="#crm-source-code">10. Source Code</a></li>
 </ul>
 </div>
 </div>
@@ -501,7 +502,7 @@ Here you will find task name, start time, priority, etc.</p>
 </div>
 <div class="imageblock thumb">
 <div class="content">
-<img src="./images/task-show.png" alt="Task details">
+<img src="./images/task-show.png" alt="View task details">
 </div>
 </div>
 <div class="paragraph">
@@ -514,7 +515,7 @@ Here you will find task name, start time, priority, etc.</p>
 <div class="sectionbody">
 <div class="imageblock thumb">
 <div class="content">
-<img src="./images/task-edit.png" alt="task edit">
+<img src="./images/task-edit.png" alt="Edit task details">
 </div>
 </div>
 <div class="paragraph">
@@ -524,28 +525,50 @@ Here you can alter values and then hit <code>Save</code> to store the new values
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-calendar">7. Calendar</h2>
+<h2 id="crm-attenders">7. Attenders</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The CrmCalendarController <code>crmCalendar/index</code> displays a month/week/day calendar with all the tasks in your database.</p>
+<p>A task can have a collection of attenders. Attenders can be people stored as a <code>CrmContact</code> domain instance,
+or just name and address stored in the <code>CrmTaskAttender</code> instance.
+Task attenders are not enabled by default. If you set the config option <code>crm.task.attenders.enabled</code> to <code>true</code> you will
+get an extra tab in the task details page. This tab will display attenders and let you add attenders to the task.</p>
 </div>
 <div class="imageblock thumb">
 <div class="content">
-<img src="./images/calendar-month.png" alt="calendar month">
+<img src="./images/task-attenders.png" alt="Task attenders">
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-license">8. License</h2>
+<h2 id="crm-calendar">8. Calendar</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The CrmCalendarController <code>crmCalendar/index</code> displays a month/week/day calendar with all the tasks in your database.
+The calendar is based on the <a href="http://arshaw.com/fullcalendar/" target="_blank">FullCalendar</a> jQuery plugin.
+A <code>username</code> query parameter can be specified to filter events for a specific user. Otherwise it will display
+all events in the current tenant.</p>
+</div>
+<div class="imageblock thumb">
+<div class="content">
+<img src="./images/calendar-month.png" alt="Month Calendar">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-license">9. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
 </div>
+<div class="paragraph">
+<p>FullCalendar jQuery plugin is open source licensed under an <a href="http://arshaw.com/js/fullcalendar-2.0.2/license.txt" target="_blank">MIT license</a>.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">9. Source Code</h2>
+<h2 id="crm-source-code">10. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-task-ui">https://github.com/technipelago/grails-crm-task-ui</a></p>
@@ -556,7 +579,7 @@ Here you can alter values and then hit <code>Save</code> to store the new values
 <div id="footer">
 <div id="footer-text">
 Version 2.0.0<br>
-Last updated 2014-07-28 23:52:07 CEST
+Last updated 2014-07-29 12:22:59 CEST
 </div>
 </div>
 </body>
