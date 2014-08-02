@@ -4,9 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Main documentation site for the GR8 CRM Plugin suite">
-<meta name="keywords" content="groovy, grails, crm, gr8crm, documentation">
-<title>GR8 CRM - Great Customer Relationship Management Plugins for the Grails Web Framework</title>
+<title>Create a web site using GR8 CRM plugins</title>
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
@@ -362,288 +360,670 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 
 </style>
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
-<script>document.addEventListener('DOMContentLoaded', prettyPrint)</script>
 </head>
 <body class="article">
 <div id="header">
-<h1>GR8 CRM - Great Customer Relationship Management Plugins for the Grails Web Framework</h1>
-<span id="author" class="author">Göran Ehrsson &lt;goran@technipelago.se&gt;</span><br>
+<h1>Create a web site using GR8 CRM plugins</h1>
+<span id="author" class="author">Göran Ehrsson, Technipelago AB &lt;goran@technipelago.se&gt;</span><br>
+<span id="revnumber">version 0.2,</span>
+<span id="revdate">2014-08-03</span>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_introduction">1. Introduction</a></li>
-<li>
-<ul class="sectlevel2">
-<li><a href="#_customer_relationship_management">1.1. Customer Relationship Management</a></li>
-</ul>
-</li>
-<li><a href="#_gr8_crm_plugins">2. GR8 CRM Plugins</a></li>
-<li>
-<ul class="sectlevel2">
-<li><a href="#_official_published_plugins">2.1. Official / Published Plugins</a></li>
-<li><a href="#_plugins_not_yet_released">2.2. Plugins not yet released</a></li>
-</ul>
-</li>
-<li><a href="#_presentations">3. Presentations</a></li>
-<li><a href="#_videos">4. Videos</a></li>
-<li><a href="#_tutorials">5. Tutorials</a></li>
-<li>
-<ul class="sectlevel2">
-<li><a href="#_gr8_crm_web_site">5.1. GR8 CRM Web Site</a></li>
-</ul>
-</li>
-<li><a href="#_demo_applications">6. Demo applications</a></li>
-<li>
-<ul class="sectlevel2">
-<li><a href="#_gr8_crm_to_do">6.1. GR8 CRM To-Do</a></li>
-<li><a href="#_gr8_contact">6.2. GR8 Contact</a></li>
-</ul>
-</li>
+<li><a href="#_gr8_crm">GR8 CRM</a></li>
+<li><a href="#_prerequisites">Prerequisites</a></li>
+<li><a href="#_create_a_new_grails_application">Create a new Grails application</a></li>
+<li><a href="#_start_the_application">Start the application</a></li>
+<li><a href="#_load_data">Load data</a></li>
+<li><a href="#_twitter_bootstrap_design">Twitter Bootstrap design</a></li>
+<li><a href="#_url_mapping_for_html_pages">URL mapping for HTML pages</a></li>
+<li><a href="#_create_an_html_page">Create an HTML page</a></li>
+<li><a href="#_web_layout">Web Layout</a></li>
+<li><a href="#_custom_stylesheet">Custom stylesheet</a></li>
+<li><a href="#_import_html_pages_from_files">Import HTML pages from files</a></li>
+<li><a href="#_references">References</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="_introduction">1. Introduction</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>GR8 CRM is a set of <a href="http://www.grails.org/">Grails Web Application Framework</a>
-plugins that makes it easy to develop web applications with CRM functionality.</p>
-</div>
-<div class="sect2">
-<h3 id="_customer_relationship_management">1.1. Customer Relationship Management</h3>
-<div class="paragraph">
-<p>Customer relationship management (CRM) is a system for managing a company’s interactions with current and future customers.
-It involves using technology to organize, automate and synchronize sales, marketing, customer service, and technical support.
-<a href="http://en.wikipedia.org/wiki/Customer_relationship_management">Wikipedia</a></p>
-</div>
+<p>This guide describes how you can use GR8 CRM Grails plugins to develop a simple web site with content authoring support.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_gr8_crm_plugins">2. GR8 CRM Plugins</h2>
+<h2 id="_gr8_crm">GR8 CRM</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The GR8 CRM "Ecosystem" currently contains over 40 Grails plugins.</p>
+<p><strong>GR8 CRM</strong> "Great Customer Relationship Management" is the name of a suite of plugins that help developers write customer relationship
+oriented applications using the open source web application framework <strong>Grails</strong> by <strong>Pivotal Inc.</strong></p>
 </div>
 <div class="paragraph">
-<p>Each GR8 CRM plugin defines a <a href="http://martinfowler.com/bliki/BoundedContext.html">Bounded Context</a>
-that focus on one specific domain, for example <strong>contact</strong>, <strong>project</strong> or <strong>document</strong>.</p>
+<p>The GR8 CRM "ecosystem" currently contains over 40 open source plugins for use with Grails. Most of them were developed as part of some kind of
+enterprise application managing customers, projects, tasks, documents, etc.</p>
 </div>
-<div class="sect2">
-<h3 id="_official_published_plugins">2.1. Official / Published Plugins</h3>
 <div class="paragraph">
-<p>The following plugins are available in Grails Central plugin repository. This means you can install them in your Grails application
-the same way as you install other plugins, by adding them to BuildConfig.groovy</p>
+<p>Each plugin contains functionality that supports a specific problem domain. For example the <code>crm-task</code> plugin contains functionality
+for scheduling tasks to be performed by people typically displayed in to-do lists or calendars.
+The <code>crm-task</code> plugin focuses on that specific domain and does not contain features for managing customers, projects or any other non-task related features.</p>
 </div>
-<table class="tableblock frame-all grid-all" style="width:100%; ">
-<colgroup>
-<col style="width:50%;">
-<col style="width:50%;"> 
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Plugin Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="/plugins/crm-core/index.html">crm-core</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Core features like multi tenancy (used by most other plugins)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="/plugins/crm-i18n/index.html">crm-i18n</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Store localized messages in database to support runtime changes</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="/plugins/crm-feature/index.html">crm-feature</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Turn application features on/off for specific users or roles</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="/plugins/crm-security/index.html">crm-security</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Core security services</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="/plugins/crm-security-shiro/index.html">crm-security-shiro</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Apache Shiro security implementation</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="/plugins/crm-ui-bootstrap/index.html">crm-ui-bootstrap</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Twitter Bootstrap user interface (used by most -ui plugins)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-notes/index.html">crm-notes</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Add short notes (subject+body) to any domain instance</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="/plugins/crm-tags/index.html">crm-tags</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Tag any domain instance</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="/plugins/crm-contact/index.html">crm-contact</a> + <a href="/plugins/crm-contact-ui/index.html">crm-contact-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contact Management (companies and individuals)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="/plugins/crm-content/index.html">crm-content</a> + <a href="/plugins/crm-content-ui/index.html">crm-content-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Content Management and authoring (-ui)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="/plugins/crm-task/index.html">crm-task</a> + <a href="/plugins/crm-task-ui/index.html">crm-task-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Task/Calendar Management</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="/plugins/crm-email/index.html">crm-email</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Send emails using Grails events</p></td>
-</tr>
-</tbody>
-</table>
-
-</div>
-<div class="sect2">
-<h3 id="_plugins_not_yet_released">2.2. Plugins not yet released</h3>
 <div class="paragraph">
-<p>The following plugins <strong>are not</strong> yet available in Grails Central. If you want to use one of these plugins, create an issue on it&#8217;s
-github project and we will prioritize cleanup and documentation and get it published as soon as we can. You can also contribute by cloning the repos, fix things and subit pull requests.</p>
+<p>Each GR8 CRM plugin was developed with this separation-of-concern philosophy. This makes it easy to develop a Grails application
+with just the functionality that is needed by assembling a set of GR8 CRM plugins covering they required features. No more, no less.
+The time is takes to develop an application can be heavily reduced by the use of pre-defined standard plugins.</p>
 </div>
-<table class="tableblock frame-all grid-all" style="width:100%; ">
-<colgroup>
-<col style="width:50%;">
-<col style="width:50%;"> 
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Plugin Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/technipelago/grails-crm-blog">crm-blog</a> + <a href="https://github.com/technipelago/grails-crm-blog-ui">crm-blog-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Blog presentation and authoring (-ui)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/technipelago/grails-crm-campaign">crm-campaign</a> + <a href="https://github.com/technipelago/grails-crm-campaign-ui">crm-campaign-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Marketing campaign execution and management (-ui)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/goeh/grails-crm-invitation">crm-invitation</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Invite external users to your application</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/goeh/grails-crm-notification">crm-notification</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Notify users about stuff with a central notification center</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/goeh/grails-crm-syslog">crm-syslog</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Log application events to database</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">crm-security-ui</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Back Office features for user and role administration</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">crm-product + crm-product-ui</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Product and inventory management including administration (-ui)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">crm-order + crm-order-ui</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Order Management</p></td>
-</tr>
-</tbody>
-</table>
-
+<div class="paragraph">
+<p>Two plugins stand out from the rest by being included in almost all enterprise applications no matter what business they
+were developed to support, <code>crm-contact</code> contains features for managing contacts/companies/addresses
+and <code>crm-content</code> contains features for content authoring and document storage.
+Almost all enterprise applications manages customers and some kind of digital content.</p>
+</div>
+<div class="paragraph">
+<p>However there is one type of application that manages content but not necessary customers and that is a simple web site.
+The <code>crm-content</code> plugin can be used by web content authors to publish HTML pages on a web site.</p>
+</div>
+<div class="paragraph">
+<p>This guide describes how you can use GR8 CRM Grails plugins to develop a simple web site.
+The <code>crm-content</code> plugin makes it possible to add HTML pages in a content repository and make the pages publicly accessible.</p>
+</div>
+<div class="paragraph">
+<p>The <code>crm-content</code> plugin is "web-front" plugin. Meaning it includes functionality to publish content on a web site.
+It <strong>does not</strong> include functionality for content authoring. A companion plugin <code>crm-content-ui</code> adds authoring support
+for content creators.</p>
+</div>
+<div class="paragraph">
+<p>Lets start from scratch and create a Grails application that when deployed to a web server will serve as a simple web site.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_presentations">3. Presentations</h2>
+<h2 id="_prerequisites">Prerequisites</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This section includes presentations that describe how to use GR8 CRM plugins in Grails applications.</p>
-</div>
-<div class="paragraph">
-<p><a href="presentations/gr8confeu2014/gr8conf-feature-plugins.pdf" target="_blank">Cut your Grails application to pieces - build feature plugins</a>. Presented at GR8Conf Europe 2014.</p>
+<p>As of this writing the GR8 CRM plugins are not tested with Grails versions above 2.2.4, so please <strong>make sure you have Grails 2.2.4 installed</strong> and ready before you attempt to follow this guide.
+Newer versions of Grails will be tested and adjustments will be done if needed to support newer versions, but because of lack of resources that work has not yet been done.
+If you have the knowledge you are welcome to try with newer versions of Grails but I cannot guarantee it will work.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_videos">4. Videos</h2>
+<h2 id="_create_a_new_grails_application">Create a new Grails application</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Here you can find videos and talks about GR8 CRM plugins and how
-to develop modular applications.</p>
+<div class="literalblock">
+<div class="content">
+<pre>$ grails create-app mywebsite
+$ cd mywebsite</pre>
 </div>
-<div class="paragraph">
-<p><a href="http://youtu.be/LZQ-1f9RGqg" target="_blank">Cut your Grails application to pieces - build feature plugins</a>. Presented at GR8Conf Europe 2014.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_tutorials">5. Tutorials</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_gr8_crm_web_site">5.1. GR8 CRM Web Site</h3>
-<div class="paragraph">
-<p><a href="/tutorials/gr8crm-web/index.html">This guide</a> describes how you can use
-GR8 CRM Grails plugins to develop a simple web site.
-The <a href="/plugins/crm-content/index.html">crm-content</a> plugin makes it possible to add HTML pages in a content repository and make the pages publicly accessible.</p>
 </div>
 <div class="paragraph">
-<p>In this tutorial you will create a Grails application that can serve as a public facing web site. It will have built-in content editing features,
-including image uploads.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_demo_applications">6. Demo applications</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>This section show demo applications based on GR8 CRM plugins.</p>
-</div>
-<div class="sect2">
-<h3 id="_gr8_crm_to_do">6.1. GR8 CRM To-Do</h3>
-<div class="paragraph">
-<p><a href="https://github.com/technipelago/gr8crm-demo-app">This Grails application</a> uses GR8 CRM plugins to create a simple Contact Management and To-Do application. Clone it and run it, you will have it up and running in a minute or two.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_gr8_contact">6.2. GR8 Contact</h3>
-<div class="paragraph">
-<p>The <a href="https://github.com/gr8crm/gr8contact">GR8 Contact</a> application
-is a simple Contact Management application. It was initially presented at
-GR8Conf Europe 2014 by <a href="https://github.com/goeh">Göran Ehrsson</a> (<a href="https://twitter.com/goeh">@goeh</a>).
-The github repository contains 5 branches, each representing a snapshot in time during development.</p>
+<p>In this project we want (web) content management support so we need to add the crm-content-ui plugin in BuildConfig.groovy.
+You must also add some other plugins needed at runtime.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>master</strong> A plain Grails application, created with grails create-app</p>
+<p>twitter-bootstrap</p>
 </li>
 <li>
-<p><strong>m1</strong> The plugin <a href="/plugins/crm-contact-ui/index.html">crm-contact-ui</a> was installed and contact (company/person) CRUD features are available.</p>
-</li>
-<li>
-<p><strong>m2</strong> The plugin <a href="/plugins/crm-content-ui/index.html">crm-content-ui</a> was installed and documents/files can now be attached to contacts.</p>
-</li>
-<li>
-<p><strong>m3</strong> The plugin <a href="/plugins/crm-task-ui/index.html">crm-task-ui</a> was installed and tasks/appointments with contacts can now be scheduled.</p>
-</li>
-<li>
-<p><strong>m4</strong> The plugin cookie-layout was installed and two themes were created to show that UI can change depending on sub-domain.</p>
+<p>less-resources</p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>Your plugin section in <code>BuildConfig.groovy</code> should look like this:</p>
+</div>
+<div class="listingblock">
+<div class="title">BuildConfig.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="groovy language-groovy">plugins {
+    build ":tomcat:$grailsVersion"
+    runtime ":hibernate:$grailsVersion"
+
+    compile ":jquery:1.10.2"
+    compile ":resources:1.2.7"
+    compile ":twitter-bootstrap:2.3.2"
+    compile ":less-resources:1.3.3.2"
+
+    compile ':cache:1.1.1'
+
+    compile ":crm-security-shiro:2.0.0"
+    compile ":crm-i18n:2.0.0"
+    compile ":crm-content-ui:2.0.0"
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We want our application to be a public web site, therefore we must add a few parameters to <code>Config.groovy</code> to support this.</p>
+</div>
+<div class="listingblock">
+<div class="title">Config.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="groovy language-groovy">crm.feature.crmContent.required = true <i class="conum" data-value="1"></i><b>(1)</b>
+crm.security.controllers.public = ['crmFileAccess', 'crmPageNotFound'] <i class="conum" data-value="2"></i><b>(2)</b>
+crm.content.cms.path = '/website/pages/' <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Enable the crm-content plugin for all users</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Controllers that should be excluded from authentication so they can be accessed by anyone</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Look for HTML pages in the <code>/website/pages</code> virtual folder.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_start_the_application">Start the application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now you should be ready to start the application!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="sh language-sh">$ grails run-app
+
+| Server running. Browse to http://localhost:8080/mywebsite</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Point your browser to the application URL and you should see the familiar Grails start page.</p>
+</div>
+<div class="imageblock thumb">
+<div class="content">
+<img src="images/default-start-page.png" alt="default start page">
+</div>
+<div class="title">Figure 1. Grails default start page</div>
+</div>
+<div class="paragraph">
+<p>The list of installed plugins is long but that&#8217;s normal. It contains all transitive plugins pulled in by dependency resolution.</p>
+</div>
+<div class="paragraph">
+<p>This was not very interesting. How do we publish content on the web site?</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_load_data">Load data</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In order to publish content you must login as a valid application user.
+To do this we must load the database with some metadata like users and permissions.
+We must also create a folder structure to hold our web content.</p>
+</div>
+<div class="paragraph">
+<p>Add this to <code>BootStrap.groovy</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">BootStrap.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="groovy language-groovy">class BootStrap {
+
+    def navigationService
+    def crmAccountService
+    def crmSecurityService
+    def crmContentService
+
+    def init = { servletContext -&gt;
+
+        navigationService.registerItem('main',
+            [controller: 'crmFolder', action: 'list', title: 'crmContent.index.label', order: 20]) <i class="conum" data-value="1"></i><b>(1)</b>
+        navigationService.updated()
+
+        def admin = crmSecurityService.createUser([username: "admin", password: "admin",
+            email: "firstname.lastname@email.com", name: "Site Admin", enabled: true]) <i class="conum" data-value="2"></i><b>(2)</b>
+
+        crmSecurityService.addPermissionAlias("permission.all", ["*:*"])
+
+        crmSecurityService.runAs(admin.username) {
+            def account = crmAccountService.createAccount([status: "active"], [:]) <i class="conum" data-value="3"></i><b>(3)</b>
+            def tenant = crmSecurityService.createTenant(account, "Website") <i class="conum" data-value="4"></i><b>(4)</b>
+            crmSecurityService.runAs(admin.username, tenant.id) {
+                crmSecurityService.addPermissionToUser("permission.all")
+
+                def root = crmContentService.createFolder(null, "website", "Web site content", "", "") <i class="conum" data-value="5"></i><b>(5)</b>
+                def images = crmContentService.createFolder(root, "images", "Web site images", "", "")
+                def pages = crmContentService.createFolder(root, "pages", "Web pages", "", "")
+            }
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Add a navigation item for content authoring to the main menu</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Create the admin user</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Create an account to hold our tenants</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Create a tenant were we will store all information</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Create a folder structure to hold all our web content</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Multitenancy</strong> refers to a principle in software architecture where a single instance of the software runs on a server,
+serving multiple client-organizations (tenants). Multitenancy contrasts with multi-instance architectures where separate
+software instances (or hardware systems) operate on behalf of different client organizations.
+With a multitenant architecture, a software application is designed to virtually partition its data and configuration,
+and each client organization works with a customized virtual application. <a href="#Multitenancy">[Multitenancy]</a></p>
+</div>
+<div class="paragraph">
+<p>All GR8 CRM plugins are required to support multitenancy. There are no automatic filtering going on behind the scenes by <code>Hibernate Filters</code> or similar.
+All plugins must be developed with multitenancy in mind and filter every query on the domain&#8217;s <code>tenantId</code> property.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now restart the application and browse to <a href="http://localhost:8080/mywebsite">http://localhost:8080/mywebsite</a> again.</p>
+</div>
+<div class="paragraph">
+<p>On the Grails start page click on <code>grails.plugins.crm.content.CrmFolderController</code> in the <strong>Available Controllers</strong> section.
+You will now be forced to login using the username and password you specified in <code>BootStrap.groovy</code> (admin/admin).
+It&#8217;s the <code>crm-security-shiro</code> plugin that kicks in and protects controller access using <strong>Apache Shiro</strong>.</p>
+</div>
+<div class="imageblock thumb">
+<div class="content">
+<img src="images/login-dialog-grails.png" alt="login dialog grails">
+</div>
+<div class="title">Figure 2. Login Dialog</div>
+</div>
+<div class="paragraph">
+<p>When successfully logged in you will see a page where you can search for files and folders.
+Click the <code>Find</code> button and you will see a list of folders.</p>
+</div>
+<div class="imageblock thumb">
+<div class="content">
+<img src="images/folder-list-grails.png" alt="folder list grails">
+</div>
+<div class="title">Figure 3. List of folders</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_twitter_bootstrap_design">Twitter Bootstrap design</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>However there is something wrong with the user interface and design. The user interface cannot be meant to be this ugly?!</p>
+</div>
+<div class="paragraph">
+<p>No the user interface can be better looking. We have to add some twitter bootstrap configuration to <code>ApplicationResources.groovy</code>
+and remove the layout that was copied to <strong>grails-app/views/layouts</strong> folder by <code>grails create-app</code>.</p>
+</div>
+<div class="paragraph">
+<p>Edit <code>grails-app/conf/ApplicationResources.groovy</code> and make it look like this:</p>
+</div>
+<div class="listingblock">
+<div class="title">ApplicationResources.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="groovy language-groovy">modules = {
+    'bootstrap-responsive-less' {
+        dependsOn 'bootstrap'
+        resource id:'bootstrap-responsive-less', url:[plugin: 'twitter-bootstrap', dir: 'less', file: 'responsive.less'], attrs:[rel: "stylesheet/less", type:'css', order:150], disposition: 'head'
+    }
+    application {
+        dependsOn 'bootstrap-responsive-less'
+        resource url:[plugin: 'twitter-bootstrap', dir: 'less', file: 'bootstrap.less'], attrs:[rel: "stylesheet/less", type:'css', order:10], disposition: 'head'
+        resource url:'js/application.js'
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Remove the default layout.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>rm grails-app/views/layouts.main.gsp</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now refresh the browser and you should see a design based on Twitter Bootstrap.</p>
+</div>
+<div class="imageblock thumb">
+<div class="content">
+<img src="images/folder-list-bootstrap.png" alt="folder list bootstrap">
+</div>
+<div class="title">Figure 4. List of folders with Twitter Bootstrap design</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_url_mapping_for_html_pages">URL mapping for HTML pages</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The crm-content plugin supports publishing HTML documents to a web site but this functionality is not enabled by default.
+To enable <strong>website mode</strong> we must add one line in <code>grails-app/conf/UrlMappings.groovy</code></p>
+</div>
+<div class="listingblock">
+<div class="title">UrlMappings.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="groovy language-groovy">"404"(controller: "crmPageNotFound", action: "index")</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above configuration routes 404 (page not found) errors to a special Grails controller that looks up and renders HTML pages.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_an_html_page">Create an HTML page</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now click on the folder <strong>Web pages</strong> to move into this folder, then click the <code>New HTML file</code> button.</p>
+</div>
+<div class="imageblock thumb">
+<div class="content">
+<img src="images/add-html-file.png" alt="add html file">
+</div>
+<div class="title">Figure 5. New HTML file</div>
+</div>
+<div class="paragraph">
+<p>A <strong>Rich Text Editor</strong> is opened where you can create you web page without the need to know HTML.</p>
+</div>
+<div class="paragraph">
+<p>Write some meaningful text and save the page as <strong>index.html</strong>.</p>
+</div>
+<div class="imageblock thumb">
+<div class="content">
+<img src="images/html-editor.png" alt="html editor">
+</div>
+<div class="title">Figure 6. Rich Text Editor</div>
+</div>
+<div class="paragraph">
+<p>Now you are ready to access <strong>your first web page</strong>!</p>
+</div>
+<div class="paragraph">
+<p>Type the application URL followed by <code>index.html</code> into your browser address bar and your carefully crafted page should appear.</p>
+</div>
+<div class="paragraph">
+<p><a href="http://localhost:8080/mywebsite/index.html">http://localhost:8080/mywebsite/index.html</a></p>
+</div>
+<div class="imageblock thumb">
+<div class="content">
+<img src="images/first-page.png" alt="first page">
+</div>
+<div class="title">Figure 7. Our first page</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_web_layout">Web Layout</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Where does the header come from? The Grails logo and the horizontal menu?
+In a previous step we removed the layout <code>grails-app/views/layouts.main.gsp</code>, so where does it pickup the Twitter Bootstrap layout?</p>
+</div>
+<div class="paragraph">
+<p>The user interface plugin <code>crm-ui-bootstrap</code> contains a layout called <code>main.gsp</code>. That&#8217;s what you see in your browser.
+This layout is specifically made to support the <em>back-office</em> user role, like content creators and administrators.
+It&#8217;s not made for public facing web sites. So we must create a new layout for our web content.</p>
+</div>
+<div class="paragraph">
+<p>Create a file called <code>grails-app/views/layouts/web.gsp</code> and add the following markup:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="html language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en" class="no-js"&gt;
+&lt;head&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/&gt;
+    &lt;title&gt;&lt;g:layoutTitle default="My GR8 Web"/&gt;&lt;/title&gt;
+    &lt;r:require modules="application, crm"/&gt;
+    &lt;r:layoutResources/&gt;
+    &lt;g:layoutHead/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;g:layoutBody/&gt;
+    &lt;/div&gt;
+    &lt;r:layoutResources/&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We must tell the <code>crm-content</code> plugin to use this new layout for web content.
+Edit <code>Config.groovy</code> and change <code>crm.content.cms.layout</code> to <code>web</code>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>crm.content.cms.layout = 'web'</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We have to restart the application for changes to take effect, but that will destroy our manually crafted web page <strong>index.html</strong>.
+To avoid repeated manual work we can add code to <code>BootStrap.groovy</code> to programatically create <strong>index.html</strong> when the application starts.
+Add this code <strong>after</strong> the code that creates the folder <code>pages</code> in BootStrap.groovy.</p>
+</div>
+<div class="listingblock">
+<div class="title">BootStrap.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="groovy language-groovy">crmContentService.createResource("""
+&lt;h1&gt;Welcome!&lt;/h1&gt;
+&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/p&gt;
+""", "index.html", pages)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now refresh the browser and you should see the contents of index.html without any layout around it.</p>
+</div>
+<div class="imageblock thumb">
+<div class="content">
+<img src="images/empty-layout.png" alt="empty layout">
+</div>
+<div class="title">Figure 8. Blank Layout</div>
+</div>
+<div class="paragraph">
+<p>There is one annoying problem left. If you access the application URL <a href="http://localhost:8080/mywebsite">http://localhost:8080/mywebsite</a> (without index.html) you&#8217;ll get the default Grails welcome page.
+We want <strong>index.html</strong> to be displayed when users navigate to the default URL. This can be done by changing a line in <code>grails-app/conf/UrlMappings.groovy</code>.
+The "/" URI is by default mapped to the <strong>index</strong> view. This will display <code>grails-app/views/index.gsp</code> in the browser.
+If we add a <strong>.html</strong> extension to the view it will show our <strong>index.html</strong> page instead.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>"/"(view:"/index.html")</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Point your browser to <a href="http://localhost:8080/mywebsite">http://localhost:8080/mywebsite</a> and it should display our <strong>index.html</strong> page.
+The default Grails <strong>index.gsp</strong> will not be accessible anymore because it&#8217;s "hidden" by the URL mapping.
+If you want a clean project you can delete <code>grails-app/views/index.gsp</code> now.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_custom_stylesheet">Custom stylesheet</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Up until now our layout has been using the default stylesheets from the <code>twitter-bootstrap</code> Grails plugin, but we want to put
+a little personal style to our website by changing some colors and styles. To do this we must copy the default styles and modify them.</p>
+</div>
+<div class="paragraph">
+<p>Create a folder under your application&#8217;s web-app folder called <code>less</code>. Then locate the <code>twitter-bootstrap</code> plugin that your application uses.
+If you use IntelliJ IDEA you can access it in the Project Explorer under the Plugins/twitter-bootstrap-2.3.2 folder.
+If you&#8217;re not using IntelliJ you can find the plugins in $HOME/.grails/&#8230;/plugins.
+Another option is to copy the file from it&#8217;s source <a href="https://github.com/twbs/bootstrap/blob/v2.3.2/less/variables.less">https://github.com/twbs/bootstrap/blob/v2.3.2/less/variables.less</a></p>
+</div>
+<div class="paragraph">
+<p>Copy the file <code>variables.less</code> from the twitter-bootstrap distribution and put it in the less folder under your application&#8217;s <code>web-app</code> folder.
+Then create an empty file under your application&#8217;s <code>web-app/less</code> folder called <code>application.less</code> with this content:</p>
+</div>
+<div class="listingblock">
+<div class="title">application.less</div>
+<div class="content">
+<pre class="highlight"><code class="css language-css">@import "responsive.less";
+
+// Add your CSS changes and additions here...
+h1 {
+  color: @green;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should now have two files in your application&#8217;s web-app/less folder:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>application.less
+variables.less</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To make the application use our custom styles we must edit <code>grails-app/conf/ApplicationResources.groovy</code> and change the
+<code>application</code> module. We must remove the <code>plugin</code> key and change <code>file</code> value from <code>bootstrap.less</code> to <code>application.less</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">ApplicationResources.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="groovy language-groovy">application {
+    dependsOn 'bootstrap-responsive-less'
+    resource url:[dir: 'less', file: 'application.less'], attrs:[rel: "stylesheet/less", type:'css', order:10], disposition: 'head'
+    resource url:'js/application.js'
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Restart the application and refresh the start page, the header text (h1) should now be green.</p>
+</div>
+<div class="imageblock thumb">
+<div class="content">
+<img src="images/custom-style.png" alt="custom style">
+</div>
+<div class="title">Figure 9. Custom Stylesheet</div>
+</div>
+<div class="paragraph">
+<p>You can add your custom styles and override existing styles in <code>application.less</code>.
+You can refer to <a href="#LESS">[LESS]</a> variables located in <code>variables.less</code> like <code>@blue</code>, <code>@linkColor</code> and <code>@navbarHeight</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_import_html_pages_from_files">Import HTML pages from files</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <strong>index.html</strong> file was added programatically in BootStrap.groovy. That&#8217;s easy for testing and to get a page up and running quickly.
+But adding HTML pages as Groovy code is not the smartest thing to do. There is another option built into the <code>crm-content</code> plugin.
+We can have it import HTML files (or any other content) from the file system when the application starts.</p>
+</div>
+<div class="paragraph">
+<p>Edit BootStrap.groovy and add the <code>crmContentImportService</code> bean.</p>
+</div>
+<div class="listingblock">
+<div class="title">BootStrap.groovy</div>
+<div class="content">
+<pre class="highlight"><code class="groovy language-groovy">class BootStrap {
+    ...
+    def crmContentImportService
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then remove the statement <strong>crmContentService.createResource(&#8230;)</strong> and replace it with this line:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>crmContentImportService.importFiles("templates/crm", "admin")</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will import all files under <code>src/templates/crm</code> as web resources.
+Under this folder your can put HTML pages, images, PDF:s or any other file type you want to use on your web site.</p>
+</div>
+<div class="paragraph">
+<p>Create two new folders under <code>src/templates/crm/website</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>images
+pages</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then put a file called <code>index.html</code> in the <code>&#8230;/website/pages</code> folder with the same content as before:</p>
+</div>
+<div class="listingblock">
+<div class="title">index.html</div>
+<div class="content">
+<pre class="highlight"><code class="html language-html">&lt;h1&gt;Welcome!&lt;/h1&gt;
+&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/p&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This file will now be imported when the application starts. The end result is exactly the same as with the createResource(&#8230;)
+code that we had before in BootStrap.groovy.</p>
+</div>
+<div class="paragraph">
+<p>You can add all your HTML pages in <code>pages</code> and images in <code>images</code>. You refer to images with the following path:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;img src="/mywebsite/r/1/website/images/imagename.png/&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>r</code> prefix is for <strong>resources</strong> and number <code>1</code> is the <strong>ID</strong> of our tenant where we store all data.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p>This concludes our first part of this guide. We now have a Grails application that can serve as a pubic facing web site.
+It has built-in content editing features, including image uploads. You can add HTML pages and images in src/templates/crm/website
+that will be imported when the application starts. Or you can configure a persistent database in DataSource.groovy and start
+creating pages manually in the rich text editor.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_references">References</h2>
+<div class="sectionbody">
+<div class="ulist bibliography">
+<ul class="bibliography">
+<li>
+<p><a id="Multitenancy"></a>[Multitenancy] <a href="http://en.wikipedia.org/wiki/Multitenancy">http://en.wikipedia.org/wiki/Multitenancy</a></p>
+</li>
+<li>
+<p><a id="LESS"></a>[LESS] <a href="http://en.wikipedia.org/wiki/LESS_(stylesheet_language)#Variables">http://en.wikipedia.org/wiki/LESS_(stylesheet_language)#Variables</a></p>
+</li>
+</ul>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-02 23:53:43 CEST
+Version 0.2<br>
+Last updated 2014-08-02 23:40:40 CEST
 </div>
 </div>
 </body>

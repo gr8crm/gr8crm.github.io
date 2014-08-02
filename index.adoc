@@ -81,6 +81,17 @@ to develop modular applications.
 
 http://youtu.be/LZQ-1f9RGqg[Cut your Grails application to pieces - build feature plugins^]. Presented at GR8Conf Europe 2014.
 
+== Tutorials
+
+=== GR8 CRM Web Site
+
+link:/tutorials/gr8crm-web/index.html[This guide] describes how you can use
+GR8 CRM Grails plugins to develop a simple web site.
+The link:/plugins/crm-content/index.html[crm-content] plugin makes it possible to add HTML pages in a content repository and make the pages publicly accessible.
+
+In this tutorial you will create a Grails application that can serve as a public facing web site. It will have built-in content editing features,
+including image uploads.
+
 == Demo applications
 
 This section show demo applications based on {gr8crm} plugins.
