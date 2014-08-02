@@ -60,9 +60,9 @@ github project and we will prioritize cleanup and documentation and get it publi
 | Plugin Name                                                     | Description
 | https://github.com/technipelago/grails-crm-blog[crm-blog] + https://github.com/technipelago/grails-crm-blog-ui[crm-blog-ui] | Blog presentation and authoring (-ui)
 | https://github.com/technipelago/grails-crm-campaign[crm-campaign] + https://github.com/technipelago/grails-crm-campaign-ui[crm-campaign-ui] | Marketing campaign execution and management (-ui)
-| crm-invitation                                                  | Invite external users to your application
-| crm-notification                                                | Notify users about stuff with a central notification center
-| crm-syslog                                                      | Log application events to database
+| https://github.com/goeh/grails-crm-invitation[crm-invitation]   | Invite external users to your application
+| https://github.com/goeh/grails-crm-notification[crm-notification] | Notify users about stuff with a central notification center
+| https://github.com/goeh/grails-crm-syslog[crm-syslog]           | Log application events to database
 | crm-security-ui                                                 | Back Office features for user and role administration
 | crm-product + crm-product-ui                                    | Product and inventory management including administration (-ui)
 | crm-order + crm-order-ui                                        | Order Management
@@ -97,7 +97,7 @@ GR8Conf Europe 2014 by https://github.com/goeh[Göran Ehrsson] (https://twitter.
 The github repository contains 5 branches, each representing a snapshot in time during development.
 
 - *master* A plain Grails application, created with grails create-app
-- *m1* The plugin crm-contact-ui was installed and contact (company/person) CRUD features are available.
-- *m2* The plugin crm-content-ui was installed and documents/files can now be attached to contacts.
-- *m3* The plugin crm-task-ui was installed and tasks/appointments with contacts can now be scheduled.
+- *m1* The plugin link:/plugins/crm-contact-ui/index.html[crm-contact-ui] was installed and contact (company/person) CRUD features are available.
+- *m2* The plugin link:/plugins/crm-content-ui/index.html[crm-content-ui] was installed and documents/files can now be attached to contacts.
+- *m3* The plugin link:/plugins/crm-task-ui/index.html[crm-task-ui] was installed and tasks/appointments with contacts can now be scheduled.
 - *m4* The plugin cookie-layout was installed and two themes were created to show that UI can change depending on sub-domain.
