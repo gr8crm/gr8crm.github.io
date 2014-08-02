@@ -1,0 +1,25 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:0.7.2'
+    }
+}
+
+apply plugin: 'org.asciidoctor.gradle.asciidoctor'
+
+asciidoctor {
+    sourceDir = projectDir
+    outputDir = sourceDir
+    options = [
+        eruby: 'erubis',
+        attributes: [
+            toc: '',
+            idprefix: 'crm-',
+            idseparator: '-',
+            'source-highlighter': 'prettify'
+        ]
+    ]
+}

@@ -1,0 +1,103 @@
+= GR8 CRM - Great Customer Relationship Management Plugins for the Grails Web Framework
+Göran Ehrsson <goran@technipelago.se>
+:description: Main documentation site for the GR8 CRM Plugin suite
+:keywords: groovy, grails, crm, gr8crm, documentation
+:toc:
+:numbered:
+:icons: font
+:imagesdir: ./images
+:source-highlighter: prettify
+:homepage: http://gr8crm.github.io
+:gr8crm: GR8 CRM
+
+== Introduction
+
+{gr8crm} is a set of http://www.grails.org/[Grails Web Application Framework]
+plugins that makes it easy to develop web applications with CRM functionality.
+
+=== Customer Relationship Management
+
+Customer relationship management (CRM) is a system for managing a company’s interactions with current and future customers.
+It involves using technology to organize, automate and synchronize sales, marketing, customer service, and technical support.
+http://en.wikipedia.org/wiki/Customer_relationship_management[Wikipedia]
+
+== {gr8crm} Plugins
+
+The {gr8crm} "Ecosystem" currently contains over 40 Grails plugins.
+
+Each {gr8crm} plugin defines a http://martinfowler.com/bliki/BoundedContext.html[Bounded Context]
+that focus on one specific domain, for example *contact*, *project* or *document*.
+
+=== Official / Published Plugins
+
+The following plugins are available in Grails Central plugin repository. This means you can install them in your Grails application
+the same way as you install other plugins, by adding them to BuildConfig.groovy
+
+[options="header"]
+|===
+| Plugin Name                                                     | Description
+| link:/plugins/crm-core/index.html[crm-core]                     | Core features like multi tenancy (used by most other plugins)
+| link:/plugins/crm-i18n/index.html[crm-i18n]                     | Store localized messages in database to support runtime changes
+| link:/plugins/crm-feature/index.html[crm-feature]               | Turn application features on/off for specific users or roles
+| link:/plugins/crm-security/index.html[crm-security]             | Core security services
+| link:/plugins/crm-security-shiro/index.html[crm-security-shiro] | Apache Shiro security implementation
+| link:/plugins/crm-ui-bootstrap/index.html[crm-ui-bootstrap]     | Twitter Bootstrap user interface (used by most -ui plugins)
+| link:plugins/crm-notes/index.html[crm-notes]                    | Add short notes (subject+body) to any domain instance
+| link:/plugins/crm-tags/index.html[crm-tags]                     | Tag any domain instance
+| link:/plugins/crm-contact/index.html[crm-contact] + link:/plugins/crm-contact-ui/index.html[crm-contact-ui]                 | Contact Management (companies and individuals)
+| link:/plugins/crm-content/index.html[crm-content] + link:/plugins/crm-content-ui/index.html[crm-content-ui]                 | Content Management and authoring (-ui)
+| link:/plugins/crm-task/index.html[crm-task] + link:/plugins/crm-task-ui/index.html[crm-task-ui] | Task/Calendar Management
+| link:/plugins/crm-email/index.html[crm-email]                   | Send emails using Grails events
+|===
+
+=== Plugins not yet released
+
+The following plugins *is not* yet available in Grails Central. If you want to use one of these plugins, create an issue on it's
+github project and we will prioritize cleanup and documentation and get it published as soon as we can.
+
+[options="header"]
+|===
+| Plugin Name                                                     | Description
+| https://github.com/technipelago/grails-crm-blog[crm-blog] + https://github.com/technipelago/grails-crm-blog-ui[crm-blog-ui] | Blog presentation and authoring (-ui)
+| https://github.com/technipelago/grails-crm-campaign[crm-campaign] + https://github.com/technipelago/grails-crm-campaign-ui[crm-campaign-ui] | Marketing campaign execution and management (-ui)
+| crm-invitation                                                  | Invite external users to your application
+| crm-notification                                                | Notify users about stuff with a central notification center
+| crm-syslog                                                      | Log application events to database
+| crm-security-ui                                                 | Back Office features for user and role administration
+| crm-product + crm-product-ui                                    | Product and inventory management including administration (-ui)
+| crm-order + crm-order-ui                                        | Order Management
+|===
+
+== Presentations
+
+This section includes presentations that describe how to use {gr8crm} plugins in Grails applications.
+
+link:presentations/gr8confeu2014/gr8conf-feature-plugins.pdf[Cut your Grails application to pieces - build feature plugins^]. Presented at GR8Conf Europe 2014.
+
+== Videos
+
+Here you can find videos and talks about {gr8crm} plugins and how
+to develop modular applications.
+
+http://youtu.be/LZQ-1f9RGqg[Cut your Grails application to pieces - build feature plugins^]. Presented at GR8Conf Europe 2014.
+
+== Demo applications
+
+This section show demo applications based on {gr8crm} plugins.
+
+=== GR8 CRM To-Do
+
+https://github.com/technipelago/gr8crm-demo-app[This Grails application] uses {gr8crm} plugins to create a simple Contact Management and To-Do application. Clone it and run it, you will have it up and running in a minute or two.
+
+=== GR8 Contact
+
+The https://github.com/gr8crm/gr8contact[GR8 Contact] application
+is a simple Contact Management application. It was initially presented at
+GR8Conf Europe 2014 by https://github.com/goeh[Göran Ehrsson] (https://twitter.com/goeh[@goeh]).
+The github repository contains 5 branches, each representing a snapshot in time during development.
+
+- *master* A plain Grails application, created with grails create-app
+- *m1* The plugin crm-contact-ui was installed and contact (company/person) CRUD features are available.
+- *m2* The plugin crm-content-ui was installed and documents/files can now be attached to contacts.
+- *m3* The plugin crm-task-ui was installed and tasks/appointments with contacts can now be scheduled.
+- *m4* The plugin cookie-layout was installed and two themes were created to show that UI can change depending on sub-domain.
