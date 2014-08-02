@@ -112,3 +112,8 @@ The github repository contains 5 branches, each representing a snapshot in time 
 - *m2* The plugin link:/plugins/crm-content-ui/index.html[crm-content-ui] was installed and documents/files can now be attached to contacts.
 - *m3* The plugin link:/plugins/crm-task-ui/index.html[crm-task-ui] was installed and tasks/appointments with contacts can now be scheduled.
 - *m4* The plugin cookie-layout was installed and two themes were created to show that UI can change depending on sub-domain.
+
+=== GR8 CRM Web Site
+
+A sample application that was created by following the *GR8 CRM Web Site*
+tutorial (see above) can be found at https://github.com/gr8crm/gr8crm-web
