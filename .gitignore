@@ -1,2 +1,4 @@
 .DS_Store
 /plugins/*/samples/
+/out/
+/.gradle/

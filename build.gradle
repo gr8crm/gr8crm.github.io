@@ -12,7 +12,7 @@ apply plugin: 'org.asciidoctor.gradle.asciidoctor'
 
 asciidoctor {
     sourceDir = projectDir
-    outputDir = sourceDir
+    outputDir = new File(projectDir, "out")
     options = [
         eruby: 'erubis',
         attributes: [
