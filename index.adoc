@@ -53,7 +53,7 @@ the same way as you install other plugins, by adding them to BuildConfig.groovy
 === Plugins not yet released
 
 The following plugins *are not* yet available in Grails Central. If you want to use one of these plugins, create an issue on it's
-github project and we will prioritize cleanup and documentation and get it published as soon as we can. You can also contribute by cloning the repos, fix things and subit pull requests.
+github project and we will prioritize cleanup and documentation and get it published as soon as we can. You can also contribute by cloning the repos, fix stuff and submit pull requests.
 
 [options="header"]
 |===

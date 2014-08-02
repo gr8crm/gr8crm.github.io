@@ -4,6 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Tutorial - Creating a public web site with GR8 CRM plugins">
+<meta name="keywords" content="groovy, grails, crm, gr8crm, documentation">
 <title>Create a web site using GR8 CRM plugins</title>
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -360,6 +362,9 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 
 </style>
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+<script>document.addEventListener('DOMContentLoaded', prettyPrint)</script>
 </head>
 <body class="article">
 <div id="header">
@@ -370,19 +375,19 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_gr8_crm">GR8 CRM</a></li>
-<li><a href="#_prerequisites">Prerequisites</a></li>
-<li><a href="#_create_a_new_grails_application">Create a new Grails application</a></li>
-<li><a href="#_start_the_application">Start the application</a></li>
-<li><a href="#_load_data">Load data</a></li>
-<li><a href="#_twitter_bootstrap_design">Twitter Bootstrap design</a></li>
-<li><a href="#_url_mapping_for_html_pages">URL mapping for HTML pages</a></li>
-<li><a href="#_create_an_html_page">Create an HTML page</a></li>
-<li><a href="#_web_layout">Web Layout</a></li>
-<li><a href="#_custom_stylesheet">Custom stylesheet</a></li>
-<li><a href="#_import_html_pages_from_files">Import HTML pages from files</a></li>
-<li><a href="#_source">Source</a></li>
-<li><a href="#_references">References</a></li>
+<li><a href="#_gr8_crm">1. GR8 CRM</a></li>
+<li><a href="#_prerequisites">2. Prerequisites</a></li>
+<li><a href="#_create_a_new_grails_application">3. Create a new Grails application</a></li>
+<li><a href="#_start_the_application">4. Start the application</a></li>
+<li><a href="#_load_data">5. Load data</a></li>
+<li><a href="#_twitter_bootstrap_design">6. Twitter Bootstrap design</a></li>
+<li><a href="#_url_mapping_for_html_pages">7. URL mapping for HTML pages</a></li>
+<li><a href="#_create_an_html_page">8. Create an HTML page</a></li>
+<li><a href="#_web_layout">9. Web Layout</a></li>
+<li><a href="#_custom_stylesheet">10. Custom stylesheet</a></li>
+<li><a href="#_import_html_pages_from_files">11. Import HTML pages from files</a></li>
+<li><a href="#_source">12. Source</a></li>
+<li><a href="#_references">13. References</a></li>
 </ul>
 </div>
 </div>
@@ -395,7 +400,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 </div>
 <div class="sect1">
-<h2 id="_gr8_crm">GR8 CRM</h2>
+<h2 id="_gr8_crm">1. GR8 CRM</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>GR8 CRM</strong> "Great Customer Relationship Management" is the name of a suite of plugins that help developers write customer relationship
@@ -440,7 +445,7 @@ for content creators.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_prerequisites">Prerequisites</h2>
+<h2 id="_prerequisites">2. Prerequisites</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>As of this writing the GR8 CRM plugins are not tested with Grails versions above 2.2.4, so please <strong>make sure you have Grails 2.2.4 installed</strong> and ready before you attempt to follow this guide.
@@ -450,7 +455,7 @@ If you have the knowledge you are welcome to try with newer versions of Grails b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_create_a_new_grails_application">Create a new Grails application</h2>
+<h2 id="_create_a_new_grails_application">3. Create a new Grails application</h2>
 <div class="sectionbody">
 <div class="literalblock">
 <div class="content">
@@ -478,7 +483,7 @@ You must also add some other plugins needed at runtime.</p>
 <div class="listingblock">
 <div class="title">BuildConfig.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="groovy language-groovy">plugins {
+<pre class="prettyprint groovy language-groovy"><code>plugins {
     build ":tomcat:$grailsVersion"
     runtime ":hibernate:$grailsVersion"
 
@@ -501,7 +506,7 @@ You must also add some other plugins needed at runtime.</p>
 <div class="listingblock">
 <div class="title">Config.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="groovy language-groovy">crm.feature.crmContent.required = true <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="prettyprint groovy language-groovy"><code>crm.feature.crmContent.required = true <i class="conum" data-value="1"></i><b>(1)</b>
 crm.security.controllers.public = ['crmFileAccess', 'crmPageNotFound'] <i class="conum" data-value="2"></i><b>(2)</b>
 crm.content.cms.path = '/website/pages/' <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
@@ -525,14 +530,14 @@ crm.content.cms.path = '/website/pages/' <i class="conum" data-value="3"></i><b>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_start_the_application">Start the application</h2>
+<h2 id="_start_the_application">4. Start the application</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Now you should be ready to start the application!</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="sh language-sh">$ grails run-app
+<pre class="prettyprint sh language-sh"><code>$ grails run-app
 
 | Server running. Browse to http://localhost:8080/mywebsite</code></pre>
 </div>
@@ -542,7 +547,7 @@ crm.content.cms.path = '/website/pages/' <i class="conum" data-value="3"></i><b>
 </div>
 <div class="imageblock thumb">
 <div class="content">
-<img src="images/default-start-page.png" alt="default start page">
+<img src="./images/default-start-page.png" alt="default start page">
 </div>
 <div class="title">Figure 1. Grails default start page</div>
 </div>
@@ -555,7 +560,7 @@ crm.content.cms.path = '/website/pages/' <i class="conum" data-value="3"></i><b>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_load_data">Load data</h2>
+<h2 id="_load_data">5. Load data</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In order to publish content you must login as a valid application user.
@@ -568,7 +573,7 @@ We must also create a folder structure to hold our web content.</p>
 <div class="listingblock">
 <div class="title">BootStrap.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="groovy language-groovy">class BootStrap {
+<pre class="prettyprint groovy language-groovy"><code>class BootStrap {
 
     def navigationService
     def crmAccountService
@@ -656,7 +661,7 @@ It&#8217;s the <code>crm-security-shiro</code> plugin that kicks in and protects
 </div>
 <div class="imageblock thumb">
 <div class="content">
-<img src="images/login-dialog-grails.png" alt="login dialog grails">
+<img src="./images/login-dialog-grails.png" alt="login dialog grails">
 </div>
 <div class="title">Figure 2. Login Dialog</div>
 </div>
@@ -666,14 +671,14 @@ Click the <code>Find</code> button and you will see a list of folders.</p>
 </div>
 <div class="imageblock thumb">
 <div class="content">
-<img src="images/folder-list-grails.png" alt="folder list grails">
+<img src="./images/folder-list-grails.png" alt="folder list grails">
 </div>
 <div class="title">Figure 3. List of folders</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_twitter_bootstrap_design">Twitter Bootstrap design</h2>
+<h2 id="_twitter_bootstrap_design">6. Twitter Bootstrap design</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>However there is something wrong with the user interface and design. The user interface cannot be meant to be this ugly?!</p>
@@ -688,7 +693,7 @@ and remove the layout that was copied to <strong>grails-app/views/layouts</stron
 <div class="listingblock">
 <div class="title">ApplicationResources.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="groovy language-groovy">modules = {
+<pre class="prettyprint groovy language-groovy"><code>modules = {
     'bootstrap-responsive-less' {
         dependsOn 'bootstrap'
         resource id:'bootstrap-responsive-less', url:[plugin: 'twitter-bootstrap', dir: 'less', file: 'responsive.less'], attrs:[rel: "stylesheet/less", type:'css', order:150], disposition: 'head'
@@ -714,14 +719,14 @@ and remove the layout that was copied to <strong>grails-app/views/layouts</stron
 </div>
 <div class="imageblock thumb">
 <div class="content">
-<img src="images/folder-list-bootstrap.png" alt="folder list bootstrap">
+<img src="./images/folder-list-bootstrap.png" alt="folder list bootstrap">
 </div>
 <div class="title">Figure 4. List of folders with Twitter Bootstrap design</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_url_mapping_for_html_pages">URL mapping for HTML pages</h2>
+<h2 id="_url_mapping_for_html_pages">7. URL mapping for HTML pages</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The crm-content plugin supports publishing HTML documents to a web site but this functionality is not enabled by default.
@@ -730,7 +735,7 @@ To enable <strong>website mode</strong> we must add one line in <code>grails-app
 <div class="listingblock">
 <div class="title">UrlMappings.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="groovy language-groovy">"404"(controller: "crmPageNotFound", action: "index")</code></pre>
+<pre class="prettyprint groovy language-groovy"><code>"404"(controller: "crmPageNotFound", action: "index")</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -739,14 +744,14 @@ To enable <strong>website mode</strong> we must add one line in <code>grails-app
 </div>
 </div>
 <div class="sect1">
-<h2 id="_create_an_html_page">Create an HTML page</h2>
+<h2 id="_create_an_html_page">8. Create an HTML page</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Now click on the folder <strong>Web pages</strong> to move into this folder, then click the <code>New HTML file</code> button.</p>
 </div>
 <div class="imageblock thumb">
 <div class="content">
-<img src="images/add-html-file.png" alt="add html file">
+<img src="./images/add-html-file.png" alt="add html file">
 </div>
 <div class="title">Figure 5. New HTML file</div>
 </div>
@@ -758,7 +763,7 @@ To enable <strong>website mode</strong> we must add one line in <code>grails-app
 </div>
 <div class="imageblock thumb">
 <div class="content">
-<img src="images/html-editor.png" alt="html editor">
+<img src="./images/html-editor.png" alt="html editor">
 </div>
 <div class="title">Figure 6. Rich Text Editor</div>
 </div>
@@ -773,14 +778,14 @@ To enable <strong>website mode</strong> we must add one line in <code>grails-app
 </div>
 <div class="imageblock thumb">
 <div class="content">
-<img src="images/first-page.png" alt="first page">
+<img src="./images/first-page.png" alt="first page">
 </div>
 <div class="title">Figure 7. Our first page</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_web_layout">Web Layout</h2>
+<h2 id="_web_layout">9. Web Layout</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Where does the header come from? The Grails logo and the horizontal menu?
@@ -796,7 +801,7 @@ It&#8217;s not made for public facing web sites. So we must create a new layout 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="html language-html">&lt;!DOCTYPE html&gt;
+<pre class="prettyprint html language-html"><code>&lt;!DOCTYPE html&gt;
 &lt;html lang="en" class="no-js"&gt;
 &lt;head&gt;
     &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/&gt;
@@ -831,7 +836,7 @@ Add this code <strong>after</strong> the code that creates the folder <code>page
 <div class="listingblock">
 <div class="title">BootStrap.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="groovy language-groovy">crmContentService.createResource("""
+<pre class="prettyprint groovy language-groovy"><code>crmContentService.createResource("""
 &lt;h1&gt;Welcome!&lt;/h1&gt;
 &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/p&gt;
 """, "index.html", pages)</code></pre>
@@ -842,7 +847,7 @@ Add this code <strong>after</strong> the code that creates the folder <code>page
 </div>
 <div class="imageblock thumb">
 <div class="content">
-<img src="images/empty-layout.png" alt="empty layout">
+<img src="./images/empty-layout.png" alt="empty layout">
 </div>
 <div class="title">Figure 8. Blank Layout</div>
 </div>
@@ -865,7 +870,7 @@ If you want a clean project you can delete <code>grails-app/views/index.gsp</cod
 </div>
 </div>
 <div class="sect1">
-<h2 id="_custom_stylesheet">Custom stylesheet</h2>
+<h2 id="_custom_stylesheet">10. Custom stylesheet</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Up until now our layout has been using the default stylesheets from the <code>twitter-bootstrap</code> Grails plugin, but we want to put
@@ -884,7 +889,7 @@ Then create an empty file under your application&#8217;s <code>web-app/less</cod
 <div class="listingblock">
 <div class="title">application.less</div>
 <div class="content">
-<pre class="highlight"><code class="css language-css">@import "responsive.less";
+<pre class="prettyprint css language-css"><code>@import "responsive.less";
 
 // Add your CSS changes and additions here...
 h1 {
@@ -908,7 +913,7 @@ variables.less</pre>
 <div class="listingblock">
 <div class="title">ApplicationResources.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="groovy language-groovy">application {
+<pre class="prettyprint groovy language-groovy"><code>application {
     dependsOn 'bootstrap-responsive-less'
     resource url:[dir: 'less', file: 'application.less'], attrs:[rel: "stylesheet/less", type:'css', order:10], disposition: 'head'
     resource url:'js/application.js'
@@ -920,7 +925,7 @@ variables.less</pre>
 </div>
 <div class="imageblock thumb">
 <div class="content">
-<img src="images/custom-style.png" alt="custom style">
+<img src="./images/custom-style.png" alt="custom style">
 </div>
 <div class="title">Figure 9. Custom Stylesheet</div>
 </div>
@@ -931,7 +936,7 @@ You can refer to <a href="#LESS">[LESS]</a> variables located in <code>variables
 </div>
 </div>
 <div class="sect1">
-<h2 id="_import_html_pages_from_files">Import HTML pages from files</h2>
+<h2 id="_import_html_pages_from_files">11. Import HTML pages from files</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <strong>index.html</strong> file was added programatically in BootStrap.groovy. That&#8217;s easy for testing and to get a page up and running quickly.
@@ -944,7 +949,7 @@ We can have it import HTML files (or any other content) from the file system whe
 <div class="listingblock">
 <div class="title">BootStrap.groovy</div>
 <div class="content">
-<pre class="highlight"><code class="groovy language-groovy">class BootStrap {
+<pre class="prettyprint groovy language-groovy"><code>class BootStrap {
     ...
     def crmContentImportService
 }</code></pre>
@@ -977,7 +982,7 @@ pages</pre>
 <div class="listingblock">
 <div class="title">index.html</div>
 <div class="content">
-<pre class="highlight"><code class="html language-html">&lt;h1&gt;Welcome!&lt;/h1&gt;
+<pre class="prettyprint html language-html"><code>&lt;h1&gt;Welcome!&lt;/h1&gt;
 &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/p&gt;</code></pre>
 </div>
 </div>
@@ -1006,7 +1011,7 @@ creating pages manually in the rich text editor.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_source">Source</h2>
+<h2 id="_source">12. Source</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>A sample application that was created by following this tutorial can be found at <a href="https://github.com/gr8crm/gr8crm-web">https://github.com/gr8crm/gr8crm-web</a></p>
@@ -1014,7 +1019,7 @@ creating pages manually in the rich text editor.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_references">References</h2>
+<h2 id="_references">13. References</h2>
 <div class="sectionbody">
 <div class="ulist bibliography">
 <ul class="bibliography">
@@ -1032,7 +1037,7 @@ creating pages manually in the rich text editor.</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2014-08-02 23:59:11 CEST
+Last updated 2014-08-03 00:37:04 CEST
 </div>
 </div>
 </body>
