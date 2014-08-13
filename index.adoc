@@ -64,7 +64,7 @@ github project and we will prioritize cleanup and documentation and get it publi
 | https://github.com/goeh/grails-crm-notification[crm-notification] | Notify users about stuff with a central notification center
 | https://github.com/goeh/grails-crm-syslog[crm-syslog]           | Log application events to database
 | crm-security-ui                                                 | Back Office features for user and role administration
-| crm-product + crm-product-ui                                    | Product and inventory management including administration (-ui)
+| link:/plugins/crm-product/index.html[crm-product] + link:/plugins/crm-product-ui/index.html[crm-product-ui] | Product and inventory management including administration (-ui)
 | crm-order + crm-order-ui                                        | Order Management
 |===
 
