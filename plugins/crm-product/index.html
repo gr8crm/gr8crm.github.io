@@ -412,8 +412,12 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <li><a href="#crm-crmproductservice">4. CrmProductService</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#crm-create-a-new-product">4.1. Create a new product</a></li>
-<li><a href="#crm-search-for-products">4.2. Search for products</a></li>
+<li><a href="#crm-create-a-product-group">4.1. Create a product group</a></li>
+<li><a href="#crm-create-a-price-list">4.2. Create a price list</a></li>
+<li><a href="#crm-create-a-new-product">4.3. Create a new product</a></li>
+<li><a href="#crm-search-for-products">4.4. Search for products</a></li>
+<li><a href="#crm-product-price">4.5. Product price</a></li>
+<li><a href="#crm-delete-a-product">4.6. Delete a product</a></li>
 </ul>
 </li>
 <li><a href="#crm-changes">5. Changes</a></li>
@@ -581,7 +585,25 @@ in your BuildConfig.groovy if you want end-user product management features.</p>
 <p>Like most other GR8 CRM plugins this plugin have a main service with methods for creating, searching and updating products.</p>
 </div>
 <div class="sect2">
-<h3 id="crm-create-a-new-product">4.1. Create a new product</h3>
+<h3 id="crm-create-a-product-group">4.1. Create a product group</h3>
+<div class="paragraph">
+<p><code>CrmProductGroup createProductGroup(Map params, boolean save = false)</code></p>
+</div>
+<div class="paragraph">
+<p>A product belongs to a product group. Product groups can be created with <code>createProductGroup()</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-create-a-price-list">4.2. Create a price list</h3>
+<div class="paragraph">
+<p><code>CrmPriceList createPriceList(Map params, boolean save = false)</code></p>
+</div>
+<div class="paragraph">
+<p>A product can have multiple prices. Each product price references a price list. A price list can be created with a call to <code>createPriceList()</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-create-a-new-product">4.3. Create a new product</h3>
 <div class="paragraph">
 <p><code>CrmProduct createProduct(Map params, boolean save = false)</code></p>
 </div>
@@ -600,7 +622,7 @@ println "The price for $product is €${product.price} excl. VAT"</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="crm-search-for-products">4.2. Search for products</h3>
+<h3 id="crm-search-for-products">4.4. Search for products</h3>
 <div class="paragraph">
 <p>As usual in GR8 CRM plugins the main service has a <code>list()</code> method that performs a query.</p>
 </div>
@@ -701,6 +723,72 @@ println "Found ${result.size()} USB products"</code></pre>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="crm-product-price">4.5. Product price</h3>
+<div class="paragraph">
+<p><code>Double getPrice(String productNumber, Integer amount = null, Object priceList = null, String unit = null)</code></p>
+</div>
+<div class="paragraph">
+<p>Because a product can have many prices depending on different price lists or how many items you want to buy,
+retrieving the product price can be complicated. However there is a <code>price</code> property on <code>CrmProduct</code> that makes it easier.
+The price property returns the first available price on the product instance. This works well if you only have one
+price per product. If you have multiple prices per product you can use <code>CrmProduct#getPrice(&#8230;)</code> with optional parameters
+or use <code>CrmProductService#getPrice(&#8230;)</code>.</p>
+</div>
+<div class="paragraph">
+<p>CrmProductService#getPrice() parameters</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>productNumber</strong> Product number to get price for</p>
+</li>
+<li>
+<p><strong>amount</strong> Amount to base price on</p>
+</li>
+<li>
+<p><strong>priceList</strong> <code>CrmPriceList</code> instance or CrmPriceList.param string</p>
+</li>
+<li>
+<p><strong>unit</strong> unit to get price for</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">TestProductPrices.groovy</div>
+<div class="content">
+<pre class="prettyprint"><code class="groovy language-groovy">def pc = crmProductService.createProductGroup(name: "PC", true)
+def priceList = crmProductService.createPriceList(param: "b2b", name: "Small Businesses", true)
+def p = crmProductService.createProduct(number: "dellxps15", name: "Dell XPS 15\"", group: pc)
+
+p.addToPrices(priceList: priceList, unit: 'pcs', fromAmount: 1, inPrice: 0, outPrice: 1299.99, vat: 0.20)
+p.addToPrices(priceList: priceList, unit: 'pcs', fromAmount: 10, inPrice: 0, outPrice: 1199.99, vat: 0.20)
+p.addToPrices(priceList: priceList, unit: 'pcs', fromAmount: 100, inPrice: 0, outPrice: 999.99, vat: 0.20)
+
+p.save(flush: true)
+
+assert crmProductService.getPrice("dellxps15") == 1299.99
+assert crmProductService.getPrice("dellxps15", 1) == 1299.99
+assert crmProductService.getPrice("dellxps15", 5) == 1299.99
+assert crmProductService.getPrice("dellxps15", 15) == 1199.99
+assert crmProductService.getPrice("dellxps15", 50) == 1199.99
+assert crmProductService.getPrice("dellxps15", 150) == 999.99</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-delete-a-product">4.6. Delete a product</h3>
+<div class="paragraph">
+<p><code>String deleteProduct(CrmProduct crmProduct)</code></p>
+</div>
+<div class="paragraph">
+<p>A product can be deleted with a call to <code>deleteProduct</code>. If the operation succeeds the name of the deleted product will be returned.
+Otherwise an exception will be thrown.</p>
+</div>
+<div class="paragraph">
+<p>Before the product is deleted the <code>crmProduct.delete</code> event will be sent and after the deletion <code>crmProduct.deleted</code> will be sent.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -736,7 +824,7 @@ println "Found ${result.size()} USB products"</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 2.0.0<br>
-Last updated 2014-08-12 19:24:23 CEST
+Last updated 2014-08-13 12:08:06 CEST
 </div>
 </div>
 </body>
