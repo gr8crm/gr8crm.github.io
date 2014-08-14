@@ -65,6 +65,7 @@ github project and we will prioritize cleanup and documentation and get it publi
 | https://github.com/goeh/grails-crm-syslog[crm-syslog]           | Log application events to database
 | crm-security-ui                                                 | Back Office features for user and role administration
 | link:/plugins/crm-product/index.html[crm-product] + link:/plugins/crm-product-ui/index.html[crm-product-ui] | Product and inventory management including administration (-ui)
+| link:/plugins/crm-sales/index.html[crm-sales] + link:/plugins/crm-sales-ui/index.html[crm-sales-ui] | Sales lead/opportunity management
 | crm-order + crm-order-ui                                        | Order Management
 |===
 
