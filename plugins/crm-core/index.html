@@ -392,7 +392,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <h1>GR8 CRM - Core Plugin</h1>
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.0.1</span>
+<span id="revnumber">version 2.0.2</span>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -435,17 +435,23 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <li><a href="#crm-crmlookupentity">7.1. CrmLookupEntity</a></li>
 </ul>
 </li>
-<li><a href="#crm-ast-transformations">8. AST Transformations</a></li>
+<li><a href="#crm-exceptions">8. Exceptions</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#crm--tenantentity">8.1. @TenantEntity</a></li>
-<li><a href="#crm--auditentity">8.2. @AuditEntity</a></li>
-<li><a href="#crm--uuidentity">8.3. @UuidEntity</a></li>
+<li><a href="#crm-crmvalidationexception">8.1. CrmValidationException</a></li>
 </ul>
 </li>
-<li><a href="#crm-changes">9. Changes</a></li>
-<li><a href="#crm-license">10. License</a></li>
-<li><a href="#crm-source-code">11. Source Code</a></li>
+<li><a href="#crm-ast-transformations">9. AST Transformations</a></li>
+<li>
+<ul class="sectlevel2">
+<li><a href="#crm--tenantentity">9.1. @TenantEntity</a></li>
+<li><a href="#crm--auditentity">9.2. @AuditEntity</a></li>
+<li><a href="#crm--uuidentity">9.3. @UuidEntity</a></li>
+</ul>
+</li>
+<li><a href="#crm-changes">10. Changes</a></li>
+<li><a href="#crm-license">11. License</a></li>
+<li><a href="#crm-source-code">12. Source Code</a></li>
 </ul>
 </div>
 </div>
@@ -794,14 +800,58 @@ All lookup entities in GR8 CRM plugins extend <strong>CrmLookupEntity</strong> a
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-ast-transformations">8. AST Transformations</h2>
+<h2 id="crm-exceptions">8. Exceptions</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="crm-crmvalidationexception">8.1. CrmValidationException</h3>
+<div class="paragraph">
+<p>This exception is thrown by services when data binding fails.
+The exception instance can carry one or more domain instances involved in the data binding.
+The constructor takes a message key and a variable number of domain instance arguments.
+The controller that called the service can pick up domain instances from the exception and render validation errors in the browser.</p>
+</div>
+<div class="listingblock">
+<div class="title">MyService.groovy</div>
+<div class="content">
+<pre class="prettyprint"><code class="groovy language-groovy">MyDomain save(Map params) {
+    ...
+    if(! myDomain.save()) {
+        throw new CrmValidationException('myDomain.validation.error', myDomain)
+    }
+    myDomain
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">MyController.groovy</div>
+<div class="content">
+<pre class="prettyprint"><code class="groovy language-groovy">def saveAction() {
+    MyDomain domainInstance
+    try {
+        domainInstance = myService.save(params)
+    } catch(CrmValidationException e) {
+        domainInstance = e.domainInstance
+    }
+    if(domainInstance.hasErrors()) {
+        render view: "create", model: [bean: domainInstance]
+    } else {
+        redirect action: "show", id: domainInstance.ident()
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-ast-transformations">9. AST Transformations</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <strong>crm-core</strong> plugin provides a collection of useful AST Transformations.
 Most of the transformations are related to domain classes.</p>
 </div>
 <div class="sect2">
-<h3 id="crm--tenantentity">8.1. @TenantEntity</h3>
+<h3 id="crm--tenantentity">9.1. @TenantEntity</h3>
 <div class="paragraph">
 <p>This transformation adds a <code>Long tenantId</code> property to the domain class.
 The property is set to <code>TenantUtils.getTenant()</code> when the domain class is instantiated.</p>
@@ -823,7 +873,7 @@ class Customer {
 </div>
 </div>
 <div class="sect2">
-<h3 id="crm--auditentity">8.2. @AuditEntity</h3>
+<h3 id="crm--auditentity">9.2. @AuditEntity</h3>
 <div class="paragraph">
 <p>This transformation adds <code>dateCreated</code> and <code>lastUpdated</code> Date properties to the domain class.</p>
 </div>
@@ -844,7 +894,7 @@ class Author {
 </div>
 </div>
 <div class="sect2">
-<h3 id="crm--uuidentity">8.3. @UuidEntity</h3>
+<h3 id="crm--uuidentity">9.3. @UuidEntity</h3>
 <div class="paragraph">
 <p>This transformation adds a <code>String guid</code> property to the domain class.
 The property is set to <code>UUID.randomUUID().toString()</code> when the domain class is instantiated.</p>
@@ -867,7 +917,7 @@ class MyEvent {
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-changes">9. Changes</h2>
+<h2 id="crm-changes">10. Changes</h2>
 <div class="sectionbody">
 <div class="dlist">
 <dl>
@@ -884,7 +934,7 @@ class MyEvent {
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-license">10. License</h2>
+<h2 id="crm-license">11. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -892,7 +942,7 @@ class MyEvent {
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">11. Source Code</h2>
+<h2 id="crm-source-code">12. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/goeh/grails-crm-core">https://github.com/goeh/grails-crm-core</a></p>
@@ -902,8 +952,8 @@ class MyEvent {
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.0.1<br>
-Last updated 2014-08-02 11:17:04 CEST
+Version 2.0.2<br>
+Last updated 2014-08-17 22:39:33 CEST
 </div>
 </div>
 </body>
