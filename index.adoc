@@ -36,18 +36,18 @@ the same way as you install other plugins, by adding them to BuildConfig.groovy
 [options="header"]
 |===
 | Plugin Name                                                     | Description
-| link:/plugins/crm-core/index.html[crm-core]                     | Core features like multi tenancy (used by most other plugins)
-| link:/plugins/crm-i18n/index.html[crm-i18n]                     | Store localized messages in database to support runtime changes
-| link:/plugins/crm-feature/index.html[crm-feature]               | Turn application features on/off for specific users or roles
-| link:/plugins/crm-security/index.html[crm-security]             | Core security services
-| link:/plugins/crm-security-shiro/index.html[crm-security-shiro] | Apache Shiro security implementation
-| link:/plugins/crm-ui-bootstrap/index.html[crm-ui-bootstrap]     | Twitter Bootstrap user interface (used by most -ui plugins)
+| link:plugins/crm-core/index.html[crm-core]                     | Core features like multi tenancy (used by most other plugins)
+| link:plugins/crm-i18n/index.html[crm-i18n]                     | Store localized messages in database to support runtime changes
+| link:plugins/crm-feature/index.html[crm-feature]               | Turn application features on/off for specific users or roles
+| link:plugins/crm-security/index.html[crm-security]             | Core security services
+| link:plugins/crm-security-shiro/index.html[crm-security-shiro] | Apache Shiro security implementation
+| link:plugins/crm-ui-bootstrap/index.html[crm-ui-bootstrap]     | Twitter Bootstrap user interface (used by most -ui plugins)
 | link:plugins/crm-notes/index.html[crm-notes]                    | Add short notes (subject+body) to any domain instance
-| link:/plugins/crm-tags/index.html[crm-tags]                     | Tag any domain instance
-| link:/plugins/crm-contact/index.html[crm-contact] + link:/plugins/crm-contact-ui/index.html[crm-contact-ui]                 | Contact Management (companies and individuals)
-| link:/plugins/crm-content/index.html[crm-content] + link:/plugins/crm-content-ui/index.html[crm-content-ui]                 | Content Management and authoring (-ui)
-| link:/plugins/crm-task/index.html[crm-task] + link:/plugins/crm-task-ui/index.html[crm-task-ui] | Task/Calendar Management
-| link:/plugins/crm-email/index.html[crm-email]                   | Send emails using Grails events
+| link:plugins/crm-tags/index.html[crm-tags]                     | Tag any domain instance
+| link:plugins/crm-contact/index.html[crm-contact] + link:plugins/crm-contact-ui/index.html[crm-contact-ui]                 | Contact Management (companies and individuals)
+| link:plugins/crm-content/index.html[crm-content] + link:plugins/crm-content-ui/index.html[crm-content-ui]                 | Content Management and authoring (-ui)
+| link:plugins/crm-task/index.html[crm-task] + link:plugins/crm-task-ui/index.html[crm-task-ui] | Task/Calendar Management
+| link:plugins/crm-email/index.html[crm-email]                   | Send emails using Grails events
 |===
 
 === Plugins not yet released
@@ -64,8 +64,8 @@ github project and we will prioritize cleanup and documentation and get it publi
 | https://github.com/goeh/grails-crm-notification[crm-notification] | Notify users about stuff with a central notification center
 | https://github.com/goeh/grails-crm-syslog[crm-syslog]           | Log application events to database
 | crm-security-ui                                                 | Back Office features for user and role administration
-| link:/plugins/crm-product/index.html[crm-product] + link:/plugins/crm-product-ui/index.html[crm-product-ui] | Product and inventory management including administration (-ui)
-| link:/plugins/crm-sales/index.html[crm-sales] + link:/plugins/crm-sales-ui/index.html[crm-sales-ui] | Sales lead/opportunity management
+| link:plugins/crm-product/index.html[crm-product] + link:plugins/crm-product-ui/index.html[crm-product-ui] | Product and inventory management including administration (-ui)
+| link:plugins/crm-sales/index.html[crm-sales] + link:plugins/crm-sales-ui/index.html[crm-sales-ui] | Sales lead/opportunity management
 | crm-order + crm-order-ui                                        | Order Management
 |===
 
@@ -84,7 +84,7 @@ YouTube video http://youtu.be/LZQ-1f9RGqg[Cut your Grails application to pieces 
 
 link:/tutorials/gr8crm-web/index.html[This guide] describes how you can use
 GR8 CRM Grails plugins to develop a simple web site.
-The link:/plugins/crm-content/index.html[crm-content] plugin makes it possible to add HTML pages in a content repository and make the pages publicly accessible.
+The link:plugins/crm-content/index.html[crm-content] plugin makes it possible to add HTML pages in a content repository and make the pages publicly accessible.
 
 In this tutorial you will create a Grails application that can serve as a public facing web site. It will have built-in content editing features,
 including image uploads.
@@ -105,9 +105,9 @@ GR8Conf Europe 2014 by https://github.com/goeh[Göran Ehrsson] (https://twitter.
 The github repository contains 5 branches, each representing a snapshot in time during development.
 
 - *master* A plain Grails application, created with grails create-app
-- *m1* The plugin link:/plugins/crm-contact-ui/index.html[crm-contact-ui] was installed and contact (company/person) CRUD features are available.
-- *m2* The plugin link:/plugins/crm-content-ui/index.html[crm-content-ui] was installed and documents/files can now be attached to contacts.
-- *m3* The plugin link:/plugins/crm-task-ui/index.html[crm-task-ui] was installed and tasks/appointments with contacts can now be scheduled.
+- *m1* The plugin link:plugins/crm-contact-ui/index.html[crm-contact-ui] was installed and contact (company/person) CRUD features are available.
+- *m2* The plugin link:plugins/crm-content-ui/index.html[crm-content-ui] was installed and documents/files can now be attached to contacts.
+- *m3* The plugin link:plugins/crm-task-ui/index.html[crm-task-ui] was installed and tasks/appointments with contacts can now be scheduled.
 - *m4* The plugin cookie-layout was installed and two themes were created to show that UI can change depending on sub-domain.
 
 === GR8 CRM Web Site
