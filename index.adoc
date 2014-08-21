@@ -48,6 +48,7 @@ the same way as you install other plugins, by adding them to BuildConfig.groovy
 | link:plugins/crm-content/index.html[crm-content] + link:plugins/crm-content-ui/index.html[crm-content-ui]                 | Content Management and authoring (-ui)
 | link:plugins/crm-task/index.html[crm-task] + link:plugins/crm-task-ui/index.html[crm-task-ui] | Task/Calendar Management
 | link:plugins/crm-email/index.html[crm-email]                   | Send emails using Grails events
+| link:plugins/crm-product/index.html[crm-product] + link:plugins/crm-product-ui/index.html[crm-product-ui] | Product and inventory management including administration (-ui)
 |===
 
 === Plugins not yet released
@@ -64,7 +65,6 @@ github project and we will prioritize cleanup and documentation and get it publi
 | https://github.com/goeh/grails-crm-notification[crm-notification] | Notify users about stuff with a central notification center
 | https://github.com/goeh/grails-crm-syslog[crm-syslog]           | Log application events to database
 | crm-security-ui                                                 | Back Office features for user and role administration
-| link:plugins/crm-product/index.html[crm-product] + link:plugins/crm-product-ui/index.html[crm-product-ui] | Product and inventory management including administration (-ui)
 | link:plugins/crm-sales/index.html[crm-sales] + link:plugins/crm-sales-ui/index.html[crm-sales-ui] | Sales lead/opportunity management
 | crm-order + crm-order-ui                                        | Order Management
 |===
