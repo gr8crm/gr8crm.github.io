@@ -422,7 +422,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.0.0</span>
+<span id="revnumber">version 2.0.1</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -451,6 +451,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#crm-changes">5. Changes</a></li>
 <li><a href="#crm-license">6. License</a></li>
 <li><a href="#crm-source-code">7. Source Code</a></li>
+<li><a href="#crm-contributing">8. Contributing</a></li>
 </ul>
 </div>
 </div>
@@ -572,9 +573,14 @@ in your BuildConfig.groovy if you want end-user product management features.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The supplier&#8217;s item number</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">supplier</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CrmContact</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Supplier reference</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">supplierId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supplier identity (primary key), if supplier exists as a CrmContact</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">supplierName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the product&#8217;s supplier</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">group</p></td>
@@ -848,11 +854,22 @@ Otherwise an exception will be thrown.</p>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="crm-contributing">8. Contributing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Please report <a href="https://github.com/goeh/grails-crm-product/issues">issues or suggestions</a>.</p>
+</div>
+<div class="paragraph">
+<p>Want to improve the plugin: Fork the <a href="https://github.com/goeh/grails-crm-product">repository</a> and send a pull request.</p>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.0.0<br>
-Last updated 2014-08-15 22:22:05 CEST
+Version 2.0.1<br>
+Last updated 2014-08-21 23:05:28 CEST
 </div>
 </div>
 </body>
