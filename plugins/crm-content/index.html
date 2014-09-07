@@ -422,7 +422,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.0.1</span>
+<span id="revnumber">version 2.0.2</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -468,9 +468,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#crm-configuration">11. Configuration</a></li>
-<li><a href="#crm-license">12. License</a></li>
-<li><a href="#crm-source-code">13. Source Code</a></li>
-<li><a href="#crm-contributing">14. Contributing</a></li>
+<li><a href="#crm-changes">12. Changes</a></li>
+<li><a href="#crm-license">13. License</a></li>
+<li><a href="#crm-source-code">14. Source Code</a></li>
+<li><a href="#crm-contributing">15. Contributing</a></li>
 </ul>
 </div>
 </div>
@@ -514,7 +515,7 @@ Content can be shared with users of the application or shared publicly to the wo
 <div class="paragraph">
 <p>Note that this plugin does not contain any user interface components. This plugin contains domain classes and services only.
 The plugin <a href="http://gr8crm.github.io/plugins/crm-content-ui/">crm-content-ui</a> provides a Twitter Bootstrap based user interface
-for managing files, folders and attachments. crm-content-ui depends on crm-content so you only need to include crm-content-ui
+for managing files, folders and attachments. <code>crm-content-ui</code> depends on <code>crm-content</code> so you only need to include <code>crm-content-ui</code>
 in your BuildConfig.groovy if you want end-user content management features.</p>
 </div>
 <div class="paragraph">
@@ -546,7 +547,7 @@ Here are some real-wold examples on what type of content that can be stored and 
 <h2 id="crm-storage">3. Storage</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The crm-content plugin has configurable <strong>storage providers</strong>. The default storage provider store
+<p>The <code>crm-content</code> plugin has configurable <strong>storage providers</strong>. The default storage provider store
 content in the web server filesystem. Files on disc can optionally be encrypted for increased security.
 Custom storage providers can be developed to integrate with content services like Amazon S3, Google Drive or Dropbox.
 One application can have multiple storage providers and select the best storage provides based on some business logic.
@@ -559,12 +560,12 @@ Maybe HTML files should be stored in a S3 bucket and customer contracts encrypte
 <div class="sectionbody">
 <div class="paragraph">
 <p>Content is usually stored in folders but content can also be attached to domain instances.
-In fact when content is stored in a folder, it is actually "attached" to a CrmResourceFolder domain instance.
+In fact when content is stored in a folder, it is actually "attached" to a <code>CrmResourceFolder</code> domain instance.
 So there is no technical difference between files stored in folders and files attached to domain instances.</p>
 </div>
 <div class="paragraph">
-<p>A CrmResourceRef instance is used to attach content to a domain instance. The ref property references
-the domain instance using a <strong>Resource Identifier</strong> and the res property contains the provider specific URI to the content.
+<p>A <code>CrmResourceRef</code> instance is used to attach content to a domain instance. The <code>ref</code> property references
+the domain instance using a <strong>Resource Identifier</strong> and the <code>res</code> property contains the provider specific URI to the content.
 This is nothing that you need to care about, the framework takes care about setting these properties when you create and attach content.</p>
 </div>
 </div>
@@ -580,9 +581,9 @@ Content can optionally be encrypted before it is stored on disc or sent over a n
 <div class="sect2">
 <h3 id="crm-access-control">5.1. Access Control</h3>
 <div class="paragraph">
-<p>An instance of the domain class CrmResourceRef is always involved when working with content. It represents a "handle"
-to the content. It has properties like filename, title and description. Another important property is status that
-specifies the status and access rights for the content. The class CrmResourceRef has one static int constant for each
+<p>An instance of the domain class <code>CrmResourceRef</code> is always involved when working with content. It represents a "handle"
+to the content. It has properties like <code>filename</code>, <code>title</code> and <code>description</code>. Another important property is <code>status</code> that
+specifies the status and access rights for the content. The class <code>CrmResourceRef</code> has one static <code>int</code> constant for each
 possible status a content instance can have. The constants are listed below.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -623,7 +624,7 @@ possible status a content instance can have. The constants are listed below.</p>
 <p>Content can be encrypted before it&#8217;s stored in the server filesystem.</p>
 </div>
 <div class="paragraph">
-<p>The class CrmFileResource has static int constants for all supported encryption algorithms.</p>
+<p>The class <code>CrmFileResource</code> has static <code>int</code> constants for all supported encryption algorithms.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 2. Content Encryption</caption>
@@ -652,7 +653,7 @@ possible status a content instance can have. The constants are listed below.</p>
 <p>You configure the application wide encryption key in Config.groovy. The encryption key must be 16 bytes long.</p>
 </div>
 <div class="paragraph">
-<p>crm.content.encryption.password = "1234567890123456"</p>
+<p><code>crm.content.encryption.password = "1234567890123456"</code></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -661,7 +662,7 @@ possible status a content instance can have. The constants are listed below.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The current implementation of CrmFileResource encrypts <strong>all</strong> content if crm.content.encryption.password is set.
+The current implementation of <code>CrmFileResource</code> encrypts <strong>all</strong> content if <code>crm.content.encryption.password</code> is set.
 </td>
 </tr>
 </table>
@@ -673,7 +674,7 @@ The current implementation of CrmFileResource encrypts <strong>all</strong> cont
 <h2 id="crm-web-access">6. Web Access</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Content can be accessed via a URL and the crm-content plugin configures a set of URL mappings for this purpose.
+<p>Content can be accessed via a URL and the <code>crm-content</code> plugin configures a set of URL mappings for this purpose.
 Note that access control restrictions apply.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -725,7 +726,7 @@ Note that access control restrictions apply.</p>
 <div class="sect2">
 <h3 id="crm-createresource">7.1. createResource</h3>
 <div class="paragraph">
-<p>CrmResourceRef createResource(InputStream inputStream, String filename, Long length, String contentType, Object reference, Map params = [:])</p>
+<p><code>CrmResourceRef createResource(InputStream inputStream, String filename, Long length, String contentType, Object reference, Map params = [:])</code></p>
 </div>
 <div class="paragraph">
 <p>Create a new file from an InputStream.</p>
@@ -764,15 +765,15 @@ Note that access control restrictions apply.</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">params</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">optional parameters like status, title and description for the content</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optional parameters like <code>status</code>, <code>title</code> and <code>description</code> for the content</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>If the content creation succeeds an instance of CrmResourceRef is returned. This is an active "handle" to the content.</p>
+<p>If the content creation succeeds an instance of <code>CrmResourceRef</code> is returned. This is an active "handle" to the content.</p>
 </div>
 <div class="paragraph">
-<p>The resource property on CrmResourceRef return a URI instance. This URI is used by other service methods, for example when reading and writing content.</p>
+<p>The <code>resource</code> property on CrmResourceRef return a <code>URI</code> instance. This URI is used by other service methods, for example when reading and writing content.</p>
 </div>
 <div class="paragraph">
 <p>The following code copies (moves) a PDF file from the server to a <strong>/presentations</strong> folder in GR8 CRM.</p>
@@ -802,10 +803,10 @@ assert pdf.name == "presentation.pdf"</code></pre>
 <div class="sect2">
 <h3 id="crm-withinputstream">7.2. withInputStream</h3>
 <div class="paragraph">
-<p>def withInputStream(URI uri, Closure work)</p>
+<p><code>def withInputStream(URI uri, Closure work)</code></p>
 </div>
 <div class="paragraph">
-<p>For content referenced by a URI create a new InputStream and pass it into a closure. This method ensures the stream is closed after the closure returns.</p>
+<p>For content referenced by a <code>URI</code> create a new InputStream and pass it into a closure. This method ensures the stream is closed after the closure returns.</p>
 </div>
 <div class="listingblock">
 <div class="title">CopyContentToServerFile.groovy</div>
@@ -822,7 +823,7 @@ crmContentService.withInputStream(content.resource) { inputStream -&gt;
 <div class="sect2">
 <h3 id="crm-writeto">7.3. writeTo</h3>
 <div class="paragraph">
-<p>long writeTo(URI uri, OutputStream out)</p>
+<p><code>long writeTo(URI uri, OutputStream out)</code></p>
 </div>
 <div class="paragraph">
 <p>Write content to an OutputStream.</p>
@@ -847,7 +848,7 @@ crmContentService.withInputStream(content.resource) { inputStream -&gt;
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Render content to the response stream. This line can be shortened to: content.writeTo(response.outputStream)</td>
+<td>Render content to the response stream. This line can be shortened to: <code>content.writeTo(response.outputStream)</code></td>
 </tr>
 </table>
 </div>
@@ -855,10 +856,10 @@ crmContentService.withInputStream(content.resource) { inputStream -&gt;
 <div class="sect2">
 <h3 id="crm-getmetadata">7.4. getMetadata</h3>
 <div class="paragraph">
-<p>Map&lt;String, Object&gt; getMetadata(URI resource)</p>
+<p><code>Map&lt;String, Object&gt; getMetadata(URI resource)</code></p>
 </div>
 <div class="paragraph">
-<p>Get metadata for the content specified by resource. The metadata Map contains the following keys:</p>
+<p>Get metadata for the content specified by <code>resource</code>. The metadata Map contains the following keys:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -914,7 +915,7 @@ crmContentService.withInputStream(content.resource) { inputStream -&gt;
 <div class="sect2">
 <h3 id="crm-updateresource">7.5. updateResource</h3>
 <div class="paragraph">
-<p>long updateResource(CrmResourceRef resource, InputStream inputStream, String contentType = null)</p>
+<p><code>long updateResource(CrmResourceRef resource, InputStream inputStream, String contentType = null)</code></p>
 </div>
 <div class="paragraph">
 <p>Update/overwrite existing content.</p>
@@ -954,30 +955,30 @@ assert s == "This is an updated test"</code></pre>
 <h2 id="crm-crmfreemarkerservice">8. CrmFreeMarkerService</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <strong>FreeMarker</strong> service is used when you want to store <a href="http://freemarker.org" target="_blank">FreeMarker</a> templates with the crm-content plugin.
+<p>The <strong>FreeMarker</strong> service is used when you want to store <a href="http://freemarker.org" target="_blank">FreeMarker</a> templates with the <code>crm-content</code> plugin.
 You can use FreeMarker templates when you send email or render HTML pages.
-If used together with the crm-content-ui plugin you can let administrators edit templates with an HTML editor.</p>
+If used together with the <code>crm-content-ui</code> plugin you can let administrators edit templates with an HTML editor.</p>
 </div>
 <div class="sect2">
 <h3 id="crm-process">8.1. process</h3>
 <div class="paragraph">
-<p>void process(String templatePath, Map binding, Writer out)</p>
+<p><code>void process(String templatePath, Map binding, Writer out)</code></p>
 </div>
 <div class="paragraph">
-<p>Let FreeMarker parse the template located at templatePath in the current tenant.
-Values in binding can be referenced from the template. The output is written to out.</p>
+<p>Let FreeMarker parse the template located at <code>templatePath</code> in the current tenant.
+Values in <code>binding</code> can be referenced from the template. The output is written to <code>out</code>.</p>
 </div>
 <div class="paragraph">
-<p>void process(Long tenant, String templatePath, Map binding, Writer out)</p>
+<p><code>void process(Long tenant, String templatePath, Map binding, Writer out)</code></p>
 </div>
 <div class="paragraph">
 <p>Same as above but a tenant can be specified from which templates will be retrieved.</p>
 </div>
 <div class="paragraph">
-<p>void process(CrmResourceRef ref, Map binding, Writer out)</p>
+<p><code>void process(CrmResourceRef ref, Map binding, Writer out)</code></p>
 </div>
 <div class="paragraph">
-<p>Same as above but an instance of CrmResourceRef will be used as template.</p>
+<p>Same as above but an instance of <code>CrmResourceRef</code> will be used as template.</p>
 </div>
 </div>
 </div>
@@ -1054,7 +1055,7 @@ You can look at the source code for the <a href="https://github.com/technipelago
 <h2 id="crm-configuration">11. Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>crm.content.encryption.algorithm</p>
+<p><code>crm.content.encryption.algorithm</code></p>
 </div>
 <div class="paragraph">
 <p>This property defines what encryption algorithm to use when storing files.
@@ -1062,49 +1063,49 @@ File are by default stored in the filesystem on the application server.
 One of the following algorithms can be used:</p>
 </div>
 <div class="paragraph">
-<p>grails.plugins.crm.content.CrmFileResource.NO_ENCRYPTION (default)</p>
+<p><code>grails.plugins.crm.content.CrmFileResource.NO_ENCRYPTION</code> (default)</p>
 </div>
 <div class="paragraph">
 <p>Files are not encrypted, they are stored in original form.</p>
 </div>
 <div class="paragraph">
-<p>grails.plugins.crm.content.CrmFileResource.AES_ENCRYPTION</p>
+<p><code>grails.plugins.crm.content.CrmFileResource.AES_ENCRYPTION</code></p>
 </div>
 <div class="paragraph">
 <p>Files are encrypted with AES encryption</p>
 </div>
 <div class="paragraph">
-<p>crm.content.encryption.password = "1234567890123456"</p>
+<p><code>crm.content.encryption.password = "1234567890123456"</code></p>
 </div>
 <div class="paragraph">
 <p>Encryption key. Must be 16 bytes!</p>
 </div>
 <div class="paragraph">
-<p>crm.content.cache.expires = 60 * 10</p>
+<p><code>crm.content.cache.expires = 60 * 10</code></p>
 </div>
 <div class="paragraph">
 <p>Browser cache expiration (in seconds) for public content.</p>
 </div>
 <div class="paragraph">
-<p>crm.content.include.tenant = 1L</p>
+<p><code>crm.content.include.tenant = 1L</code></p>
 </div>
 <div class="paragraph">
 <p>Default tenant for content rendered with the render tag.</p>
 </div>
 <div class="paragraph">
-<p>crm.content.include.path = '/templates'</p>
+<p><code>crm.content.include.path = '/templates'</code></p>
 </div>
 <div class="paragraph">
 <p>Default path for content rendered with the render tag.</p>
 </div>
 <div class="paragraph">
-<p>crm.content.include.parser = 'freemarker'</p>
+<p><code>crm.content.include.parser = 'freemarker'</code></p>
 </div>
 <div class="paragraph">
 <p>Default parser for content rendered with the render tag.</p>
 </div>
 <div class="paragraph">
-<p>crm.content.freemarker.template.updateDelay = 60</p>
+<p><code>crm.content.freemarker.template.updateDelay = 60</code></p>
 </div>
 <div class="paragraph">
 <p>The FreeMarker service checks if templates has been updated with this interval (in seconds).</p>
@@ -1112,7 +1113,30 @@ One of the following algorithms can be used:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-license">12. License</h2>
+<h2 id="crm-changes">12. Changes</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">2.0.2</dt>
+<dd>
+<p>Grails tags are now supported when using the <code>crm:render</code> tag with option <code>parser="gsp"</code>.<br>
+Improved handling of illegal characters in file names.<br>
+CrmContentImportService#importFiles(&#8230;&#8203;) now works on Windows.</p>
+</dd>
+<dt class="hdlist1">2.0.1</dt>
+<dd>
+<p>Updated dependency on crm-core to version 2.0.2</p>
+</dd>
+<dt class="hdlist1">2.0.0</dt>
+<dd>
+<p>First public release</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-license">13. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -1120,7 +1144,7 @@ One of the following algorithms can be used:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">13. Source Code</h2>
+<h2 id="crm-source-code">14. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-content" class="bare">https://github.com/technipelago/grails-crm-content</a></p>
@@ -1128,7 +1152,7 @@ One of the following algorithms can be used:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-contributing">14. Contributing</h2>
+<h2 id="crm-contributing">15. Contributing</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Please report <a href="https://github.com/technipelago/grails-crm-content/issues">issues or suggestions</a>.</p>
@@ -1141,8 +1165,8 @@ One of the following algorithms can be used:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.0.1<br>
-Last updated 2014-08-28 17:39:13 CEST
+Version 2.0.2<br>
+Last updated 2014-09-07 22:15:15 CEST
 </div>
 </div>
 </body>
