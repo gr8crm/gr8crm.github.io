@@ -422,7 +422,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.0.2</span>
+<span id="revnumber">version 2.0.3</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -467,11 +467,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#crm-create-a-file">10.2. Create a file</a></li>
 </ul>
 </li>
-<li><a href="#crm-configuration">11. Configuration</a></li>
-<li><a href="#crm-changes">12. Changes</a></li>
-<li><a href="#crm-license">13. License</a></li>
-<li><a href="#crm-source-code">14. Source Code</a></li>
-<li><a href="#crm-contributing">15. Contributing</a></li>
+<li><a href="#crm-tag-library">11. Tag Library</a>
+<ul class="sectlevel2">
+<li><a href="#crm-render">11.1. render</a></li>
+<li><a href="#crm-image">11.2. image</a></li>
+<li><a href="#crm-attachments-2">11.3. attachments</a></li>
+</ul>
+</li>
+<li><a href="#crm-configuration">12. Configuration</a></li>
+<li><a href="#crm-changes">13. Changes</a></li>
+<li><a href="#crm-license">14. License</a></li>
+<li><a href="#crm-source-code">15. Source Code</a></li>
+<li><a href="#crm-contributing">16. Contributing</a></li>
 </ul>
 </div>
 </div>
@@ -1052,7 +1059,93 @@ You can look at the source code for the <a href="https://github.com/technipelago
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-configuration">11. Configuration</h2>
+<h2 id="crm-tag-library">11. Tag Library</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="crm-render">11.1. render</h3>
+<div class="paragraph">
+<p>The render tag renders content in the browser.</p>
+</div>
+<div class="listingblock">
+<div class="title">frontpage.gsp</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-html" data-lang="html">&lt;div class="row-fluid"&gt;
+    &lt;crm:render template="web/front/banner.html"/&gt;
+&lt;/div&gt;
+&lt;div class="row-fluid"&gt;
+    &lt;crm:render template="web/front/intro.html" parser="gsp"/&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The content can optionally be parsed with <code>gsp</code> or <code>freemarker</code>.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-image">11.2. image</h3>
+<div class="paragraph">
+<p>The <code>image</code> tag generates markup to display a resource instance as an image.</p>
+</div>
+<div class="listingblock">
+<div class="title">ImageController.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">class ImageController {
+    def crmContentService
+
+    def index(Long id) {
+        [file: crmContentService.getResourceRef(id)]
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">index.gsp</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-html" data-lang="html">&lt;crm:image resource="${file}" class="img-polaroid" width="640"/&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-attachments-2">11.3. attachments</h3>
+<div class="paragraph">
+<p>With the <code>attachments</code> tag you can iterate over resources attached to a domain instance.</p>
+</div>
+<div class="paragraph">
+<p>The following example displays a photo album of all images attached to a project that are tagged as <strong>favorite</strong>.
+The project domain instance is referenced with the <code>project</code> variable.</p>
+</div>
+<div class="listingblock">
+<div class="title">project-album.gsp</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-html" data-lang="html">&lt;crm:attachments bean="${project}" var="file" type="image" tags="favorite"&gt; <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b>
+    &lt;g:link controller="crmContent" action="open" id="${file.id}" title="${file.title.encodeAsHTML()}" target="_blank"&gt;
+      &lt;crm:image resource="${file}" width="64" class="img-polaroid" alt="${file.name.encodeAsHTML()}"/&gt;
+    &lt;/g:link&gt;
+&lt;/crm:attachments&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>type</code> attribute can be any file extension, or <code>image</code> that is a shorthand for (jpg, png, gif).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The tags attribute can be used to only include attachments that are tagged with a specific value</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-configuration">12. Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><code>crm.content.encryption.algorithm</code></p>
@@ -1113,10 +1206,14 @@ One of the following algorithms can be used:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-changes">12. Changes</h2>
+<h2 id="crm-changes">13. Changes</h2>
 <div class="sectionbody">
 <div class="dlist">
 <dl>
+<dt class="hdlist1">2.0.3</dt>
+<dd>
+<p>Tag <code>attachments</code> added to the <code>crm</code> tag library</p>
+</dd>
 <dt class="hdlist1">2.0.2</dt>
 <dd>
 <p>Grails tags are now supported when using the <code>crm:render</code> tag with option <code>parser="gsp"</code>.<br>
@@ -1136,7 +1233,7 @@ CrmContentImportService#importFiles(&#8230;&#8203;) now works on Windows.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-license">13. License</h2>
+<h2 id="crm-license">14. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -1144,7 +1241,7 @@ CrmContentImportService#importFiles(&#8230;&#8203;) now works on Windows.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">14. Source Code</h2>
+<h2 id="crm-source-code">15. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-content" class="bare">https://github.com/technipelago/grails-crm-content</a></p>
@@ -1152,7 +1249,7 @@ CrmContentImportService#importFiles(&#8230;&#8203;) now works on Windows.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-contributing">15. Contributing</h2>
+<h2 id="crm-contributing">16. Contributing</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Please report <a href="https://github.com/technipelago/grails-crm-content/issues">issues or suggestions</a>.</p>
@@ -1165,8 +1262,8 @@ CrmContentImportService#importFiles(&#8230;&#8203;) now works on Windows.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.0.2<br>
-Last updated 2014-09-07 22:15:15 CEST
+Version 2.0.3<br>
+Last updated 2014-09-23 13:37:31 CEST
 </div>
 </div>
 </body>
