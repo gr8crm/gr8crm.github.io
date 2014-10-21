@@ -422,7 +422,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.0.0</span>
+<span id="revnumber">version 2.0.1</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -442,9 +442,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#crm-crmtagservice">3.1. CrmTagService</a></li>
 </ul>
 </li>
-<li><a href="#crm-configuration">4. Configuration</a></li>
+<li><a href="#crm-code-examples">4. Code Examples</a></li>
 <li><a href="#crm-license">5. License</a></li>
 <li><a href="#crm-source-code">6. Source Code</a></li>
+<li><a href="#crm-contributing">7. Contributing</a></li>
 </ul>
 </div>
 </div>
@@ -476,12 +477,12 @@ It involves using technology to organize, automate and synchronize sales, market
 <h2 id="crm-crm-tags-plugin">2. CRM Tags Plugin</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The crm-tags plugin provides both storage, service and user interface components for working with tags.</p>
+<p>The <code>crm-tags</code> plugin provides both storage, service and user interface components for working with tags.</p>
 </div>
 <div class="sect2">
 <h3 id="crm-enable-tagging-support-for-a-domain-class">2.1. Enable tagging support for a domain class</h3>
 <div class="paragraph">
-<p>To make a domain class "taggable" you add a static property taggable on the class.</p>
+<p>To make a domain class "taggable" you add a static property <code>taggable</code> on the class.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -499,18 +500,18 @@ It involves using technology to organize, automate and synchronize sales, market
 <h2 id="crm-services">3. Services</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The crm-tags plugin provides a service that you can use to interact with tags and tagged entities.</p>
+<p>The <code>crm-tags</code> plugin provides a service that you can use to interact with tags and tagged entities.</p>
 </div>
 <div class="sect2">
 <h3 id="crm-crmtagservice">3.1. CrmTagService</h3>
 <div class="paragraph">
-<p>CrmTag createTag(Map params)</p>
+<p><code>CrmTag createTag(Map params)</code></p>
 </div>
 <div class="paragraph">
 <p>Create a new tag.</p>
 </div>
 <div class="paragraph">
-<p>void deleteTag(String name, Long tenantId = null)</p>
+<p><code>void deleteTag(String name, Long tenantId = null)</code></p>
 </div>
 <div class="paragraph">
 <p>Delete an existing tag.</p>
@@ -530,37 +531,37 @@ It involves using technology to organize, automate and synchronize sales, market
 </table>
 </div>
 <div class="paragraph">
-<p>void deleteLinks(reference)</p>
+<p><code>void deleteLinks(reference)</code></p>
 </div>
 <div class="paragraph">
-<p>Delete all tags on the domain instance reference.</p>
+<p>Delete all tags on the domain instance <code>reference</code>.</p>
 </div>
 <div class="paragraph">
-<p>void setTagValue(def instance, Object[] args)</p>
+<p><code>void setTagValue(def instance, Object[] args)</code></p>
 </div>
 <div class="paragraph">
 <p>Set value of a tag associated with a domain instance.</p>
 </div>
 <div class="paragraph">
-<p>def getTagValue(Object instance, String tagName)</p>
+<p><code>def getTagValue(Object instance, String tagName)</code></p>
 </div>
 <div class="paragraph">
 <p>Get the value of a tag associated with a domain instance.</p>
 </div>
 <div class="paragraph">
-<p>boolean isTagged(final Object instance, String tagName)</p>
+<p><code>boolean isTagged(final Object instance, String tagName)</code></p>
 </div>
 <div class="paragraph">
 <p>Check if a domain instance has been tagged with a specific tag.</p>
 </div>
 <div class="paragraph">
-<p>Collection deleteTag(Object instance, String tagName)</p>
+<p><code>Collection deleteTag(Object instance, String tagName)</code></p>
 </div>
 <div class="paragraph">
 <p>Delete a tag associated with a domain instance.</p>
 </div>
 <div class="paragraph">
-<p>PagedResultList findAllByTag(Class clazz, Object[] args)</p>
+<p><code>PagedResultList findAllByTag(Class clazz, Object[] args)</code></p>
 </div>
 <div class="paragraph">
 <p>Find all domain instances with a specific tag.</p>
@@ -569,9 +570,17 @@ It involves using technology to organize, automate and synchronize sales, market
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-configuration">4. Configuration</h2>
+<h2 id="crm-code-examples">4. Code Examples</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>Filter domain instances that are tagged with a specific value.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">List&lt;Person&gt; everyone = Person.findAllByTenantId(1L)
+List&lt;Person&gt; veryImportantPeople = everyone.findAll{it.isTagged('vip')}</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -590,11 +599,22 @@ It involves using technology to organize, automate and synchronize sales, market
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="crm-contributing">7. Contributing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Please report <a href="https://github.com/goeh/grails-crm-tags/issues">issues or suggestions</a>.</p>
+</div>
+<div class="paragraph">
+<p>Want to improve the plugin: Fork the <a href="https://github.com/goeh/grails-crm-tags">repository</a> and send a pull request.</p>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.0.0<br>
-Last updated 2014-07-16 10:01:52 CEST
+Version 2.0.1<br>
+Last updated 2014-09-23 20:31:29 CEST
 </div>
 </div>
 </body>
