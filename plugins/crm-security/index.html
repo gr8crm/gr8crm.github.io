@@ -420,7 +420,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.0.0</span>
+<span id="revnumber">version 2.0.1</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -440,10 +440,23 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#crm-initialize-security-objects">4. Initialize Security Objects</a></li>
-<li><a href="#crm-crmaccountservice">5. CrmAccountService</a></li>
-<li><a href="#crm-crmsecurityservice">6. CrmSecurityService</a></li>
-<li><a href="#crm-license">7. License</a></li>
-<li><a href="#crm-source-code">8. Source Code</a></li>
+<li><a href="#crm-crmaccountservice">5. CrmAccountService</a>
+<ul class="sectlevel2">
+<li><a href="#crm-createaccount">5.1. createAccount</a></li>
+<li><a href="#crm-getaccounts">5.2. getAccounts</a></li>
+<li><a href="#crm-getcurrentaccount">5.3. getCurrentAccount</a></li>
+</ul>
+</li>
+<li><a href="#crm-crmsecurityservice">6. CrmSecurityService</a>
+<ul class="sectlevel2">
+<li><a href="#crm-createuser">6.1. createUser</a></li>
+<li><a href="#crm-adduserrole">6.2. addUserRole</a></li>
+</ul>
+</li>
+<li><a href="#crm-changes">7. Changes</a></li>
+<li><a href="#crm-license">8. License</a></li>
+<li><a href="#crm-source-code">9. Source Code</a></li>
+<li><a href="#crm-contributing">10. Contributing</a></li>
 </ul>
 </div>
 </div>
@@ -479,9 +492,9 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 <h2 id="crm-crm-security-plugin">2. CRM Security Plugin</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The crm-security plugin is a mandatory plugin in GR8 CRM, it manages basic application security like users, roles and permissions.
+<p>The <code>crm-security</code> plugin is a mandatory plugin in GR8 CRM, it manages basic application security like users, roles and permissions.
 However the plugin does not contain a concrete security implementation. It&#8217;s an abstract security implementation with generic features.
-Concrete implementations exists in the form of sub-plugins. One such sub-plugin is crm-security-shiro that implements
+Concrete implementations exists in the form of sub-plugins. One such sub-plugin is <code>crm-security-shiro</code> that implements
 application security using the Apache Shiro web security framework.</p>
 </div>
 </div>
@@ -490,27 +503,29 @@ application security using the Apache Shiro web security framework.</p>
 <h2 id="crm-security-design">3. Security Design</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>All GR8 CRM applications use the crm-security plugin and thus get four common elements that are important objects
+<p>All GR8 CRM applications use the <code>crm-security</code> plugin and thus get four common elements that are important objects
 in a GR8 CRM application (<strong>account</strong>, <strong>tenant</strong>, <strong>role</strong> and <strong>user</strong>).</p>
 </div>
 <div class="sect2">
 <h3 id="crm-account">3.1. Account</h3>
 <div class="paragraph">
-<p>An account in GR8 CRM is owned by a user. An account contains billing information.
-An account can have one or many tenants.</p>
+<p>The <strong>account</strong> it the top-level object in GR8 CRM security object hierarchy.
+In a billing scenario the account is usually the invoice target and contains the invoice address and other billing information.
+Even if you are not running in a multi-tenant business environment an account object must exist.
+In the simplest setup a CRM system contains one user, one account and one tenant.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="crm-tenant">3.2. Tenant</h3>
 <div class="paragraph">
 <p>A tenant can be viewed as a separate database but is technically just an identifier.
-All user-registered information in a GR8 CRM application is tied to a tenant via a tenantId property.</p>
+All user-registered information in a GR8 CRM application is tied to a tenant via a <code>tenantId</code> property.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="crm-role">3.3. Role</h3>
 <div class="paragraph">
-<p>Each tenant can contain a unique set of roles that users can have. Common roles are admin, user and guest.</p>
+<p>Each tenant can contain a unique set of roles that users can have. Common roles are <code>admin</code>, <code>user</code> and <code>guest</code>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -528,7 +543,7 @@ A user is identified by it&#8217;s unique username.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To create user-data in a GR8 CRM application you must first create a user, an account and a tenant.
-This can easily be done in BootStrap.groovy with some help from crmAccountService and crmSecurityService.</p>
+This can easily be done in BootStrap.groovy with some help from <code>crmAccountService</code> and <code>crmSecurityService</code>.</p>
 </div>
 <div class="listingblock">
 <div class="title">Bootstrap.groovy</div>
@@ -572,17 +587,278 @@ This can easily be done in BootStrap.groovy with some help from crmAccountServic
 <div class="sect1">
 <h2 id="crm-crmaccountservice">5. CrmAccountService</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>The account service is used to manage a GR8 CRM account. The account is the top-level object in the security object hierarchy.</p>
+</div>
+<div class="sect2">
+<h3 id="crm-createaccount">5.1. createAccount</h3>
+<div class="paragraph">
+<p><code>createAccount(Map params, Map features)</code></p>
+</div>
+<div class="paragraph">
+<p>The following properties are available on CrmAccount and can be set with the <code>params</code> parameter:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account name (mandatory)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">email</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Email address to the account owner</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">telephone</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Phone number to the account owner</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">address1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invoice address</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">address2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invoice address</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">address3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invoice address</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">postalCode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invoice address</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">city</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invoice address</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">region</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invoice address</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">countryCode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invoice address</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ssn</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Business identification number (if relevant)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reference</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of account owner or invoice reference</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <code>features</code> parameter is used to specify what features are available in the account.
+Feature names are application specific but the following three features and reserved for the security system.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Feature</th>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">crmAdmin</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max number of administrators in the account</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">crmUser</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max number of users in the account</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">crmGuest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max number of guests in the account</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>To create an account that allow 2 administrators, 10 users and 50 guests you create the account with the following parameters:</p>
+</div>
+<div class="listingblock">
+<div class="title">CreateAccount.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">def account = crmAccountService.createAccount(
+    [name: "Corporate Account", status: "active"],
+    [crmAdmin: 2, crmUser: 10, crmGuest: 50]
+)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Trying to add more than 2 users with the <code>admin</code> role to the account above will result in <code>CrmException</code> with error code <code>admin.role.max.exceeded</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-getaccounts">5.2. getAccounts</h3>
+<div class="paragraph">
+<p><code>List&lt;CrmAccount&gt; getAccounts(String)</code></p>
+</div>
+<div class="paragraph">
+<p>Return all accounts owned by a specific user.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-getcurrentaccount">5.3. getCurrentAccount</h3>
+<div class="paragraph">
+<p><code>CrmAccount getCurrentAccount()</code></p>
+</div>
+<div class="paragraph">
+<p>Returns the current active account. The implementation finds the current tenant and then returns the account that the current tenant belongs to.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="crm-crmsecurityservice">6. CrmSecurityService</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>This service is the most frequently used service in the GR8 CRM security system. This service focuses on users, roles and permissions.
+Each tenant has its own set of roles and permissions. This means that one user instance can have different permissions in different tenants.
+For example user <strong>linda</strong> can have the <strong>admin</strong> role in tenant <strong>Marketing</strong> and <strong>guest</strong> role in tenant <strong>R&amp;D</strong>.</p>
+</div>
+<div class="sect2">
+<h3 id="crm-createuser">6.1. createUser</h3>
+<div class="paragraph">
+<p><code>CrmUser createUser(Map)</code></p>
+</div>
+<div class="paragraph">
+<p>Create a new user instance.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">username</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Short name (mandatory)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">email</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Email (mandatory)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Full name (mandatory)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">company</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Company name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">telephone</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Telephone</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">timezone</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default time zone</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">postalCode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Postal address</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">countryCode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Country code</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">campaign</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sign up campaign</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(ACTIVE = 1, BLOCKED = -1)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="crm-adduserrole">6.2. addUserRole</h3>
+<div class="paragraph">
+<p><code>CrmUserRole addUserRole(CrmUser user, String rolename, Date expires, Long tenant)</code></p>
+</div>
+<div class="paragraph">
+<p>Assigns a role to a user. The <code>rolename</code> parameter is usually <strong>admin</strong>, <strong>user</strong> or <strong>guest</strong>.
+If the role is time-restricted you can specify an <strong>expires</strong> date. After that date the role will no longer be active.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-license">7. License</h2>
+<h2 id="crm-changes">7. Changes</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">2.0.1</dt>
+<dd>
+<p>The event crm.tenantCreated is now sent synchronously</p>
+</dd>
+<dt class="hdlist1">2.0.0</dt>
+<dd>
+<p>First public release</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-license">8. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -590,18 +866,29 @@ This can easily be done in BootStrap.groovy with some help from crmAccountServic
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">8. Source Code</h2>
+<h2 id="crm-source-code">9. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/goeh/grails-crm-security" class="bare">https://github.com/goeh/grails-crm-security</a></p>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="crm-contributing">10. Contributing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Please report <a href="https://github.com/goeh/grails-crm-security/issues">issues or suggestions</a>.</p>
+</div>
+<div class="paragraph">
+<p>Want to improve the plugin: Fork the <a href="https://github.com/goeh/grails-crm-security">repository</a> and send a pull request.</p>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.0.0<br>
-Last updated 2014-07-16 09:48:57 CEST
+Version 2.0.1<br>
+Last updated 2014-11-03 16:03:35 CET
 </div>
 </div>
 </body>
