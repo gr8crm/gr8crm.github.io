@@ -1,0 +1,69 @@
+= Events in GR8 CRM
+Göran Ehrsson <goran@technipelago.se>
+:description: GR8 CRM event examples
+:keywords: groovy, grails, crm, gr8crm, events
+:icons: font
+:imagesdir: ./images
+:source-highlighter: prettify
+:homepage: http://gr8crm.github.io
+:gr8crm: GR8 CRM
+
+This document lists a few examples where events are used in {gr8crm} to do inter-plugin communication and avoid tight coupling between plugins and applications.
+
+== reset-password plugin
+
+The reset-password plugin tells the application to send a security code to the user requesting a password change. The plugin has no knowledge about the application or how to send emails. So it triggers an event `resetPassword/sendSecurityCode`. The application listens for the event and can use a nice email design template and include the security code provided in the event.
+
+https://github.com/goeh/grails-reset-password/blob/master/grails-app/controllers/grails/plugins/resetpassword/ResetPasswordController.groovy#L186
+
+When the password has beed reset, it sends another event to let the application do stuff after password has been reset, like sending a notification email to the user.
+
+https://github.com/goeh/grails-reset-password/blob/master/grails-app/services/grails/plugins/resetpassword/ResetPasswordService.groovy#L155
+
+== crm-invitation plugin
+
+When a {gr8crm} user wants to share information with another user he/she sends an "invitation". The invitation plugin does not want to bother with sending emails. It would also make it hard to use a nice email template that follows the application's style guide. Therefore the invitation plugin just triggers an event `crmInvitation/created`. The application listens for this event and sends a nice looking invitation email to the invited email address.
+
+https://github.com/goeh/grails-crm-invitation/blob/master/grails-app/services/grails/plugins/crm/invitation/CrmInvitationService.groovy#L91
+
+== crm-contact-ui plugin
+
+The crm-contact-ui plugin handles one thing well and that is CRUD operations on organisations, people and their relationships. When a user want to print a list of contacts, or export them to Excel the user must get a list of available report layouts. The crm-contact-ui does not include a single layout. Instead the plugin sends an event and wait for answers from plugins that provide layouts. Each plugin that provide report functionality for contacts reply with a list of layouts. The list includes layout name, description, thumbnail image and what callback event to use to actually start the printing/export.
+
+https://github.com/technipelago/grails-crm-contact-ui/blob/master/grails-app/controllers/grails/plugins/crm/contact/CrmContactController.groovy#L113
+
+When the user picks a layout for printing a POST request is sent to the controller. The request includes what topic to post an event to. The listener for this topic is usually in the same plugin that said "hey I have contact reports". The event listener will produce the output and return a temporary File instance. The original controller will render this file to the browser and delete it. That way I can add plugins to an application with the only purpose of providing customer specific reports or other output producers, without modifying the crm-contact-ui plugin.
+
+https://github.com/technipelago/grails-crm-contact-ui/blob/master/grails-app/controllers/grails/plugins/crm/contact/CrmContactController.groovy#L91
+
+== crm-task
+
+The crm-task plugin manages tasks / to-do lists / scheduled events, etc. A Quartz job periodically checks if a task is due. But the crm-task plugin does not know what to do when the task is due, so it's just triggers an event `crmTask/alarm`. The application or other plugins can listen for this event and do stuff, like sending an email or text message about the task that needs attention.
+
+https://github.com/technipelago/grails-crm-task/blob/master/grails-app/services/grails/plugins/crm/task/CrmTaskService.groovy#L522
+
+== crm-security
+
+When a {gr8crm} plugin needs to present a list of available users, for example in a drop down list. The application must decide what users to include in the list. Maybe not all registered users should be in this list. Most plugins depend on the crm-security plugin so they can call crmSecurityService.getTenantUsers(). But that method really just triggers an event `crmTenant/getUsers`. So the custom application can listen on this topic and return a list of available users.
+
+https://github.com/goeh/grails-crm-security/blob/master/grails-app/services/grails/plugins/crm/security/CrmSecurityService.groovy#L995
+
+== crm-feature
+
+When the administrator enables a feature in a {gr8crm} application that previously was disabled, the application and other plugins must get a change to initialise stuff. The crm-feature plugin triggers the event  `<featureName>/enableFeature` to let listeners know that a feature was enabled.
+
+https://github.com/goeh/grails-crm-feature/blob/master/grails-app/services/grails/plugins/crm/feature/CrmFeatureService.groovy#L199
+
+== crm-product
+
+We use the crm-product plugin as an example of a listener for enableFeature events. When the "Product Management" feature is enabled it creates a default/standard price list.
+
+https://github.com/goeh/grails-crm-product/blob/master/grails-app/services/grails/plugins/crm/product/CrmProductService.groovy#L35
+
+----
+These are just a few examples. You will find more event usage in other GR8 CRM plugins at gr8crm.github.io
+
+By using this event model we have managed to develop 20+ different Grails applications to customers without forking one single plugin. All our customers use the same set of base plugins. Then we develop one or two custom plugins for customers that need special stuff. Customers with simple requirements just need some @Listener(s) in a custom application service and they still get a system that feels customised for just them.
+----
+
+WARNING: platform-core works ok in {gr8crm} but we often stumbled upon problems with Hibernate transactions. That's why you may see `[fork: false]` in some events that really should be asynchronous.

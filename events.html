@@ -5,10 +5,10 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
-<meta name="description" content="Main documentation site for the GR8 CRM Plugin suite">
-<meta name="keywords" content="groovy, grails, crm, gr8crm, documentation">
+<meta name="description" content="GR8 CRM event examples">
+<meta name="keywords" content="groovy, grails, crm, gr8crm, events">
 <meta name="author" content="Göran Ehrsson">
-<title>GR8 CRM - Great Customer Relationship Management Plugins for the Grails Web Framework</title>
+<title>Events in GR8 CRM</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -418,296 +418,132 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>GR8 CRM - Great Customer Relationship Management Plugins for the Grails Web Framework</h1>
+<h1>Events in GR8 CRM</h1>
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
 </div>
-<div id="toc" class="toc">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_introduction">1. Introduction</a>
-<ul class="sectlevel2">
-<li><a href="#_customer_relationship_management">1.1. Customer Relationship Management</a></li>
-</ul>
-</li>
-<li><a href="#_gr8_crm_plugins">2. GR8 CRM Plugins</a>
-<ul class="sectlevel2">
-<li><a href="#_official_published_plugins">2.1. Official / Published Plugins</a></li>
-<li><a href="#_plugins_not_yet_released">2.2. Plugins not yet released</a></li>
-</ul>
-</li>
-<li><a href="#_presentations_and_talks">3. Presentations and Talks</a></li>
-<li><a href="#_tutorials">4. Tutorials</a>
-<ul class="sectlevel2">
-<li><a href="#_gr8_crm_web_site">4.1. GR8 CRM Web Site</a></li>
-</ul>
-</li>
-<li><a href="#_demo_applications">5. Demo applications</a>
-<ul class="sectlevel2">
-<li><a href="#_gr8_crm_to_do">5.1. GR8 CRM To-Do</a></li>
-<li><a href="#_gr8_contact">5.2. GR8 Contact</a></li>
-<li><a href="#_gr8_crm_web_site_2">5.3. GR8 CRM Web Site</a></li>
-</ul>
-</li>
-<li><a href="#_application_events">6. Application Events</a></li>
-</ul>
-</div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="_introduction">1. Introduction</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>GR8 CRM is a set of <a href="http://www.grails.org/">Grails Web Application Framework</a>
-plugins that makes it easy to develop web applications with CRM functionality.</p>
-</div>
-<div class="sect2">
-<h3 id="_customer_relationship_management">1.1. Customer Relationship Management</h3>
-<div class="paragraph">
-<p>Customer relationship management (CRM) is a system for managing a company’s interactions with current and future customers.
-It involves using technology to organize, automate and synchronize sales, marketing, customer service, and technical support.
-<a href="http://en.wikipedia.org/wiki/Customer_relationship_management">Wikipedia</a></p>
-</div>
+<p>This document lists a few examples where events are used in GR8 CRM to do inter-plugin communication and avoid tight coupling between plugins and applications.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_gr8_crm_plugins">2. GR8 CRM Plugins</h2>
+<h2 id="_reset_password_plugin">reset-password plugin</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The GR8 CRM "Ecosystem" currently contains over 40 Grails plugins.</p>
+<p>The reset-password plugin tells the application to send a security code to the user requesting a password change. The plugin has no knowledge about the application or how to send emails. So it triggers an event <code>resetPassword/sendSecurityCode</code>. The application listens for the event and can use a nice email design template and include the security code provided in the event.</p>
 </div>
 <div class="paragraph">
-<p>Each GR8 CRM plugin defines a <a href="http://martinfowler.com/bliki/BoundedContext.html">Bounded Context</a>
-that focus on one specific domain, for example <strong>contact</strong>, <strong>project</strong> or <strong>document</strong>.</p>
+<p><a href="https://github.com/goeh/grails-reset-password/blob/master/grails-app/controllers/grails/plugins/resetpassword/ResetPasswordController.groovy#L186" class="bare">https://github.com/goeh/grails-reset-password/blob/master/grails-app/controllers/grails/plugins/resetpassword/ResetPasswordController.groovy#L186</a></p>
 </div>
-<div class="sect2">
-<h3 id="_official_published_plugins">2.1. Official / Published Plugins</h3>
 <div class="paragraph">
-<p>The following plugins are available in Grails Central plugin repository. This means you can install them in your Grails application
-the same way as you install other plugins, by adding them to BuildConfig.groovy</p>
+<p>When the password has beed reset, it sends another event to let the application do stuff after password has been reset, like sending a notification email to the user.</p>
 </div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
+<div class="paragraph">
+<p><a href="https://github.com/goeh/grails-reset-password/blob/master/grails-app/services/grails/plugins/resetpassword/ResetPasswordService.groovy#L155" class="bare">https://github.com/goeh/grails-reset-password/blob/master/grails-app/services/grails/plugins/resetpassword/ResetPasswordService.groovy#L155</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_crm_invitation_plugin">crm-invitation plugin</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When a GR8 CRM user wants to share information with another user he/she sends an "invitation". The invitation plugin does not want to bother with sending emails. It would also make it hard to use a nice email template that follows the application&#8217;s style guide. Therefore the invitation plugin just triggers an event <code>crmInvitation/created</code>. The application listens for this event and sends a nice looking invitation email to the invited email address.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/goeh/grails-crm-invitation/blob/master/grails-app/services/grails/plugins/crm/invitation/CrmInvitationService.groovy#L91" class="bare">https://github.com/goeh/grails-crm-invitation/blob/master/grails-app/services/grails/plugins/crm/invitation/CrmInvitationService.groovy#L91</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_crm_contact_ui_plugin">crm-contact-ui plugin</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The crm-contact-ui plugin handles one thing well and that is CRUD operations on organisations, people and their relationships. When a user want to print a list of contacts, or export them to Excel the user must get a list of available report layouts. The crm-contact-ui does not include a single layout. Instead the plugin sends an event and wait for answers from plugins that provide layouts. Each plugin that provide report functionality for contacts reply with a list of layouts. The list includes layout name, description, thumbnail image and what callback event to use to actually start the printing/export.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/technipelago/grails-crm-contact-ui/blob/master/grails-app/controllers/grails/plugins/crm/contact/CrmContactController.groovy#L113" class="bare">https://github.com/technipelago/grails-crm-contact-ui/blob/master/grails-app/controllers/grails/plugins/crm/contact/CrmContactController.groovy#L113</a></p>
+</div>
+<div class="paragraph">
+<p>When the user picks a layout for printing a POST request is sent to the controller. The request includes what topic to post an event to. The listener for this topic is usually in the same plugin that said "hey I have contact reports". The event listener will produce the output and return a temporary File instance. The original controller will render this file to the browser and delete it. That way I can add plugins to an application with the only purpose of providing customer specific reports or other output producers, without modifying the crm-contact-ui plugin.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/technipelago/grails-crm-contact-ui/blob/master/grails-app/controllers/grails/plugins/crm/contact/CrmContactController.groovy#L91" class="bare">https://github.com/technipelago/grails-crm-contact-ui/blob/master/grails-app/controllers/grails/plugins/crm/contact/CrmContactController.groovy#L91</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_crm_task">crm-task</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The crm-task plugin manages tasks / to-do lists / scheduled events, etc. A Quartz job periodically checks if a task is due. But the crm-task plugin does not know what to do when the task is due, so it&#8217;s just triggers an event <code>crmTask/alarm</code>. The application or other plugins can listen for this event and do stuff, like sending an email or text message about the task that needs attention.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/technipelago/grails-crm-task/blob/master/grails-app/services/grails/plugins/crm/task/CrmTaskService.groovy#L522" class="bare">https://github.com/technipelago/grails-crm-task/blob/master/grails-app/services/grails/plugins/crm/task/CrmTaskService.groovy#L522</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_crm_security">crm-security</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When a GR8 CRM plugin needs to present a list of available users, for example in a drop down list. The application must decide what users to include in the list. Maybe not all registered users should be in this list. Most plugins depend on the crm-security plugin so they can call crmSecurityService.getTenantUsers(). But that method really just triggers an event <code>crmTenant/getUsers</code>. So the custom application can listen on this topic and return a list of available users.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/goeh/grails-crm-security/blob/master/grails-app/services/grails/plugins/crm/security/CrmSecurityService.groovy#L995" class="bare">https://github.com/goeh/grails-crm-security/blob/master/grails-app/services/grails/plugins/crm/security/CrmSecurityService.groovy#L995</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_crm_feature">crm-feature</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When the administrator enables a feature in a GR8 CRM application that previously was disabled, the application and other plugins must get a change to initialise stuff. The crm-feature plugin triggers the event  <code>&lt;featureName&gt;/enableFeature</code> to let listeners know that a feature was enabled.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/goeh/grails-crm-feature/blob/master/grails-app/services/grails/plugins/crm/feature/CrmFeatureService.groovy#L199" class="bare">https://github.com/goeh/grails-crm-feature/blob/master/grails-app/services/grails/plugins/crm/feature/CrmFeatureService.groovy#L199</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_crm_product">crm-product</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We use the crm-product plugin as an example of a listener for enableFeature events. When the "Product Management" feature is enabled it creates a default/standard price list.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/goeh/grails-crm-product/blob/master/grails-app/services/grails/plugins/crm/product/CrmProductService.groovy#L35" class="bare">https://github.com/goeh/grails-crm-product/blob/master/grails-app/services/grails/plugins/crm/product/CrmProductService.groovy#L35</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>These are just a few examples. You will find more event usage in other GR8 CRM plugins at gr8crm.github.io
+
+By using this event model we have managed to develop 20+ different Grails applications to customers without forking one single plugin. All our customers use the same set of base plugins. Then we develop one or two custom plugins for customers that need special stuff. Customers with simple requirements just need some @Listener(s) in a custom application service and they still get a system that feels customised for just them.</pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
 <tr>
-<th class="tableblock halign-left valign-top">Plugin Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+platform-core works ok in GR8 CRM but we often stumbled upon problems with Hibernate transactions. That&#8217;s why you may see <code>[fork: false]</code> in some events that really should be asynchronous.
+</td>
 </tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-core/index.html">crm-core</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Core features like multi tenancy (used by most other plugins)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-i18n/index.html">crm-i18n</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Store localized messages in database to support runtime changes</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-feature/index.html">crm-feature</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Turn application features on/off for specific users or roles</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-security/index.html">crm-security</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Core security services</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-security-shiro/index.html">crm-security-shiro</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Apache Shiro security implementation</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-ui-bootstrap/index.html">crm-ui-bootstrap</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Twitter Bootstrap user interface (used by most -ui plugins)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-notes/index.html">crm-notes</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Add short notes (subject+body) to any domain instance</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-tags/index.html">crm-tags</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Tag any domain instance</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-contact/index.html">crm-contact</a> + <a href="plugins/crm-contact-ui/index.html">crm-contact-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contact Management (companies and individuals)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-content/index.html">crm-content</a> + <a href="plugins/crm-content-ui/index.html">crm-content-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Content Management and authoring (-ui)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-task/index.html">crm-task</a> + <a href="plugins/crm-task-ui/index.html">crm-task-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Task/Calendar Management</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-email/index.html">crm-email</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Send emails using Grails events</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-product/index.html">crm-product</a> + <a href="plugins/crm-product-ui/index.html">crm-product-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Product and inventory management including administration (-ui)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-order/index.html">crm-order</a> + <a href="plugins/crm-order-ui/index.html">crm-order-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Order Management including administration user interface (-ui)</p></td>
-</tr>
-</tbody>
 </table>
-</div>
-<div class="sect2">
-<h3 id="_plugins_not_yet_released">2.2. Plugins not yet released</h3>
-<div class="paragraph">
-<p>The following plugins <strong>are not</strong> yet available in Grails Central. If you want to use one of these plugins, create an issue on it&#8217;s
-github project and we will prioritize cleanup and documentation and get it published as soon as we can. You can also contribute by cloning the repos, fix stuff and submit pull requests.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Plugin Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/technipelago/grails-crm-blog">crm-blog</a> + <a href="https://github.com/technipelago/grails-crm-blog-ui">crm-blog-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Blog presentation and authoring (-ui)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/technipelago/grails-crm-campaign">crm-campaign</a> + <a href="https://github.com/technipelago/grails-crm-campaign-ui">crm-campaign-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Marketing campaign execution and management (-ui)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/goeh/grails-crm-invitation">crm-invitation</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Invite external users to your application</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/goeh/grails-crm-notification">crm-notification</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Notify users about stuff with a central notification center</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/goeh/grails-crm-syslog">crm-syslog</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Log application events to database</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">crm-security-ui</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Back Office features for user and role administration</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-sales/index.html">crm-sales</a> + <a href="plugins/crm-sales-ui/index.html">crm-sales-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sales lead/opportunity management</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_presentations_and_talks">3. Presentations and Talks</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>This section includes presentations that describe how to use GR8 CRM plugins
-in Grails applications and how to develop modular applications.</p>
-</div>
-<div class="paragraph">
-<p>Presentation <a href="presentations/gr8confeu2014/gr8conf-feature-plugins.pdf" target="_blank">Cut your Grails application to pieces - build feature plugins</a>. Presented at GR8Conf Europe 2014.</p>
-</div>
-<div class="paragraph">
-<p>YouTube video <a href="http://youtu.be/LZQ-1f9RGqg" target="_blank">Cut your Grails application to pieces - build feature plugins</a>. Presented at GR8Conf Europe 2014.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_tutorials">4. Tutorials</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_gr8_crm_web_site">4.1. GR8 CRM Web Site</h3>
-<div class="paragraph">
-<p><a href="/tutorials/gr8crm-web/index.html">This guide</a> describes how you can use
-GR8 CRM Grails plugins to develop a simple web site.
-The <a href="plugins/crm-content/index.html">crm-content</a> plugin makes it possible to add HTML pages in a content repository and make the pages publicly accessible.</p>
-</div>
-<div class="paragraph">
-<p>In this tutorial you will create a Grails application that can serve as a public facing web site. It will have built-in content editing features,
-including image uploads.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_demo_applications">5. Demo applications</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>This section show demo applications based on GR8 CRM plugins.</p>
-</div>
-<div class="sect2">
-<h3 id="_gr8_crm_to_do">5.1. GR8 CRM To-Do</h3>
-<div class="paragraph">
-<p><a href="https://github.com/technipelago/gr8crm-demo-app">This Grails application</a> uses GR8 CRM plugins to create a simple Contact Management and To-Do application. Clone it and run it, you will have it up and running in a minute or two.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_gr8_contact">5.2. GR8 Contact</h3>
-<div class="paragraph">
-<p>The <a href="https://github.com/gr8crm/gr8contact">GR8 Contact</a> application
-is a simple Contact Management application. It was initially presented at
-GR8Conf Europe 2014 by <a href="https://github.com/goeh">Göran Ehrsson</a> (<a href="https://twitter.com/goeh">@goeh</a>).
-The github repository contains 5 branches, each representing a snapshot in time during development.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>master</strong> A plain Grails application, created with grails create-app</p>
-</li>
-<li>
-<p><strong>m1</strong> The plugin <a href="plugins/crm-contact-ui/index.html">crm-contact-ui</a> was installed and contact (company/person) CRUD features are available.</p>
-</li>
-<li>
-<p><strong>m2</strong> The plugin <a href="plugins/crm-content-ui/index.html">crm-content-ui</a> was installed and documents/files can now be attached to contacts.</p>
-</li>
-<li>
-<p><strong>m3</strong> The plugin <a href="plugins/crm-task-ui/index.html">crm-task-ui</a> was installed and tasks/appointments with contacts can now be scheduled.</p>
-</li>
-<li>
-<p><strong>m4</strong> The plugin cookie-layout was installed and two themes were created to show that UI can change depending on sub-domain.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_gr8_crm_web_site_2">5.3. GR8 CRM Web Site</h3>
-<div class="paragraph">
-<p>A sample application that was created by following the <strong>GR8 CRM Web Site</strong>
-tutorial (see above) can be found at <a href="https://github.com/gr8crm/gr8crm-web" class="bare">https://github.com/gr8crm/gr8crm-web</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_application_events">6. Application Events</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Most GR8 CRM plugins use application events (synchronous and asynchronous)
-to communicate with the host application and other GR8 CRM plugins.
-In <a href="events.html">this document</a> you can read about some examples where
-application events are used in GR8 CRM applications.
-Looking at all these examples you get an understanding of how to think
-when designing "modular monoliths" with GR8 CRM.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-12-10 20:52:04 CET
+Last updated 2014-12-10 21:00:51 CET
 </div>
 </div>
 </body>

@@ -114,3 +114,13 @@ The github repository contains 5 branches, each representing a snapshot in time 
 
 A sample application that was created by following the *GR8 CRM Web Site*
 tutorial (see above) can be found at https://github.com/gr8crm/gr8crm-web
+
+== Application Events
+
+Most {gr8crm} plugins use application events (synchronous and asynchronous)
+to communicate with the host application and other {gr8crm} plugins.
+In link:events.html[this document] you can read about some examples where
+application events are used in {gr8crm} applications.
+Looking at all these examples you get an understanding of how to think
+when designing "modular monoliths" with {gr8crm}.
+
