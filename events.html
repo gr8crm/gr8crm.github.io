@@ -442,7 +442,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><a href="https://github.com/goeh/grails-reset-password/blob/master/grails-app/controllers/grails/plugins/resetpassword/ResetPasswordController.groovy#L186" class="bare">https://github.com/goeh/grails-reset-password/blob/master/grails-app/controllers/grails/plugins/resetpassword/ResetPasswordController.groovy#L186</a></p>
 </div>
 <div class="paragraph">
-<p>When the password has beed reset, it sends another event to let the application do stuff after password has been reset, like sending a notification email to the user.</p>
+<p>When the password has been reset, it sends another event to let the application do stuff after password has been reset, like sending a notification email to the user.</p>
 </div>
 <div class="paragraph">
 <p><a href="https://github.com/goeh/grails-reset-password/blob/master/grails-app/services/grails/plugins/resetpassword/ResetPasswordService.groovy#L155" class="bare">https://github.com/goeh/grails-reset-password/blob/master/grails-app/services/grails/plugins/resetpassword/ResetPasswordService.groovy#L155</a></p>
@@ -485,6 +485,23 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="paragraph">
 <p><a href="https://github.com/technipelago/grails-crm-task/blob/master/grails-app/services/grails/plugins/crm/task/CrmTaskService.groovy#L522" class="bare">https://github.com/technipelago/grails-crm-task/blob/master/grails-app/services/grails/plugins/crm/task/CrmTaskService.groovy#L522</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_crm_campaign">crm-campaign</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The campaign plugin is a multi-purpose plugin that is used when you
+want to broadcast some information to a target group.
+Email marketing is one such thing. The <code>crm-campaign</code> plugin
+manages the target group but it does not actually send mass emails.
+Instead it triggers an event <code>crmCampaign/sendMail</code> for each recipient.
+The application or some other email sending plugin can listen for the
+event and do the actual email sending using the email plugin or the sendgrid service.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/technipelago/grails-crm-campaign/blob/master/grails-app/services/grails/plugins/crm/campaign/CrmEmailCampaignService.groovy#L84" class="bare">https://github.com/technipelago/grails-crm-campaign/blob/master/grails-app/services/grails/plugins/crm/campaign/CrmEmailCampaignService.groovy#L84</a></p>
 </div>
 </div>
 </div>
@@ -543,7 +560,7 @@ platform-core works ok in GR8 CRM but we often stumbled upon problems with Hiber
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-12-10 21:04:32 CET
+Last updated 2014-12-10 21:55:00 CET
 </div>
 </div>
 </body>
