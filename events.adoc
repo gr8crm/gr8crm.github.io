@@ -63,7 +63,7 @@ https://github.com/goeh/grails-crm-product/blob/master/grails-app/services/grail
 ----
 These are just a few examples. You will find more event usage in other GR8 CRM plugins at gr8crm.github.io
 
-By using this event model we have managed to develop 20+ different Grails applications to customers without forking one single plugin. All our customers use the same set of base plugins. Then we develop one or two custom plugins for customers that need special stuff. Customers with simple requirements just need some @Listener(s) in a custom application service and they still get a system that feels customised for just them.
+By using this event model we have managed to develop 20+ different Grails applications to customers without forking one single plugin. All our customers use the same set of base plugins. Then we develop one or two custom plugins for customers that need special stuff. Customers with simple requirements just need some @Listener(s) in a custom application service and they still get a system that feels customised just for them.
 ----
 
 WARNING: platform-core works ok in {gr8crm} but we often stumbled upon problems with Hibernate transactions. That's why you may see `[fork: false]` in some events that really should be asynchronous.
