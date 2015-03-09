@@ -420,7 +420,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.0.0</span>
+<span id="revnumber">version 2.0.1</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -436,8 +436,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#crm-send-email">3.1. Send email</a></li>
 </ul>
 </li>
-<li><a href="#crm-license">4. License</a></li>
-<li><a href="#crm-source-code">5. Source Code</a></li>
+<li><a href="#crm-changes">4. Changes</a></li>
+<li><a href="#crm-license">5. License</a></li>
+<li><a href="#crm-source-code">6. Source Code</a></li>
+<li><a href="#crm-contributing">7. Contributing</a></li>
 </ul>
 </div>
 </div>
@@ -473,7 +475,9 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 <h2 id="crm-email-composition-plugin">2. Email Composition Plugin</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This GR8 CRM plugin provides services, controllers and views for sending emails in a GR8 CRM application.</p>
+<p>This GR8 CRM plugin provides services, controllers and views for composing and sending emails in a GR8 CRM application.
+The email composition screen can display a list of FreeMarker templates that can be selected to quickly compose standard emails.
+Attachments are also supported, both uploaded local files and files stored in the application by the <a href="../crm-content/index.html">crm-content</a> plugin.</p>
 </div>
 </div>
 </div>
@@ -486,7 +490,7 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 <p>String prepareForSendMail(HttpServletRequest request, Map params)</p>
 </div>
 <div class="paragraph">
-<p>To send an email with the crm-email plugin you create a configuration and pass it to the mail composition page.
+<p>To send an email with the crm-email plugin you create a <strong>send configuration</strong> and pass it to the mail composition page.
 The composition page uses the configuration to initialize fields, templates and attachments.</p>
 </div>
 <div class="listingblock">
@@ -535,11 +539,85 @@ The composition page uses the configuration to initialize fields, templates and 
 </div>
 <div class="title">Figure 1. Email composition page</div>
 </div>
+<div class="sect3">
+<h4 id="crm-multiple-recipients">3.1.1. Multiple recipients</h4>
+<div class="paragraph">
+<p>The above code example opens the email composition screen and send the email to <strong>one</strong> recipient.
+Combined with the <a href="http://grails.org/plugin/selection">selection</a> plugin we can compose an email the same way
+and send to a <strong>group of recipients</strong>.</p>
+</div>
+<div class="paragraph">
+<p>It works like this: The user searches for a group of recipients using a standard query form. When the result page is displayed
+with the matching list of recipients, the user clicks a button to invoke the email composition screen to send to the group.</p>
+</div>
+<div class="paragraph">
+<p>You must have a controller action that prepares a <strong>send configuration</strong> then redirects to the email composition screen.
+You store the last executed query (encoded as a URI) in the send configuration (key=selection).
+The query will be re-executed by <code>CrmEmailService</code> and each recipient will receive an individual copy of the email.</p>
+</div>
+<div class="listingblock">
+<div class="title">MyOrderController.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">def sendmail() {
+    def selection = params.getSelectionURI() <i class="conum" data-value="1"></i><b>(1)</b>
+    def user = crmSecurityService.getUserInfo()    <i class="conum" data-value="2"></i><b>(2)</b>
+    def token = crmEmailService.prepareForSendMail(request, [
+        tenant   : TenantUtils.tenant,
+        user     : user,
+        referer  : createLink(action: "index"),
+        senders  : ["${user.name} &lt;${user.email}&gt;", "My Company Inc. &lt;info@mycompany.com&gt;"],
+        from     : "${user.name} &lt;${user.email}&gt;",
+        selection: selection,
+        subject  : "GR8 CRM News",
+        body     : "Hi $m, I'm pleased to let you know that the crm-email plugin now can send to a group of recipients."
+    ]) <i class="conum" data-value="3"></i><b>(3)</b>
+    redirect mapping: 'crm-mail-send', id: token <i class="conum" data-value="4"></i><b>(4)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>When using the selection plugin we can get the last executed query encoded as a URI</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The current user will be the sender</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>This creates an email configuration that is stored in the user&#8217;s session</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Redirect to the generic sendmail page, there the user can finish the message and send it to all people in the collection/selection</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-license">4. License</h2>
+<h2 id="crm-changes">4. Changes</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">2.0.1</dt>
+<dd>
+<p>Added support for sending to multiple recipients using the <code>selection</code> plugin.</p>
+</dd>
+<dt class="hdlist1">2.0.0</dt>
+<dd>
+<p>First public release</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-license">5. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -547,18 +625,29 @@ The composition page uses the configuration to initialize fields, templates and 
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">5. Source Code</h2>
+<h2 id="crm-source-code">6. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-email" class="bare">https://github.com/technipelago/grails-crm-email</a></p>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="crm-contributing">7. Contributing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Please report <a href="https://github.com/technipelago/grails-crm-email/issues">issues or suggestions</a>.</p>
+</div>
+<div class="paragraph">
+<p>Want to improve the plugin: Fork the <a href="https://github.com/technipelago/grails-crm-email">repository</a> and send a pull request.</p>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.0.0<br>
-Last updated 2014-08-01 22:12:15 CEST
+Version 2.0.1<br>
+Last updated 2015-01-31 22:41:51 CET
 </div>
 </div>
 </body>

@@ -4,16 +4,16 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.0">
+<meta name="generator" content="Asciidoctor 1.5.2">
 <meta name="description" content="Official documentation for the GR8 CRM Core Plugin">
 <meta name="keywords" content="groovy, grails, crm, gr8crm, documentation">
 <meta name="author" content="Göran Ehrsson">
 <title>GR8 CRM - Core Plugin</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 /* Remove the comments around the @import statement below when using this as a custom stylesheet */
-/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400";*/
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400";*/
 article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
 audio,canvas,video{display:inline-block}
 audio:not([controls]){display:none;height:0}
@@ -277,8 +277,8 @@ dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
 ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
 ul.unstyled,ol.unnumbered,ul.checklist,ul.none{list-style-type:none}
 ul.unstyled,ol.unnumbered,ul.checklist{margin-left:.625em}
-ul.checklist li>p:first-child>.fa-check-square-o:first-child,ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
-ul.checklist li>p:first-child>input[type="checkbox"]:first-child{position:relative;top:1px}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1em;font-size:.85em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{width:1em;position:relative;top:1px}
 ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
 ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
 ul.inline>li>*{display:block}
@@ -383,7 +383,7 @@ p{margin-bottom:1.25rem}
 *{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
 a{color:inherit!important;text-decoration:underline!important}
 a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
-a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after,a[href^="mailto:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
 abbr[title]:after{content:" (" attr(title) ")"}
 pre,blockquote,tr,img{page-break-inside:avoid}
 thead{display:table-header-group}
@@ -411,7 +411,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>document.addEventListener('DOMContentLoaded', prettyPrint)</script>
@@ -422,7 +422,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.0.2</span>
+<span id="revnumber">version 2.4.0-SNAPSHOT</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -476,6 +476,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#crm-changes">10. Changes</a></li>
 <li><a href="#crm-license">11. License</a></li>
 <li><a href="#crm-source-code">12. Source Code</a></li>
+<li><a href="#crm-contributing">13. Contributing</a></li>
 </ul>
 </div>
 </div>
@@ -525,7 +526,7 @@ Multitenancy is also regarded as one of the essential attributes of cloud comput
 <h3 id="crm-gr8-crm-has-multitenancy-built-in">2.1. GR8 CRM has multitenancy built-in</h3>
 <div class="paragraph">
 <p>GR8 CRM implements a very simple approach to multitenancy. All domain classes that are tenant-specific
-must have a tenantId property of type Long. All code that work with tenant specific domain instances
+must have a <code>tenantId</code> property of type <code>Long</code>. All code that work with tenant specific domain instances
 must handle the tenantId property "manually". With a few exceptions there is no automatic filtering going on behind the scenes.</p>
 </div>
 <div class="paragraph">
@@ -555,7 +556,7 @@ You as a developer are responsible for tenant filtering. Never forget that. And 
 <div class="sect2">
 <h3 id="crm-tenant-aware-domain-class">2.2. Tenant-aware domain class</h3>
 <div class="paragraph">
-<p>To make a domain class tenant-aware you add the TenantEntity annotation to the class.</p>
+<p>To make a domain class tenant-aware you add the <code>TenantEntity</code> annotation to the class.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -566,15 +567,15 @@ class Person {
 </div>
 </div>
 <div class="paragraph">
-<p>This annotation trigger an AST transformation that adds a Long tenantId property to the domain class.
-The property is set to TenantUtils.getTenant() when the domain class is instantiated.</p>
+<p>This annotation trigger an AST transformation that adds a <code>Long tenantId</code> property to the domain class.
+The property is set to <code>TenantUtils.getTenant()</code> when the domain class is instantiated.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="crm-current-tenant">2.3. Current Tenant</h3>
 <div class="paragraph">
 <p>GR8 CRM resolves the current executing tenant from the HTTP request or the HTTP session.
-The tenant resolver sets the current tenant in a ThreadLocal variable and you use the TenantUtils.getTenant() to access it.</p>
+The tenant resolver sets the current tenant in a ThreadLocal variable and you use the <code>TenantUtils.getTenant()</code> to access it.</p>
 </div>
 </div>
 <div class="sect2">
@@ -617,8 +618,8 @@ and we look forward to contributions. ;-)</p>
 <h2 id="crm-crm-core-plugin">4. CRM Core Plugin</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The crm-core plugin does not provide much visual functionality. It contains common features that other GR8 CRM plugins use.
-Normally you don&#8217;t include crm-core in your application&#8217;s BuildConfig.groovy, instead you include dependencies on other
+<p>The <code>crm-core</code> plugin does not provide much visual functionality. It contains common features that other GR8 CRM plugins use.
+Normally you don&#8217;t include <code>crm-core</code> in your application&#8217;s <code>BuildConfig.groovy</code>, instead you include dependencies on other
 high-level GR8 CRM plugins that transitively depends on crm-core. However if you are a GR8 CRM plugin developer you may depend on crm-core directly.</p>
 </div>
 </div>
@@ -632,12 +633,12 @@ high-level GR8 CRM plugins that transitively depends on crm-core. However if you
 <div class="sect2">
 <h3 id="crm-crmcoreservice">5.1. CrmCoreService</h3>
 <div class="paragraph">
-<p>String getReferenceIdentifier(Object object)</p>
+<p><code>String getReferenceIdentifier(Object object)</code></p>
 </div>
 <div class="paragraph">
 <p>Return a string representation of a domain instance. This string contains both the domain type and the primary key.
 The format is <strong>"domainName@primaryKey"</strong>, for example: "customerOrder@42".
-This makes it possible to store the reference in a String property and re-create the domain instance later.
+This makes it possible to store the reference in a <code>String</code> property and re-create the domain instance later.
 Because the domain type is stored in a readable form it is also possible to query the property to find
 all objects of the same type or query for an exact match on a specific domain instance.</p>
 </div>
@@ -648,10 +649,10 @@ SomeDomain.findByReference("customerOrder@42") // Find the object that contains 
 </div>
 </div>
 <div class="paragraph">
-<p>def getReference(String identifier)</p>
+<p><code>def getReference(String identifier)</code></p>
 </div>
 <div class="paragraph">
-<p>The method getReference is the opposite of getReferenceIdentifier().
+<p>The method <code>getReference</code> is the opposite of <code>getReferenceIdentifier()</code>.
 Given a reference identifier the method return a re-constructed domain instance.</p>
 </div>
 <div class="listingblock">
@@ -663,16 +664,16 @@ Given a reference identifier the method return a re-constructed domain instance.
 <div class="sect2">
 <h3 id="crm-crmpluginservice">5.2. CrmPluginService</h3>
 <div class="paragraph">
-<p>void registerView(final String controller, final String action, final String location, final Map params)</p>
+<p><code>void registerView(final String controller, final String action, final String location, final Map params)</code></p>
 </div>
 <div class="paragraph">
 <p>Inject a custom GSP view in an existing GSP view.</p>
 </div>
 <div class="paragraph">
-<p>List getViews(final String controller, final String action, final String location)</p>
+<p><code>List getViews(final String controller, final String action, final String location)</code></p>
 </div>
 <div class="paragraph">
-<p>Return a list of custom views injected in a GSP view with registerView().</p>
+<p>Return a list of custom views injected in a GSP view with <code>registerView()</code>.</p>
 </div>
 </div>
 </div>
@@ -702,13 +703,13 @@ Statistic reports and other "management" type of queries may span multiple tenan
 Therefore it&#8217;s up to the developer of the application or plugin to decide how a query should be restricted.</p>
 </div>
 <div class="paragraph">
-<p>public static Long getTenant()</p>
+<p><code>public static Long getTenant()</code></p>
 </div>
 <div class="paragraph">
 <p>Return the ID of current executing tenant.</p>
 </div>
 <div class="paragraph">
-<p>public static Object withTenant(Long tenantId, Closure work)</p>
+<p><code>public static Object withTenant(Long tenantId, Closure work)</code></p>
 </div>
 <div class="paragraph">
 <p>Execute some work on behalf of a tenant. The tenant will be saved in a ThreadLocal variable.
@@ -740,13 +741,13 @@ outside of a HTTP request you must, for example in Quartz background jobs.</p>
 <div class="sect2">
 <h3 id="crm-dateutils">6.2. DateUtils</h3>
 <div class="paragraph">
-<p>static Date parseDate(String input, TimeZone tz = UTC)</p>
+<p><code>static Date parseDate(String input, TimeZone tz = UTC)</code></p>
 </div>
 <div class="paragraph">
 <p>Parse a date string and return a date instance.</p>
 </div>
 <div class="paragraph">
-<p>static String formatDate(final Date date, TimeZone tz = UTC)</p>
+<p><code>static String formatDate(final Date date, TimeZone tz = UTC)</code></p>
 </div>
 <div class="paragraph">
 <p>Format a date instance as a String.</p>
@@ -755,7 +756,7 @@ outside of a HTTP request you must, for example in Quartz background jobs.</p>
 <div class="sect2">
 <h3 id="crm-searchutils">6.3. SearchUtils</h3>
 <div class="paragraph">
-<p>static String wildcard(String q)</p>
+<p><code>static String wildcard(String q)</code></p>
 </div>
 <div class="paragraph">
 <p>Replaces asterisk (*) in the input string with '%'.</p>
@@ -764,19 +765,19 @@ outside of a HTTP request you must, for example in Quartz background jobs.</p>
 <div class="sect2">
 <h3 id="crm-webutils">6.4. WebUtils</h3>
 <div class="paragraph">
-<p>static void shortCache(final HttpServletResponse response)</p>
+<p><code>static void shortCache(final HttpServletResponse response)</code></p>
 </div>
 <div class="paragraph">
 <p>Cache a HTTP response for 2 minutes.</p>
 </div>
 <div class="paragraph">
-<p>static void defaultCache(final HttpServletResponse response)</p>
+<p><code>static void defaultCache(final HttpServletResponse response)</code></p>
 </div>
 <div class="paragraph">
 <p>Cache a HTTP response for 10 minutes.</p>
 </div>
 <div class="paragraph">
-<p>static String bytesFormatted(final Number b)</p>
+<p><code>static String bytesFormatted(final Number b)</code></p>
 </div>
 <div class="paragraph">
 <p>Returns a human friendly representation of number of bytes.</p>
@@ -877,8 +878,8 @@ Most of the transformations are related to domain classes.</p>
 <div class="sect2">
 <h3 id="crm--tenantentity">9.1. @TenantEntity</h3>
 <div class="paragraph">
-<p>This transformation adds a Long tenantId property to the domain class.
-The property is set to TenantUtils.getTenant() when the domain class is instantiated.</p>
+<p>This transformation adds a <code>Long tenantId</code> property to the domain class.
+The property is set to <code>TenantUtils.getTenant()</code> when the domain class is instantiated.</p>
 </div>
 <div class="listingblock">
 <div class="title">Customer.groovy</div>
@@ -899,7 +900,7 @@ class Customer {
 <div class="sect2">
 <h3 id="crm--auditentity">9.2. @AuditEntity</h3>
 <div class="paragraph">
-<p>This transformation adds dateCreated and lastUpdated Date properties to the domain class.</p>
+<p>This transformation adds <code>dateCreated</code> and <code>lastUpdated</code> Date properties to the domain class.</p>
 </div>
 <div class="listingblock">
 <div class="title">Author.groovy</div>
@@ -920,8 +921,8 @@ class Author {
 <div class="sect2">
 <h3 id="crm--uuidentity">9.3. @UuidEntity</h3>
 <div class="paragraph">
-<p>This transformation adds a String guid property to the domain class.
-The property is set to UUID.randomUUID().toString() when the domain class is instantiated.</p>
+<p>This transformation adds a <code>String guid</code> property to the domain class.
+The property is set to <code>UUID.randomUUID().toString()</code> when the domain class is instantiated.</p>
 </div>
 <div class="listingblock">
 <div class="title">MyEvent.groovy</div>
@@ -945,13 +946,21 @@ class MyEvent {
 <div class="sectionbody">
 <div class="dlist">
 <dl>
+<dt class="hdlist1">2.4.0</dt>
+<dd>
+<p>First version compatible with Grails 2.4.4.</p>
+</dd>
+<dt class="hdlist1">2.0.2</dt>
+<dd>
+<p>New exception type CrmValidationException to use in services that persist domain instances.</p>
+</dd>
 <dt class="hdlist1">2.0.1</dt>
 <dd>
-<p>Interface CrmContactInformation changed. New getter method Long getCompanyId().</p>
+<p>Interface <code>CrmContactInformation</code> changed. New getter method <code>Long getCompanyId()</code>.</p>
 </dd>
 <dt class="hdlist1">2.0.0</dt>
 <dd>
-<p>First public release</p>
+<p>First public release.</p>
 </dd>
 </dl>
 </div>
@@ -973,11 +982,22 @@ class MyEvent {
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="crm-contributing">13. Contributing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Please report <a href="https://github.com/goeh/grails-crm-core/issues">issues or suggestions</a>.</p>
+</div>
+<div class="paragraph">
+<p>Want to improve the plugin: Fork the <a href="https://github.com/goeh/grails-crm-core">repository</a> and send a pull request.</p>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.0.2<br>
-Last updated 2014-08-17 22:39:33 CEST
+Version 2.4.0-SNAPSHOT<br>
+Last updated 2015-03-08 22:53:33 CET
 </div>
 </div>
 </body>
