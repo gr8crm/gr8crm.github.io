@@ -511,7 +511,7 @@ It can be traditional training classes, seminars, small conferences or user grou
 <div class="title">CreateConference.groovy</div>
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">    def conferenceType = crmTrainingService.createTrainingType(name: "Conference", true) <i class="conum" data-value="1"></i><b>(1)</b>
-    def gr8conf = crmTrainingService.createTraining(name: "GR8Conf EU", type: conferenceType, true) <i class="conum" data-value="2"></i><b>(2)</b>
+    def gr8conf = crmTrainingService.createTraining(name: "GR8Conf EU", type: conferenceType, url: "http://gr8conf.eu/", true) <i class="conum" data-value="2"></i><b>(2)</b>
     def taskType = crmTaskService.createTaskType(name: "Conference", true) <i class="conum" data-value="3"></i><b>(3)</b>
 
     def startDate = new GregorianCalendar(2015, Calendar.JUNE, 2, 8, 0, 0).time
@@ -597,7 +597,7 @@ It can be traditional training classes, seminars, small conferences or user grou
 <div id="footer">
 <div id="footer-text">
 Version 2.4.0-SNAPSHOT<br>
-Last updated 2015-03-22 22:33:12 CET
+Last updated 2015-03-22 22:36:59 CET
 </div>
 </div>
 </body>
