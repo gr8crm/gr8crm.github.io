@@ -519,7 +519,7 @@ It can be traditional training classes, seminars, small conferences or user grou
     def gr8confeu2015 = crmTaskService.createTask(number: 'GR8CONF-EU-2015', name: "GR8Conf EU", type: taskType,
         startTime: startDate, endTime: endDate, displayDate: "June 2nd - 4th, 2015",
         location: "IT-University, Rued Langgards Vej 7, Copenhagen, Denmark", username: 'admin', reference: gr8conf,
-        description: "GR8Conf is an independent, affordable series of conferences in Denmark and the US. It's dedicated to the technologies in the Groovy ecosystem.", true) <i class="conum" data-value="4"></i><b>(4)</b>
+        description: "GR8Conf is an independent, affordable series of conferences in Denmark and the US. It's dedicated to the technologies in the Groovy ecosystem", true) <i class="conum" data-value="4"></i><b>(4)</b>
 
     crmTrainingService.addAttender(gr8confeu2015, [firstName: "Göran", lastName: "Ehrsson", status: "confirmed", tags: ["Speaker"]) <i class="conum" data-value="5"></i><b>(5)</b>
     crmTrainingService.addAttender(gr8confeu2015, [firstName: "Søren", lastName: "Berg Glasius", status: "confirmed", tags: ["Crew", "Speaker"]])
@@ -538,7 +538,7 @@ It can be traditional training classes, seminars, small conferences or user grou
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>An event instance is really just a CRMTask instance. We create a separate task type "Conference" to separate it from other tasks in our calendar.</td>
+<td>An event instance is really a CrmTask instance. We create a task type "Conference" to easier separate conferences from other tasks in our calendar.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -546,7 +546,7 @@ It can be traditional training classes, seminars, small conferences or user grou
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>Add attenders to the conference.</td>
+<td>Add attendees to the conference.</td>
 </tr>
 </table>
 </div>
@@ -597,7 +597,7 @@ It can be traditional training classes, seminars, small conferences or user grou
 <div id="footer">
 <div id="footer-text">
 Version 2.4.0-SNAPSHOT<br>
-Last updated 2015-03-22 22:23:06 CET
+Last updated 2015-03-22 22:33:12 CET
 </div>
 </div>
 </body>
