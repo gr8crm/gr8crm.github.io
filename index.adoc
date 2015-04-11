@@ -77,6 +77,8 @@ github project and we will prioritize cleanup and documentation and get it publi
 This section includes presentations that describe how to use {gr8crm} plugins
 in Grails applications and how to develop modular applications.
 
+*Presentation link:presentations/greach2015/greach-2015-goeh.pdf[Cut your Grails application to pieces - build feature plugins^]. Presented at Greach 2015 in Madrid.*
+
 Presentation link:presentations/gr8confeu2014/gr8conf-feature-plugins.pdf[Cut your Grails application to pieces - build feature plugins^]. Presented at GR8Conf Europe 2014.
 
 YouTube video http://youtu.be/LZQ-1f9RGqg[Cut your Grails application to pieces - build feature plugins^]. Presented at GR8Conf Europe 2014.
@@ -112,6 +114,16 @@ The github repository contains 5 branches, each representing a snapshot in time 
 - *m2* The plugin link:plugins/crm-content-ui/index.html[crm-content-ui] was installed and documents/files can now be attached to contacts.
 - *m3* The plugin link:plugins/crm-task-ui/index.html[crm-task-ui] was installed and tasks/appointments with contacts can now be scheduled.
 - *m4* The plugin cookie-layout was installed and two themes were created to show that UI can change depending on sub-domain.
+
+TIP: 5 more branches was added for the *Greach 2015* demo.
+
+- *m1-greach*: Same as **m1** but with Greach theme applied.
+
+- *m2-greach*: Same as **m2** but with Greach theme applied.
+
+- *m3-greach*: Same as **m3** but with Greach theme applied and option to import Greach 2015 speakers as contacts.
+
+- *m4-greach*: Same as **m4** but with Greach theme available. Three themes (Greach, Gr8ConfEU and Gr8ConfUS) available at run-time.
 
 === GR8 CRM Web Site
 
