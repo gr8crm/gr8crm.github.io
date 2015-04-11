@@ -125,6 +125,8 @@ TIP: Four more branches was added for the *Greach 2015* demo.
 
 - *m4-greach*: Same as **m4** but with Greach theme available. Three themes (Greach, Gr8ConfEU and Gr8ConfUS) available at run-time.
 
+image::greach2015/contacts.png[Greach 2015 Demo application]
+
 === GR8 CRM Web Site
 
 A sample application that was created by following the *GR8 CRM Web Site*
