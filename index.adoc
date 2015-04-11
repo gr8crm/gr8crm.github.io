@@ -115,7 +115,7 @@ The github repository contains 5 branches, each representing a snapshot in time 
 - *m3* The plugin link:plugins/crm-task-ui/index.html[crm-task-ui] was installed and tasks/appointments with contacts can now be scheduled.
 - *m4* The plugin cookie-layout was installed and two themes were created to show that UI can change depending on sub-domain.
 
-TIP: 5 more branches was added for the *Greach 2015* demo.
+TIP: Four more branches was added for the *Greach 2015* demo.
 
 - *m1-greach*: Same as **m1** but with Greach theme applied.
 
