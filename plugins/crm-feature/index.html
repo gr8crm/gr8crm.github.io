@@ -420,7 +420,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.4.0</span>
+<span id="revnumber">version 2.4.1</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -491,7 +491,7 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 <h2 id="crm-crm-feature-plugin">2. CRM Feature Plugin</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The crm-feature plugin manages installed <strong>features</strong> in a GR8 CRM application. A feature is a unit of functionality that can be
+<p>The <code>crm-feature</code> plugin manages installed <strong>features</strong> in a GR8 CRM application. A feature is a unit of functionality that can be
 enabled or disabled per user role. Application code can check if a feature is enabled before doing some work.
 Typically one GR8 CRM plugin provides one feature but there is no limit to the number of features a plugin can provide.</p>
 </div>
@@ -517,7 +517,7 @@ Typically one GR8 CRM plugin provides one feature but there is no limit to the n
 <h3 id="crm-add-a-feature-property-to-the-plugin-descriptor">3.1. Add a feature property to the plugin descriptor</h3>
 <div class="paragraph">
 <p>If a plugin provides a feature, the easiest way to add it to the application is by adding
-a property called features to the plugin descriptor. The features property must return a Map or a Closure.</p>
+a property called <code>features</code> to the plugin descriptor. The features property must return a Map or a Closure.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -548,9 +548,9 @@ a property called features to the plugin descriptor. The features property must 
 <div class="sect3">
 <h4 id="crm-feature-dsl">3.1.1. Feature DSL</h4>
 <div class="paragraph">
-<p>The feature plugin scans all installed plugins and look for a features property in the plugin descriptor.
-If the plugin has a features property it is parsed by the <strong>Feature DSL</strong> parser. The following example is from the
-crm-tags plugin. It provides tagging support in a GR8 CRM application. A feature with name <strong>crmTag</strong> will be
+<p>The feature plugin scans all installed plugins and look for a <code>features</code> property in the plugin descriptor.
+If the plugin has a <code>features</code> property it is parsed by the <strong>Feature DSL</strong> parser. The following example is from the
+<code>crm-tags</code> plugin. It provides tagging support in a GR8 CRM application. A feature with name <strong>crmTag</strong> will be
 installed in the application. The feature DSL also specifies standard permissions for common user roles.</p>
 </div>
 <div class="listingblock">
@@ -565,6 +565,7 @@ installed in the application. The feature DSL also specifies standard permission
             user "crmTag:*"
             admin "crmTag,crmTagAdmin:*"
         }
+        theme "premium" // Feature is only available to tenants with the premium theme.
         required true
         hidden true
     }
@@ -587,21 +588,27 @@ permissions during application startup.</p>
 <div class="sect3">
 <h4 id="crm-required-default-features">3.1.3. Required/Default Features</h4>
 <div class="paragraph">
-<p>The required true statement specifies that this feature is required, it will be enabled for all users and roles automatically.</p>
+<p>The <code>required true</code> statement specifies that this feature is required, it will be enabled for all users and roles automatically.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="crm-hidden-features">3.1.4. Hidden Features</h4>
 <div class="paragraph">
-<p>The hidden true statement specifies that this feature should not be displayed in any <strong>feature settings</strong> pages.
+<p>The <code>hidden true</code> statement specifies that this feature should not be displayed in any <strong>feature settings</strong> pages.
 It&#8217;s a default/required feature so there is no reason to let the application administrator enable or disable it.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="crm-theme-features">3.1.5. Theme Features</h4>
+<div class="paragraph">
+<p>The <code>theme</code> statement specifies that the feature is only available to tenants that uses a specific CRM theme.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="crm-adding-features-using-crmfeatureservice">3.2. Adding features using CrmFeatureService</h3>
 <div class="paragraph">
-<p>You can also add features to the application by calling crmFeatureService.addApplicationFeature(Map metadata).</p>
+<p>You can also add features to the application by calling <code>crmFeatureService.addApplicationFeature(Map metadata)</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -674,19 +681,19 @@ assert crmFeatureService.getFeature("not installed") == null</code></pre>
 <h2 id="crm-services">4. Services</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <strong>crm-feature</strong> plugin provide a service called CrmFeatureService.
+<p>The <strong>crm-feature</strong> plugin provide a service called <code>CrmFeatureService</code>.
 This service contains methods for enabling/disabling features for users and roles.</p>
 </div>
 <div class="sect2">
 <h3 id="crm-crmfeatureservice">4.1. CrmFeatureService</h3>
 <div class="paragraph">
-<p>List&lt;Feature&gt; getApplicationFeatures()</p>
+<p><code>List&lt;Feature&gt; getApplicationFeatures()</code></p>
 </div>
 <div class="paragraph">
 <p>Returns all the features that are available in the application, even disabled features are included.</p>
 </div>
 <div class="paragraph">
-<p>Feature getApplicationFeature(final String name)</p>
+<p><code>Feature getApplicationFeature(final String name)</code></p>
 </div>
 <div class="paragraph">
 <p>Returns metadata for a specific application feature. A metadata instance has the following properties:</p>
@@ -715,11 +722,11 @@ This service contains methods for enabling/disabling features for users and role
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">role</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If enabled is <strong>true</strong> the feature can optionally be enabled for a specific role (String)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If <code>enabled</code> is <strong>true</strong> the feature can optionally be enabled for a specific role (String)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">tenant</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If enabled is <strong>true</strong> the feature can optionally be enabled for a specific tenant (Long)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If <code>enabled</code> is <strong>true</strong> the feature can optionally be enabled for a specific tenant (Long)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">info</p></td>
@@ -736,7 +743,7 @@ This service contains methods for enabling/disabling features for users and role
 </tbody>
 </table>
 <div class="paragraph">
-<p>The properties info, help, admin and main contains a Map with the following properties:</p>
+<p>The properties <code>info</code>, <code>help</code>, <code>admin</code> and <code>main</code> contains a Map with the following properties:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -767,7 +774,7 @@ This service contains methods for enabling/disabling features for users and role
 </tbody>
 </table>
 <div class="paragraph">
-<p>removeApplicationFeature(String name)</p>
+<p><code>removeApplicationFeature(String name)</code></p>
 </div>
 <div class="paragraph">
 <p>To remove a feature you normally disable it instead of removing it.
@@ -782,40 +789,40 @@ case you can remove unwanted features at application startup. For example in Boo
 </div>
 </div>
 <div class="paragraph">
-<p>void enableFeature(def features, Long tenant = null, String role = null, Date expires = null)</p>
+<p><code>void enableFeature(def features, Long tenant = null, String role = null, Date expires = null)</code></p>
 </div>
 <div class="paragraph">
 <p>Enable a feature for a specific user role or for all roles in a tenant.
-The features parameter can be a feature name or a collection of feature names.
-If no tenant is specified then the current executing tenant will be used.
-If no role is specified then the feature will be enabled for all roles in the tenant.
+The <code>features</code> parameter can be a feature name or a collection of feature names.
+If no <code>tenant</code> is specified then the current executing tenant will be used.
+If no <code>role</code> is specified then the feature will be enabled for all roles in the tenant.
 An expiration date can be specified. When the date has passed the feature will be disabled.
 This can be used to provide a <strong>trial period</strong> where a feature will be enabled for a limited period.</p>
 </div>
 <div class="paragraph">
-<p>void disableFeature(def features, Long tenant = null, String role = null)</p>
+<p><code>void disableFeature(def features, Long tenant = null, String role = null)</code></p>
 </div>
 <div class="paragraph">
 <p>Disable a feature for a specific user role or for all roles in a tenant.
-The features parameter can be a feature name or a collection of feature names.
-If no tenant is specified then the current executing tenant will be used.
-If no role is specified then the feature will be disabled for all roles in the tenant.</p>
+The <code>features</code> parameter can be a feature name or a collection of feature names.
+If no <code>tenant</code> is specified then the current executing tenant will be used.
+If no <code>role</code> is specified then the feature will be disabled for all roles in the tenant.</p>
 </div>
 <div class="paragraph">
-<p>boolean hasFeature(final String feature, Long tenant = null, String role = null)</p>
+<p><code>boolean hasFeature(final String feature, Long tenant = null, String role = null)</code></p>
 </div>
 <div class="paragraph">
 <p>Check if a feature is enabled.
-If no tenant is specified then the current executing tenant will be used.
-If no role is specified then it will check if the feature is enabled for all users in the tenant.</p>
+If no <code>tenant</code> is specified then the current executing tenant will be used.
+If no <code>role</code> is specified then it will check if the feature is enabled for all users in the tenant.</p>
 </div>
 <div class="paragraph">
-<p>List&lt;Feature&gt; getFeatures(Long tenant = null, String role = null)</p>
+<p><code>List&lt;Feature&gt; getFeatures(Long tenant = null, String role = null)</code></p>
 </div>
 <div class="paragraph">
 <p>List all enabled features.
-If no tenant is specified then features enabled in the current executing tenant will be returned.
-If no role is specified then all features enabled in the tenant will be returned.</p>
+If no <code>tenant</code> is specified then features enabled in the current executing tenant will be returned.
+If no <code>role</code> is specified then all features enabled in the tenant will be returned.</p>
 </div>
 </div>
 </div>
@@ -824,7 +831,7 @@ If no role is specified then all features enabled in the tenant will be returned
 <h2 id="crm-tag-libraries">5. Tag Libraries</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The crm-feature plugin provides a few GSP tags under the crm namespace.</p>
+<p>The <code>crm-feature</code> plugin provides a few GSP tags under the <code>crm</code> namespace.</p>
 </div>
 <div class="sect2">
 <h3 id="crm-featurelink">5.1. featureLink</h3>
@@ -954,13 +961,21 @@ in application code, but you should avoid checking for features in plugin code. 
 <div class="sectionbody">
 <div class="dlist">
 <dl>
+<dt class="hdlist1">2.4.1</dt>
+<dd>
+<p>A feature can now be tied to a theme. Only tenants with that theme will have access to the feature</p>
+</dd>
 <dt class="hdlist1">2.4.0</dt>
 <dd>
 <p>First version compatible with Grails 2.4.4.</p>
 </dd>
+<dt class="hdlist1">2.0.1</dt>
+<dd>
+<p>A feature can now be tied to a theme. Only tenants with that theme will have access to the feature</p>
+</dd>
 <dt class="hdlist1">2.0.0</dt>
 <dd>
-<p>First public release.</p>
+<p>First public release</p>
 </dd>
 </dl>
 </div>
@@ -978,7 +993,7 @@ in application code, but you should avoid checking for features in plugin code. 
 <h2 id="crm-source-code">8. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The source code for this plugin is available at <a href="https://github.com/goeh/grails-crm-feature" class="bare">https://github.com/goeh/grails-crm-feature</a></p>
+<p>The source code for this plugin is available at <a href="https://github.com/goeh/grails-crm-core" class="bare">https://github.com/goeh/grails-crm-core</a></p>
 </div>
 </div>
 </div>
@@ -996,8 +1011,8 @@ in application code, but you should avoid checking for features in plugin code. 
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.4.0<br>
-Last updated 2015-03-08 22:59:25 CET
+Version 2.4.1<br>
+Last updated 2015-05-10 16:47:04 CEST
 </div>
 </div>
 </body>
