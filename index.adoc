@@ -48,11 +48,9 @@ the same way as you install other plugins, by adding them to BuildConfig.groovy
 | link:plugins/crm-content/index.html[crm-content] + link:plugins/crm-content-ui/index.html[crm-content-ui]                 | Content Management and authoring (-ui)
 | link:plugins/crm-task/index.html[crm-task] + link:plugins/crm-task-ui/index.html[crm-task-ui] | Task/Calendar Management
 | link:plugins/crm-email/index.html[crm-email]                   | Send emails using Grails events
-| link:plugins/crm-product/index.html[crm-product] * + link:plugins/crm-product-ui/index.html[crm-product-ui] * | Product and inventory management including administration (-ui)
-| link:plugins/crm-order/index.html[crm-order] * + link:plugins/crm-order-ui/index.html[crm-order-ui] * | Order Management including administration user interface (-ui)
+| link:plugins/crm-product/index.html[crm-product] + link:plugins/crm-product-ui/index.html[crm-product-ui] | Product and inventory management including administration (-ui)
+| link:plugins/crm-order/index.html[crm-order] + link:plugins/crm-order-ui/index.html[crm-order-ui] | Order Management including administration user interface (-ui)
 |===
-
-NOTE: Most plugins are compatible with Grails 2.4.x. Plugins marked with * are not yet verified with Grails 2.4.x but they are confirmed to work well with Grails 2.2.4.
 
 === Plugins not yet released
 
