@@ -75,6 +75,8 @@ github project and we will prioritize cleanup and documentation and get it publi
 This section includes presentations that describe how to use {gr8crm} plugins
 in Grails applications and how to develop modular applications.
 
+Presentation link:presentations/gr8confeu2015/gr8conf/gr8conf-event-driven-plugins.pdf[Event-driven plugins with Grails 3^]. Presented at GR8Conf Europe 2015.
+
 *Presentation link:presentations/greach2015/greach-2015-goeh.pdf[Cut your Grails application to pieces - build feature plugins^]. Presented at Greach 2015 in Madrid.*
 
 Presentation link:presentations/gr8confeu2014/gr8conf-feature-plugins.pdf[Cut your Grails application to pieces - build feature plugins^]. Presented at GR8Conf Europe 2014.
