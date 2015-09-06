@@ -422,7 +422,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.4.1</span>
+<span id="revnumber">version 2.4.2</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -448,10 +448,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#crm-alarms">5. Alarms</a></li>
 <li><a href="#crm-recurring-tasks">6. Recurring tasks</a></li>
-<li><a href="#crm-changes">7. Changes</a></li>
-<li><a href="#crm-license">8. License</a></li>
-<li><a href="#crm-source-code">9. Source Code</a></li>
-<li><a href="#crm-contributing">10. Contributing</a></li>
+<li><a href="#crm-attenders">7. Attenders</a></li>
+<li><a href="#crm-changes">8. Changes</a></li>
+<li><a href="#crm-license">9. License</a></li>
+<li><a href="#crm-source-code">10. Source Code</a></li>
+<li><a href="#crm-contributing">11. Contributing</a></li>
 </ul>
 </div>
 </div>
@@ -1025,10 +1026,104 @@ Contributions are welcome!
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-changes">7. Changes</h2>
+<h2 id="crm-attenders">7. Attenders</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The crm-task plugin have extensive support for assigning attenders to a task. This can be used to schedule meetings
+with attenders, or conference registrations. The crm-task-ui plugin have back-office UI for managing
+events and attenders.</p>
+</div>
+<div class="paragraph">
+<p>The CrmTask domain class contains information about a single event, with properties like start time, end time
+and location of the event. A CrmTask instance can have many CrmTaskBooking instances.
+A booking hold one or more attenders. For example, if one company register three employees for an event,
+then one CrmTaskBooking instances is created with three CrmTaskAttender instances. The booking is like an "order",
+typically for commercial events one invoice is created for each booking. That&#8217;s why CrmTaskBooking domain class
+contains customer and (invoice) address properties.</p>
+</div>
+<div class="listingblock">
+<div class="title">AddAttendersToEvent.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">def conference = crmTaskService.createTaskType(name: "Conference", param: "conf", true) <i class="conum" data-value="1"></i><b>(1)</b>
+def gr8conf = crmTaskService.createTask(number: 'GR8CONF-EU-2015', name: "Gr8Conf EU 2015",
+    type: conference, location: "Copenhagen, Denmark",
+    startTime: date(2015, 6, 2, 9, 0), endTime: date(2015, 6, 4, 16, 0), displayDate: "2-4 june 2015",
+    true) <i class="conum" data-value="2"></i><b>(2)</b>
+
+def booking = crmTaskService.createBooking(task: gr8conf,
+    invoiceAddress: [address1: 'Technipelago AB', address2: 'Gransbergsvägen 18',
+    postalCode: '13973', city: 'Djurhamn', country: 'Sweden'],
+    true) <i class="conum" data-value="3"></i><b>(3)</b>
+
+def attender1 = crmContactService.createContactInformation(firstName: "Göran", lastName: "Ehrsson",
+    email: "goran@technipelago.se", company: "Technipelago AB") <i class="conum" data-value="4"></i><b>(4)</b>
+crmTaskService.addAttender(booking, attender1, 'created') <i class="conum" data-value="5"></i><b>(5)</b>
+
+def attender2 = crmContactService.createContactInformation(firstName: "Sven", lastName: "Andersson",
+    email: "sven@technipelago.se", company: "Technipelago AB") <i class="conum" data-value="6"></i><b>(6)</b>
+crmTaskService.addAttender(booking, attender2, 'created') <i class="conum" data-value="7"></i><b>(7)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Task (event) type is mandatory so we create a type called "Conference".</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We create an event for one of the best conferences in the Groovy ecosystem.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Create a booking that will hold all attendees from a company.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Create contact information for the first attender the company will send to the conference.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Add the first attender to the conference booking</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Create contact information for the second attender.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Add the second attender to the conference booking.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The above example is a typical workflow for registering two attendees from the same company on a conference.
+All of the above can be entered manually with forms in the <strong>crm-task-ui</strong> plugin.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Version 2.4.2 of crm-task plugin changed the domain hierarchy around attenders.
+Previously CrmTaskBooking was optional but since 2.4.2 CrmTaskBooking is mandatory when working with CrmTaskAttender.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-changes">8. Changes</h2>
 <div class="sectionbody">
 <div class="dlist">
 <dl>
+<dt class="hdlist1">2.4.2</dt>
+<dd>
+<p>Refactored domain hierarchy CrmTask &#8594; CrmTaskBooking &#8594; CrmTaskAttender (database migration!)</p>
+</dd>
 <dt class="hdlist1">2.4.1</dt>
 <dd>
 <p>Tagging support for task attenders</p>
@@ -1046,7 +1141,7 @@ Contributions are welcome!
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-license">8. License</h2>
+<h2 id="crm-license">9. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -1054,7 +1149,7 @@ Contributions are welcome!
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">9. Source Code</h2>
+<h2 id="crm-source-code">10. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-task" class="bare">https://github.com/technipelago/grails-crm-task</a></p>
@@ -1062,7 +1157,7 @@ Contributions are welcome!
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-contributing">10. Contributing</h2>
+<h2 id="crm-contributing">11. Contributing</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Please report <a href="https://github.com/technipelago/grails-crm-task/issues">issues or suggestions</a>.</p>
@@ -1075,8 +1170,8 @@ Contributions are welcome!
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.4.1<br>
-Last updated 2015-05-24 21:59:24 CEST
+Version 2.4.2<br>
+Last updated 2015-09-06 18:35:59 CEST
 </div>
 </div>
 </body>
