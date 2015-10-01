@@ -4,16 +4,16 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.0">
+<meta name="generator" content="Asciidoctor 1.5.2">
 <meta name="description" content="Official documentation for the GR8 CRM Sales/Lead User Interface Plugin">
 <meta name="keywords" content="groovy, grails, crm, gr8crm, documentation">
 <meta name="author" content="Göran Ehrsson">
 <title>GR8 CRM - Sales/Lead User Interface Plugin</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 /* Remove the comments around the @import statement below when using this as a custom stylesheet */
-/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400";*/
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400";*/
 article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
 audio,canvas,video{display:inline-block}
 audio:not([controls]){display:none;height:0}
@@ -277,8 +277,8 @@ dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
 ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
 ul.unstyled,ol.unnumbered,ul.checklist,ul.none{list-style-type:none}
 ul.unstyled,ol.unnumbered,ul.checklist{margin-left:.625em}
-ul.checklist li>p:first-child>.fa-check-square-o:first-child,ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
-ul.checklist li>p:first-child>input[type="checkbox"]:first-child{position:relative;top:1px}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1em;font-size:.85em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{width:1em;position:relative;top:1px}
 ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
 ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
 ul.inline>li>*{display:block}
@@ -383,7 +383,7 @@ p{margin-bottom:1.25rem}
 *{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
 a{color:inherit!important;text-decoration:underline!important}
 a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
-a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after,a[href^="mailto:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
 abbr[title]:after{content:" (" attr(title) ")"}
 pre,blockquote,tr,img{page-break-inside:avoid}
 thead{display:table-header-group}
@@ -411,7 +411,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script>document.addEventListener('DOMContentLoaded', prettyPrint)</script>
@@ -422,7 +422,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.0.0</span>
+<span id="revnumber">version 2.4.0</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -433,10 +433,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#crm-sales-lead-user-interface-plugin">2. Sales/Lead User Interface Plugin</a></li>
-<li><a href="#crm-changes">3. Changes</a></li>
-<li><a href="#crm-license">4. License</a></li>
-<li><a href="#crm-source-code">5. Source Code</a></li>
-<li><a href="#crm-contributing">6. Contributing</a></li>
+<li><a href="#crm-crud-user-interface">3. CRUD user interface</a>
+<ul class="sectlevel2">
+<li><a href="#crm-create-new-sales-opportunity">3.1. Create new sales opportunity</a></li>
+<li><a href="#crm-edit-existing-sales-opportunity">3.2. Edit existing sales opportunity</a></li>
+<li><a href="#crm-find-opportunities">3.3. Find opportunities</a></li>
+<li><a href="#crm-list-opportunities">3.4. List opportunities</a></li>
+</ul>
+</li>
+<li><a href="#crm-project-roles">4. Project Roles</a></li>
+<li><a href="#crm-sales-staff">5. Sales staff</a></li>
+<li><a href="#crm-configuration">6. Configuration</a></li>
+<li><a href="#crm-changes">7. Changes</a></li>
+<li><a href="#crm-license">8. License</a></li>
+<li><a href="#crm-source-code">9. Source Code</a></li>
+<li><a href="#crm-contributing">10. Contributing</a></li>
 </ul>
 </div>
 </div>
@@ -472,17 +483,179 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 <h2 id="crm-sales-lead-user-interface-plugin">2. Sales/Lead User Interface Plugin</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The crm-sales-ui plugin is a companion plugin to the crm-sales plugin.
-It provides a Twitter Bootstrap based user interface for managing leads and sales opportunities.</p>
+<p>The <code>crm-sales-ui</code> plugin provides a Twitter Bootstrap user interface for managing leads and sales opportunities.
+It depends on the <code>crm-sales</code> plugin for low level services and persistence.</p>
+</div>
+<div class="imageblock thumb">
+<div class="content">
+<img src="./images/crm-sales-show.png" alt="Example sales opportunity">
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-changes">3. Changes</h2>
+<h2 id="crm-crud-user-interface">3. CRUD user interface</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The plugin provide user interface for creating and updating sales upportunities. It follows the same CRUD workflow
+as other GR8 CRM <code>-ui</code> plugins.</p>
+</div>
+<div class="sect2">
+<h3 id="crm-create-new-sales-opportunity">3.1. Create new sales opportunity</h3>
+<div class="paragraph">
+<p>You can create a new sales opportunity from all pages where you can search, list or view opportunities.
+Just press the [New Opportunity] button and enter information in the create opportunity form.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/crm-sales-create.png" alt="Create new sales opportunity">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-edit-existing-sales-opportunity">3.2. Edit existing sales opportunity</h3>
+<div class="paragraph">
+<p>When you view an existing opportunity you can alter information by pressing the [Edit] button.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/crm-sales-edit.png" alt="Edit existing sales opportunity">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-find-opportunities">3.3. Find opportunities</h3>
+<div class="paragraph">
+<p>The search form have several input fields where you can enter search criteria. When you hit [Search] you
+will either be presented with a list of matching opportunities or if there is only one match it will be
+displayed immediately.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/crm-sales-find.png" alt="Search sales opportunities">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-list-opportunities">3.4. List opportunities</h3>
+<div class="paragraph">
+<p>When you search for opportunities and more than one match you search criteria, a list will displayed where
+you can select an opportunity to view details.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/crm-sales-list.png" alt="List sales opportunities">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-project-roles">4. Project Roles</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A sales opportunity can have multiple people assigned to different roles. You can specify the project manager that will
+lead the project, or the sales support staff that are assigned to the project. As an administrator you can add as
+many role types as you want. These roles can then be used to assign people to the sales opportunity.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/crm-sales-roles.png" alt="Multiple project roles">
+</div>
+</div>
+<div class="paragraph">
+<p>To add a role other than customer and contact you press the [Add role] button on the Roles tab. You can add contacts
+already in your address book or create a new contact by entering new name.
+The new contact will be added to your address book when you save the project.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/crm-sales-role.png" alt="Add new role">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-sales-staff">5. Sales staff</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When creating or updating a sales project you can select the responsible sales representative from a dropdown list.
+This dropdown list is populated using an application event <code>crmTenant.getUsers</code>. You must add an event listener in
+one of your application services that listens to this event and returns a list of users (sales staff).</p>
+</div>
+<div class="paragraph">
+<p>For a list of <strong>all</strong> registered users you can add something like this to a service in your application:</p>
+</div>
+<div class="listingblock">
+<div class="title">MyApplicationService.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">@Listener(namespace="crmTenant", topic="getUsers")
+def listAllUsersInTenant(data) {
+    CrmUserRole.createCriteria().list(sort: 'user.name', order: 'asc') {
+        resultTransformer CriteriaSpecification.ALIAS_TO_ENTITY_MAP
+        projections {
+            user {
+                property('id', 'id')
+                property('guid', 'guid')
+                property('username', 'username')
+                property('name', 'name')
+                property('email', 'email')
+            }
+        }
+        role {
+            eq('tenantId', data.tenant)
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-configuration">6. Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>crm-sales-ui</code> plugin can be configured with the following parameters.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Key</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">crm.currency.default</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default currency code when <code>CrmSalesProject.currency</code> is null</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"EUR"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">crm.sales.probabilities</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of valid probability options (rendered in &lt;select&gt;)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[0, 0.2, 0.4, 0.6, 0.8, 1]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">crm.sales.export.timeout</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Timeout (in seconds) waiting for export process to finish</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">60</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-changes">7. Changes</h2>
 <div class="sectionbody">
 <div class="dlist">
 <dl>
-<dt class="hdlist1">2.0.0</dt>
+<dt class="hdlist1">2.4.0</dt>
 <dd>
 <p>First public release</p>
 </dd>
@@ -491,7 +664,7 @@ It provides a Twitter Bootstrap based user interface for managing leads and sale
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-license">4. License</h2>
+<h2 id="crm-license">8. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -499,7 +672,7 @@ It provides a Twitter Bootstrap based user interface for managing leads and sale
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">5. Source Code</h2>
+<h2 id="crm-source-code">9. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-sales-ui" class="bare">https://github.com/technipelago/grails-crm-sales-ui</a></p>
@@ -507,7 +680,7 @@ It provides a Twitter Bootstrap based user interface for managing leads and sale
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-contributing">6. Contributing</h2>
+<h2 id="crm-contributing">10. Contributing</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Please report <a href="https://github.com/technipelago/grails-crm-sales-ui/issues">issues or suggestions</a>.</p>
@@ -520,8 +693,8 @@ It provides a Twitter Bootstrap based user interface for managing leads and sale
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.0.0<br>
-Last updated 2014-08-15 22:11:06 CEST
+Version 2.4.0<br>
+Last updated 2015-10-01 11:34:30 +02:00
 </div>
 </div>
 </body>
