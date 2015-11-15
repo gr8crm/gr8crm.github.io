@@ -63,6 +63,7 @@ github project and we will prioritize cleanup and documentation and get it publi
 | Plugin Name                                                     | Description
 | https://github.com/technipelago/grails-crm-blog[crm-blog] + https://github.com/technipelago/grails-crm-blog-ui[crm-blog-ui] | Blog presentation and authoring (-ui)
 | https://github.com/technipelago/grails-crm-campaign[crm-campaign] + https://github.com/technipelago/grails-crm-campaign-ui[crm-campaign-ui] | Marketing campaign execution and management (-ui)
+| link:plugins/crm-invoice/index.html[crm-invoice] + link:plugins/crm-invoice-ui/index.html[crm-invoice-ui] | Invoice Management including administration user interface (-ui)
 | https://github.com/goeh/grails-crm-invitation[crm-invitation]   | Invite external users to your application
 | https://github.com/goeh/grails-crm-notification[crm-notification] | Notify users about stuff with a central notification center
 | https://github.com/goeh/grails-crm-syslog[crm-syslog]           | Log application events to database
