@@ -432,7 +432,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#crm-customer-relationship-management">1.1. Customer Relationship Management</a></li>
 </ul>
 </li>
-<li><a href="#crm-blog-services-plugin">2. Blog Services Plugin</a></li>
+<li><a href="#crm-blog-services-plugin">2. Blog Services Plugin</a>
+<ul class="sectlevel2">
+<li><a href="#crm-rendering-blog-posts">2.1. Rendering blog posts</a></li>
+</ul>
+</li>
 <li><a href="#crm-domain-model">3. Domain model</a></li>
 <li><a href="#crm-crmblogservice">4. CrmBlogService</a>
 <ul class="sectlevel2">
@@ -494,9 +498,8 @@ Instead it depends on crm-content and delegate much of the storage and rendering
 <p>Note that this plugin does not contain any user interface components. This plugin contains domain classes and services only.
 The plugin <a href="http://gr8crm.github.io/plugins/crm-blog-ui/">crm-blog-ui</a> provides a Twitter Bootstrap based user interface for blog authors.</p>
 </div>
-<div class="paragraph">
-<p>Rendering blog posts</p>
-</div>
+<div class="sect2">
+<h3 id="crm-rendering-blog-posts">2.1. Rendering blog posts</h3>
 <div class="paragraph">
 <p>To render blog posts in a GSP page you can use the <strong>crm:blogPosts</strong> tag.
 It iterates over all published blog posts and render it&#8217;s content on the page.
@@ -536,10 +539,8 @@ The following example show that:</p>
 <div class="paragraph">
 <p>The example above render something like this:</p>
 </div>
-<div class="imageblock thumb">
-<div class="content">
-<img src="./images/blog-view.png" alt="blog view">
-</div>
+<div class="paragraph">
+<p>image::blog-view.png</p>
 </div>
 <div class="paragraph">
 <p>The <strong>crm:blogPosts</strong> tag is included in the <strong>crm-blog</strong> plugin so you could create a Grails application
@@ -547,6 +548,7 @@ that serves a public web site and include the crm-blog plugin to render blog pos
 Then you could create another Grails application and include the <strong>crm-blog-ui</strong> plugin to get all the blog editing
 features that your blog authors use to create content.
 Or you can include both plugins in the same application if it&#8217;s a small project with limited requirements.</p>
+</div>
 </div>
 </div>
 </div>
@@ -698,7 +700,7 @@ You can change the parameter to something else with the configuration option crm
 <div id="footer">
 <div id="footer-text">
 Version 2.4.0<br>
-Last updated 2016-01-06 00:44:35 CET
+Last updated 2016-01-06 00:56:15 CET
 </div>
 </div>
 </body>
