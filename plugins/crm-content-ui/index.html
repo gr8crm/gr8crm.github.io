@@ -422,7 +422,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.4.0</span>
+<span id="revnumber">version 2.4.1</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -440,10 +440,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#crm-create-a-new-html-file">3.3. Create a new HTML file</a></li>
 </ul>
 </li>
-<li><a href="#crm-changes">4. Changes</a></li>
-<li><a href="#crm-license">5. License</a></li>
-<li><a href="#crm-source-code">6. Source Code</a></li>
-<li><a href="#crm-contributing">7. Contributing</a></li>
+<li><a href="#crm-extensions">4. Extensions</a></li>
+<li><a href="#crm-changes">5. Changes</a></li>
+<li><a href="#crm-license">6. License</a></li>
+<li><a href="#crm-source-code">7. Source Code</a></li>
+<li><a href="#crm-contributing">8. Contributing</a></li>
 </ul>
 </div>
 </div>
@@ -565,6 +566,9 @@ In this tab you can also let users upload files and even create new files attach
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>When content is uploaded the status is set to 'shared' by default. This can be changed with the config parameter 'crm.content.upload.opts'.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="crm-working-with-folders-and-files">3.2. Working with folders and files</h3>
@@ -604,10 +608,211 @@ For example crmContent/create?ref=crmResourceFolder@42 would attach the newly cr
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-changes">4. Changes</h2>
+<h2 id="crm-extensions">4. Extensions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Like most GR8 CRM plugins the crm-content plugin trigger events when important things happens in the system,
+when content is created, updated, deleted, etc. These events can be used to extend functionality. By listening to events
+in your application service and take actions. The following example shows how you can scale and crop images automatically
+when uploaded to a folder tagged with a dimension tag. The program Imagemagick is used on the server to scale images.</p>
+</div>
+<div class="paragraph">
+<p>Example: If you add a tag with the name <strong>1024x768</strong> to a folder. Then all images uploaded to that folder will be resized
+to 1024x768 pixels in a "smart way", always trying to keep as much as possible of the image and focusing on the middle.
+The Imagemagick command <strong>convert</strong> is used on the server with the following options:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>-resize &lt;width&gt;x&lt;height&gt;^
+-gravity center
+-crop &lt;width&gt;x&lt;height&gt;+0+0
++repage
+-quality 50</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is the complete source for the service that listens for crmContent.created events and perform the resizing.</p>
+</div>
+<div class="listingblock">
+<div class="title">CrmContentResizingService</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package my.company
+
+import grails.events.Listener
+import grails.plugins.crm.core.Pair
+
+import java.util.concurrent.TimeUnit
+import java.util.regex.Pattern
+
+/**
+ * Scale uploaded images automatically.
+ */
+class CrmContentResizingService {
+
+    def grailsApplication
+    def crmContentService
+    def crmTagService
+
+    private static final DIMENSION_PATTERN = Pattern.compile(/(\d+)x(\d+)/)
+
+    @Listener(namespace = 'crmContent', topic = 'created')
+    def contentCreated(data) {
+        filter(data)
+    }
+
+    @Listener(namespace = 'crmResourceRef', topic = 'updated')
+    def contentUpdated(data) {
+        filter(data)
+    }
+
+    private void filter(data) {
+        // [tenant: ref.tenantId, id: ref.id, user: username, name: ref.name]
+
+        String name = data.name ? data.name.toLowerCase() : ''
+        def image = name.endsWith('.png') || name.endsWith('.jpg') || name.endsWith('.gif')
+
+        Thread.sleep(2000) // Wait for the transaction to complete.
+
+        def file = crmContentService.getResourceRef(data.id) <i class="conum" data-value="1"></i><b>(1)</b>
+        if (!file) {
+            log.error("No content found with id: ${data.id}")
+            return
+        }
+
+        if (!image) {
+            // The file name did not tell us it was an image, what about the mime type?
+            image = file.metadata.contentType.startsWith('image/')
+        }
+
+        if (image) {
+            def (width, height) = getDimensions(file)
+            if (width &amp;&amp; height) {
+                resize(file, width, height)
+                crmTagService.setTagValue(file, "resized") <i class="conum" data-value="4"></i><b>(4)</b>
+            }
+        }
+    }
+
+    /**
+     * Find a tag with the format &lt;width&gt;x&lt;height&gt; on the resource or the resource's owner.
+     *
+     * @param file CrmResourceRef instance
+     * @return width and height as a Pair, or 0x0 if no tags was found
+     */
+    private Pair&lt;Integer, Integer&gt; getDimensions(file) {
+        def tags = crmTagService.getTagValue(file, null)
+        if (tags) {
+            if (tags.contains("resized")) {
+                log.debug("File $file is already resized") <i class="conum" data-value="2"></i><b>(2)</b>
+                return new Pair&lt;&gt;(0, 0)
+            }
+        } else {
+            def reference = file.reference
+            if (!reference) {
+                log.error("No instance found with reference: ${file.ref}")
+                return new Pair&lt;&gt;(0, 0)
+            }
+            tags = crmTagService.getTagValue(reference, null)
+        }
+
+        def width = 0
+        def height = 0
+        for (value in tags) {
+            def m = DIMENSION_PATTERN.matcher(value)
+            if (m.find()) { <i class="conum" data-value="3"></i><b>(3)</b>
+                width = Integer.valueOf(m.group(1))
+                height = Integer.valueOf(m.group(2))
+                break
+            }
+        }
+
+        return new Pair&lt;&gt;(width, height)
+    }
+
+    /**
+     * convert in.jpg -resize "1920x1080^" -gravity center -crop 1920x1080+0+0 +repage -quality 50 out.jpg
+     * @param file file to resize
+     * @param width wanted width in pixels
+     * @param height wanted height in pixels
+     */
+    private void resize(file, int width, int height) {
+        final String command = grailsApplication.config.crm.content.convert.executable ?: "/usr/bin/convert"
+        final File infile = File.createTempFile("crm", '.' + file.ext)
+        final File outfile = File.createTempFile("crm", '.' + file.ext)
+
+        infile.deleteOnExit()
+        outfile.deleteOnExit()
+
+        try {
+            infile.withOutputStream { os -&gt;
+                file.writeTo(os)
+            }
+            Process p = new ProcessBuilder().inheritIO().command(command, infile.absolutePath,
+                    "-resize", "${width}x${height}^",
+                    "-gravity", "center",
+                    "-crop", "${width}x${height}+0+0",
+                    "+repage",
+                    "-quality", "50",
+                    outfile.absolutePath).start()
+            p.waitFor(30, TimeUnit.SECONDS)
+            int exitValue = p.exitValue()
+            if (exitValue == 0) {
+                outfile.withInputStream { is -&gt;
+                    crmContentService.updateResource(file, is) <i class="conum" data-value="5"></i><b>(5)</b>
+                }
+                log.debug "File $file resized to ${width}x${height}"
+            } else {
+                log.error "Could not resize file $file, exit code: $exitValue"
+            }
+        } catch (Exception e) {
+            log.error("Failed to resize file", e)
+        } finally {
+            infile.delete()
+            outfile.delete()
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Grab the uploaded/created image</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>If image is already resized we do nothing</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>If we find a tag with the form &lt;width&gt;x&lt;height&gt; we use the dimensions to scale the image</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Add a tag to tell that this image was resized</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Update the image, overwriting original content</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-changes">5. Changes</h2>
 <div class="sectionbody">
 <div class="dlist">
 <dl>
+<dt class="hdlist1">2.4.1</dt>
+<dd>
+<p>Default options for uploaded content can now be configured with 'crm.content.upload.opts'. crmContent/open now redirect to public endpoint if content is public.</p>
+</dd>
+<dt class="hdlist1">2.4.0</dt>
+<dd>
+<p>Grails 2.4.x compatibility.</p>
+</dd>
 <dt class="hdlist1">2.0.2</dt>
 <dd>
 <p>Action <code>attachDocument</code> on <code>CrmContentController</code> can now tag uploaded files with the <code>tags</code> parameter</p>
@@ -626,7 +831,7 @@ You can now update status on files directly from the embedded file list</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-license">5. License</h2>
+<h2 id="crm-license">6. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -634,7 +839,7 @@ You can now update status on files directly from the embedded file list</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">6. Source Code</h2>
+<h2 id="crm-source-code">7. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-content-ui" class="bare">https://github.com/technipelago/grails-crm-content-ui</a></p>
@@ -642,7 +847,7 @@ You can now update status on files directly from the embedded file list</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-contributing">7. Contributing</h2>
+<h2 id="crm-contributing">8. Contributing</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Please report <a href="https://github.com/technipelago/grails-crm-content-ui/issues">issues or suggestions</a>.</p>
@@ -655,8 +860,8 @@ You can now update status on files directly from the embedded file list</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.4.0<br>
-Last updated 2014-09-23 13:48:34 CEST
+Version 2.4.1<br>
+Last updated 2016-01-05 22:27:27 CET
 </div>
 </div>
 </body>
