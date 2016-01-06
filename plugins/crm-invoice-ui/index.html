@@ -434,9 +434,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#crm-invoice-management-user-interface-plugin">2. Invoice Management User Interface Plugin</a>
 <ul class="sectlevel2">
-<li><a href="#crm-search-invoices">2.1. Search invoices</a></li>
-<li><a href="#crm-invoice-details">2.2. Invoice details</a></li>
-<li><a href="#crm-edit-invoice-details">2.3. Edit invoice details</a></li>
+<li><a href="#crm-create-invoices">2.1. Create invoices</a></li>
+<li><a href="#crm-search-invoices">2.2. Search invoices</a></li>
+<li><a href="#crm-invoice-details">2.3. Invoice details</a></li>
+<li><a href="#crm-edit-invoice-details">2.4. Edit invoice details</a></li>
 </ul>
 </li>
 <li><a href="#crm-changes">3. Changes</a></li>
@@ -482,7 +483,19 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 It provides a Twitter Bootstrap based user interface for invoice management.</p>
 </div>
 <div class="sect2">
-<h3 id="crm-search-invoices">2.1. Search invoices</h3>
+<h3 id="crm-create-invoices">2.1. Create invoices</h3>
+<div class="paragraph">
+<p>In most application invoices are created programatically based on information from the database or external systems.
+But you can also create an invoice manually with the CrmInvoiceController.create() action.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/invoice-create.png" alt="Create invoice manually">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-search-invoices">2.2. Search invoices</h3>
 <div class="paragraph">
 <p>To query for invoices you visit <code>crmIndex/index</code> which will show the query form.</p>
 </div>
@@ -515,7 +528,7 @@ Look at <a href="https://github.com/technipelago/grails-crm-invoice-ui/blob/mast
 </div>
 </div>
 <div class="sect2">
-<h3 id="crm-invoice-details">2.2. Invoice details</h3>
+<h3 id="crm-invoice-details">2.3. Invoice details</h3>
 <div class="paragraph">
 <p>The invoice details page <code>crmInvoice/show</code> show all details for an invoice.
 Here you will find invoice number, customer name, invoice and delivery addresses and more.</p>
@@ -530,7 +543,7 @@ Here you will find invoice number, customer name, invoice and delivery addresses
 </div>
 </div>
 <div class="sect2">
-<h3 id="crm-edit-invoice-details">2.3. Edit invoice details</h3>
+<h3 id="crm-edit-invoice-details">2.4. Edit invoice details</h3>
 <div class="paragraph">
 <p>To edit invoice details you hit the <code>Edit</code> button. This will display the edit page <code>crmInvoice/edit</code>.
 Here you can alter values and then hit <code>Save</code> to store the new values in the database.</p>
@@ -595,7 +608,7 @@ Here you can alter values and then hit <code>Save</code> to store the new values
 <div id="footer">
 <div id="footer-text">
 Version 2.4.0<br>
-Last updated 2015-11-15 12:51:12 CET
+Last updated 2016-01-06 15:44:53 CET
 </div>
 </div>
 </body>
