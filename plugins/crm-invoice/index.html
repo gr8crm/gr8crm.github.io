@@ -422,7 +422,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.4.0-SNAPSHOT</span>
+<span id="revnumber">version 2.4.0</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -691,8 +691,19 @@ The association <code>CrmInvoice.items</code> references all items for an invoic
 </div>
 <div class="sect2">
 <h3 id="crm-create-a-new-invoice">4.2. Create a new invoice</h3>
-<div class="paragraph">
-<p>TODO</p>
+<div class="listingblock">
+<div class="title">CreateInvoice.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">def s = crmInvoiceService.createInvoiceStatus(name: "Created", true)
+def t = crmInvoiceService.createPaymentTerm(name: "14days", true)
+
+def invoice = crmInvoiceService.createInvoice(invoiceStatus: s, paymentTerm: t, customer: "ACME Inc.", customerTel: "+4685551234", customerEmail: "customer@acme.com")
+crmInvoiceService.addInvoiceItem(invoice, [orderIndex: 1, productNumber: "iPhone6s", productName: "iPhone 6s 64GB Space Grey",
+    unit: "item", quantity: 1, price: 699, vat: 0.2])
+invoice.save(failOnError: true)
+
+println "Invoice number #$invoice created for ${invoice.customer}"</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -702,7 +713,7 @@ The association <code>CrmInvoice.items</code> references all items for an invoic
 <div class="sectionbody">
 <div class="dlist">
 <dl>
-<dt class="hdlist1">2.0.0</dt>
+<dt class="hdlist1">2.4.0</dt>
 <dd>
 <p>First public release</p>
 </dd>
@@ -740,8 +751,8 @@ The association <code>CrmInvoice.items</code> references all items for an invoic
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.4.0-SNAPSHOT<br>
-Last updated 2015-11-15 12:15:47 CET
+Version 2.4.0<br>
+Last updated 2015-11-15 12:25:18 CET
 </div>
 </div>
 </body>
