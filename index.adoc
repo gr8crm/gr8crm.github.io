@@ -69,6 +69,7 @@ github project and we will prioritize cleanup and documentation and get it publi
 | https://github.com/goeh/grails-crm-syslog[crm-syslog]           | Log application events to database
 | crm-security-ui                                                 | Back Office features for user and role administration
 | link:plugins/crm-training/index.html[crm-training] + link:plugins/crm-training-ui/index.html[crm-training-ui] | Event (course/conference) management
+| link:plugins/crm-public-profile/index.html[crm-public-profile] | Let users update their public profile
 |===
 
 == Presentations and Talks
