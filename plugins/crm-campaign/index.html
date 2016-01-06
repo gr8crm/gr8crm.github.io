@@ -422,7 +422,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.4.0-SNAPSHOT</span>
+<span id="revnumber">version 2.4.0</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -440,12 +440,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#crm-crmcampaignservice">4. CrmCampaignService</a>
 <ul class="sectlevel2">
-<li><a href="#crm-create-campaign-status">4.1. Create campaign status</a></li>
-<li><a href="#crm-create-a-new-campaign">4.2. Create a new campaign</a></li>
-<li><a href="#crm-banner-campaign">4.3. Banner Campaign</a></li>
-<li><a href="#crm-information-campaign">4.4. Information Campaign</a></li>
-<li><a href="#crm-product-discount-campaign">4.5. Product Discount Campaign</a></li>
-<li><a href="#crm-email-campaign">4.6. Email Campaign</a></li>
+<li><a href="#crm-create-a-new-campaign">4.1. Create a new campaign</a></li>
+<li><a href="#crm-banner-campaign">4.2. Banner Campaign</a></li>
+<li><a href="#crm-information-campaign">4.3. Information Campaign</a></li>
+<li><a href="#crm-product-discount-campaign">4.4. Product Discount Campaign</a></li>
+<li><a href="#crm-email-campaign">4.5. Email Campaign</a></li>
 </ul>
 </li>
 <li><a href="#crm-changes">5. Changes</a></li>
@@ -518,16 +517,7 @@ in your BuildConfig.groovy if you want end-user campaign management features.</p
 <p>Like most other GR8 CRM plugins this plugin have a main service with methods for creating, searching and updating campaigns.</p>
 </div>
 <div class="sect2">
-<h3 id="crm-create-campaign-status">4.1. Create campaign status</h3>
-<div class="paragraph">
-<p><code>CrmCampaignStatus createCampaignStatus(Map params, boolean save = false)</code></p>
-</div>
-<div class="paragraph">
-<p>Campaign status is mandatory on a campaign and different campaign statuses can be created with <code>createCampaignStatus()</code>.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="crm-create-a-new-campaign">4.2. Create a new campaign</h3>
+<h3 id="crm-create-a-new-campaign">4.1. Create a new campaign</h3>
 <div class="paragraph">
 <p><code>CrmCampaign createCampaign(Map params, boolean save = false)</code></p>
 </div>
@@ -540,12 +530,12 @@ to indicate if the campaign should be persisted inside the method or if you want
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">def c = crmCampaignService.createCampaign(...);
 
-println "Campaign $c created with status ${c.status}"</code></pre>
+println "Campaign $c created"</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="crm-banner-campaign">4.3. Banner Campaign</h3>
+<h3 id="crm-banner-campaign">4.2. Banner Campaign</h3>
 <div class="paragraph">
 <p>A banner campaign is used when you want to display a banner image on your web page with a link that leads to
 a page with more information. A banner campaign uses <a href="http://gr8crm.github.io/plugins/crm-content">crm-content</a> plugin to store banner images.</p>
@@ -557,15 +547,13 @@ a page with more information. A banner campaign uses <a href="http://gr8crm.gith
 def bannerCampaign <i class="conum" data-value="1"></i><b>(1)</b>
 
 final ApplicationContext ctx = grailsApplication.mainContext
-final CrmCampaignStatus status = crmCampaignService.createCampaignStatus(orderIndex: 2,
-        name: "Active campaign", param: "active", true)
 
 final CrmCampaign parentCampaign = crmCampaignService.createCampaign(number: "banner",
         name: "Banners on home page", description: "Parent campaign for all banners on home page",
-        status: status, true) <i class="conum" data-value="2"></i><b>(2)</b>
+        true) <i class="conum" data-value="2"></i><b>(2)</b>
 
 def createCampaign = { name, desc, img, link -&gt; <i class="conum" data-value="3"></i><b>(3)</b>
-    def c = crmCampaignService.createCampaign(parent: parentCampaign, status: status,
+    def c = crmCampaignService.createCampaign(parent: parentCampaign,
             name: name, description: desc, code: "ads", true)
     if(c.hasErrors()) {
         throw new RuntimeException("Cannot create campaign")
@@ -643,7 +631,7 @@ on our web page. When the visitor clicks on an image it will redirect the browse
 </div>
 </div>
 <div class="sect2">
-<h3 id="crm-information-campaign">4.4. Information Campaign</h3>
+<h3 id="crm-information-campaign">4.3. Information Campaign</h3>
 <div class="paragraph">
 <p>If you develop a public facing site with GR8 CRM you can display different content depending on where your visitors
 come from. For example if they come via a link on Twitter you can display one type of content, if they come via
@@ -652,8 +640,7 @@ Facebook you can display another type of content.</p>
 <div class="listingblock">
 <div class="title">CreateInformationCampaign</div>
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">def status = crmCampaignService.createCampaignStatus(name: 'Active campaign', param: 'active', true)
-def twitter = crmCampaignService.createCampaign(number: "twitter-app-2016", code: "twitter", status: status,
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">def twitter = crmCampaignService.createCampaign(number: "twitter-app-2016", code: "twitter",
     name: "Tweets", description: "Visitors that came to us via a tweet", true)
 def text = """
 &lt;h3&gt;Download our Twitter App&lt;/h3&gt;
@@ -715,7 +702,7 @@ Otherwise a default text template is rendered using the 'crm-content' plugin.</t
 </div>
 </div>
 <div class="sect2">
-<h3 id="crm-product-discount-campaign">4.5. Product Discount Campaign</h3>
+<h3 id="crm-product-discount-campaign">4.4. Product Discount Campaign</h3>
 <div class="paragraph">
 <p>If you develop a web shop with the <code>crm-product</code> plugin you can configure product campaigns to offer discounts or
 value-add products for your customers. The <code>ProductDiscountCampaign</code> handler is very flexible with lots of
@@ -741,8 +728,7 @@ and a campaign source query parameter has the value "twitter".</p>
 <div class="listingblock">
 <div class="title">CreateProductDiscountCampaign</div>
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">def status = crmCampaignService.createCampaignStatus(name: 'Active campaign', param: 'active', true)
-def twitter = crmCampaignService.createCampaign(number: "twitter2016", code: "twitter", status: status,
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">def twitter = crmCampaignService.createCampaign(number: "twitter2016", code: "twitter",
     name: "Promotion for twitter users", description: "Follow us on Twitter to receive a 10 % discount on Product X.")
 productDiscountCampaign.configure(twitter) {
     products = ['productXbasic', 'productXpro', 'productXultimate'] <i class="conum" data-value="1"></i><b>(1)</b>
@@ -774,20 +760,18 @@ If condition is a number the discount will only be applied if the total shopping
 </div>
 </div>
 <div class="sect2">
-<h3 id="crm-email-campaign">4.6. Email Campaign</h3>
+<h3 id="crm-email-campaign">4.5. Email Campaign</h3>
 <div class="listingblock">
 <div class="title">CreateEmailCampaign.groovy</div>
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">def emailCampaign <i class="conum" data-value="1"></i><b>(1)</b>
 
-def active = crmCampaignService.createCampaignStatus(name: "Active", true)
-def campaign = crmCampaignService.createCampaign(name: "Test campaign", status: active, true)
+def campaign = crmCampaignService.createCampaign(name: "Test campaign", true)
 emailCampaign.configure(campaign) {
     subject = "Test"
     sender = "info@mycompany.com"
-    parts = ['html', 'text']
-    html = """&lt;h1&gt;Hello World!&lt;/h1&gt;"""
-    text = """Hello World!"""
+    parts = ['body']
+    body = """&lt;h1&gt;Hello World!&lt;/h1&gt;"""
 } <i class="conum" data-value="2"></i><b>(2)</b>
 crmEmailCampaignService.createRecipients(campaign, ['me@mycompany.com', 'joe.average@customer.com']) <i class="conum" data-value="3"></i><b>(3)</b>
 crmEmailCampaignService.send() <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
@@ -859,8 +843,8 @@ crmEmailCampaignService.send() <i class="conum" data-value="4"></i><b>(4)</b></c
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.4.0-SNAPSHOT<br>
-Last updated 2015-12-19 18:01:32 CET
+Version 2.4.0<br>
+Last updated 2015-12-21 13:13:03 CET
 </div>
 </div>
 </body>

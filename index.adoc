@@ -61,7 +61,7 @@ github project and we will prioritize cleanup and documentation and get it publi
 [options="header"]
 |===
 | Plugin Name                                                     | Description
-| link:plugins/crm-blog[crm-blog] + link:plugins/crm-blog-ui[crm-blog-ui] | Blog presentation and authoring (-ui)
+| link:plugins/crm-blog/index.html[crm-blog] + link:plugins/crm-blog-ui/index.html[crm-blog-ui] | Blog presentation and authoring (-ui)
 | link:plugins/crm-campaign/index.html[crm-campaign] + link:plugins/crm-campaign-ui/index.html[crm-campaign-ui] | Marketing campaign execution and management (-ui)
 | link:plugins/crm-invoice/index.html[crm-invoice] + link:plugins/crm-invoice-ui/index.html[crm-invoice-ui] | Invoice Management including administration user interface (-ui)
 | https://github.com/goeh/grails-crm-invitation[crm-invitation]   | Invite external users to your application
