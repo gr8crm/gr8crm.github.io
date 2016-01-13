@@ -46,11 +46,14 @@ the same way as you install other plugins, by adding them to BuildConfig.groovy
 | link:plugins/crm-tags/index.html[crm-tags]                     | Tag any domain instance
 | link:plugins/crm-contact/index.html[crm-contact] + link:plugins/crm-contact-ui/index.html[crm-contact-ui]                 | Contact Management (companies and individuals)
 | link:plugins/crm-content/index.html[crm-content] + link:plugins/crm-content-ui/index.html[crm-content-ui]                 | Content Management and authoring (-ui)
+| link:plugins/crm-blog/index.html[crm-blog] + link:plugins/crm-blog-ui/index.html[crm-blog-ui] | Blog presentation and authoring (-ui)
 | link:plugins/crm-task/index.html[crm-task] + link:plugins/crm-task-ui/index.html[crm-task-ui] | Task/Calendar Management
 | link:plugins/crm-email/index.html[crm-email]                   | Send emails using Grails events
 | link:plugins/crm-product/index.html[crm-product] + link:plugins/crm-product-ui/index.html[crm-product-ui] | Product and inventory management including administration (-ui)
 | link:plugins/crm-order/index.html[crm-order] + link:plugins/crm-order-ui/index.html[crm-order-ui] | Order Management including administration user interface (-ui)
+| link:plugins/crm-invoice/index.html[crm-invoice] + link:plugins/crm-invoice-ui/index.html[crm-invoice-ui] | Invoice Management including administration user interface (-ui)
 | link:plugins/crm-sales/index.html[crm-sales] + link:plugins/crm-sales-ui/index.html[crm-sales-ui] | Sales lead/opportunity management
+| link:plugins/crm-campaign/index.html[crm-campaign] + link:plugins/crm-campaign-ui/index.html[crm-campaign-ui] | Marketing campaign execution and management (-ui)
 |===
 
 === Plugins not yet released
@@ -61,9 +64,6 @@ github project and we will prioritize cleanup and documentation and get it publi
 [options="header"]
 |===
 | Plugin Name                                                     | Description
-| link:plugins/crm-blog/index.html[crm-blog] + link:plugins/crm-blog-ui/index.html[crm-blog-ui] | Blog presentation and authoring (-ui)
-| link:plugins/crm-campaign/index.html[crm-campaign] + link:plugins/crm-campaign-ui/index.html[crm-campaign-ui] | Marketing campaign execution and management (-ui)
-| link:plugins/crm-invoice/index.html[crm-invoice] + link:plugins/crm-invoice-ui/index.html[crm-invoice-ui] | Invoice Management including administration user interface (-ui)
 | https://github.com/goeh/grails-crm-invitation[crm-invitation]   | Invite external users to your application
 | https://github.com/goeh/grails-crm-notification[crm-notification] | Notify users about stuff with a central notification center
 | https://github.com/goeh/grails-crm-syslog[crm-syslog]           | Log application events to database
