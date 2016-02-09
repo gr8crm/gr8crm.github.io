@@ -422,7 +422,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.4.1</span>
+<span id="revnumber">version 2.4.2</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -797,6 +797,46 @@ crmEmailCampaignService.send() <i class="conum" data-value="4"></i><b>(4)</b></c
 </tr>
 </table>
 </div>
+<div class="sect3">
+<h4 id="crm-bounce-tracking-return-to-sender">4.5.1. Bounce Tracking (return-to-sender)</h4>
+<div class="paragraph">
+<p>When you send out large amount of emails you must have a process to handle invalid email addresses and other type of
+return-to-sender emails. The quartz job <code>CrmEmailBounceJob</code> helps you with that burden. It periodically scans the IMAP mailbox
+that you used as <code>sender</code> or <code>reply-to</code> address. If it finds an error report from an external mail server
+it looks up the recipient in your GR8 CRM database and marks it with <strong>error</strong> status.
+Optionally it can tag the <code>CrmContact</code> instance with a tag that tells you that this contact&#8217;s email address it not valid.
+Future email campaign can ignore contacts tagged as invalid. Or you can query and delete them from your address database.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">Config.groovy
+----
+crm {
+    campaign {
+        job.bounce.enabled = true
+        email {
+            bounce {
+                imap.host = 'imap.googlemail.com'
+                imap.port = 993
+                imap.username = 'info@yourcompany.com' <i class="conum" data-value="1"></i><b>(1)</b>
+                imap.password = 'password' <i class="conum" data-value="2"></i><b>(2)</b>
+                imap.store = 'imaps'
+                to = 'newsletter@yourcompany.com' <i class="conum" data-value="3"></i><b>(3)</b>
+                tag = 'wrong-email' <i class="conum" data-value="4"></i><b>(4)</b>
+                tenant = 1 <i class="conum" data-value="5"></i><b>(5)</b>
+            }
+        }
+    }
+}
+----
+&lt;1&gt; Your sender or reply-to address
+&lt;2&gt; GMail users, generate an app specific password in Google Admin Console
+&lt;3&gt; If the sender or reply-to address is an alias, specify the address here to filter messages on *To:*
+&lt;4&gt; Contacts will be tagged with this value, exclude or set to null if you don't want to use tagging
+&lt;5&gt; The tenant to process in a multi-teant environment</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -805,6 +845,10 @@ crmEmailCampaignService.send() <i class="conum" data-value="4"></i><b>(4)</b></c
 <div class="sectionbody">
 <div class="dlist">
 <dl>
+<dt class="hdlist1">2.4.2</dt>
+<dd>
+<p>Better configurability for the email campaign bounce tracker</p>
+</dd>
 <dt class="hdlist1">2.4.1</dt>
 <dd>
 <p>First public release (2.4.0 got corrupted when published to grails.org)</p>
@@ -843,8 +887,8 @@ crmEmailCampaignService.send() <i class="conum" data-value="4"></i><b>(4)</b></c
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.4.1<br>
-Last updated 2016-01-14 22:18:00 +01:00
+Version 2.4.2<br>
+Last updated 2016-02-09 10:40:33 CET
 </div>
 </div>
 </body>
