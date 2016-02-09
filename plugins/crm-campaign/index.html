@@ -808,10 +808,9 @@ Optionally it can tag the <code>CrmContact</code> instance with a tag that tells
 Future email campaign can ignore contacts tagged as invalid. Or you can query and delete them from your address database.</p>
 </div>
 <div class="listingblock">
+<div class="title">Config.groovy</div>
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">Config.groovy
-----
-crm {
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">crm {
     campaign {
         job.bounce.enabled = true
         email {
@@ -827,14 +826,32 @@ crm {
             }
         }
     }
-}
-----
-&lt;1&gt; Your sender or reply-to address
-&lt;2&gt; GMail users, generate an app specific password in Google Admin Console
-&lt;3&gt; If the sender or reply-to address is an alias, specify the address here to filter messages on *To:*
-&lt;4&gt; Contacts will be tagged with this value, exclude or set to null if you don't want to use tagging
-&lt;5&gt; The tenant to process in a multi-teant environment</code></pre>
+}</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Your sender or reply-to address</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>GMail users, generate an app specific password in Google Admin Console</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>If the sender or reply-to address is an alias, specify the address here to filter messages on <strong>To:</strong></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Contacts will be tagged with this value, exclude or set to null if you don&#8217;t want to use tagging</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The tenant to process in a multi-teant environment</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -888,7 +905,7 @@ crm {
 <div id="footer">
 <div id="footer-text">
 Version 2.4.2<br>
-Last updated 2016-02-09 10:40:33 CET
+Last updated 2016-02-09 10:58:02 CET
 </div>
 </div>
 </body>
