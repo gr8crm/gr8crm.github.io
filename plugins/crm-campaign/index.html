@@ -422,7 +422,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.4.3</span>
+<span id="revnumber">version 2.4.4</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -773,7 +773,7 @@ emailCampaign.configure(campaign) {
     parts = ['body']
     body = """&lt;h1&gt;Hello World!&lt;/h1&gt;"""
 } <i class="conum" data-value="2"></i><b>(2)</b>
-crmEmailCampaignService.createRecipients(campaign, [[email: 'me@mycompany.com'], [email: 'joe.average@customer.com']]) <i class="conum" data-value="3"></i><b>(3)</b>
+crmCampaignService.createRecipients(campaign, [[email: 'me@mycompany.com'], [email: 'joe.average@customer.com']]) <i class="conum" data-value="3"></i><b>(3)</b>
 crmEmailCampaignService.send() <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
 </div>
 </div>
@@ -842,7 +842,8 @@ Future email campaign can ignore contacts tagged as invalid. Or you can query an
                 imap.store = 'imaps'
                 to = 'newsletter@yourcompany.com' <i class="conum" data-value="3"></i><b>(3)</b>
                 tag = 'wrong-email' <i class="conum" data-value="4"></i><b>(4)</b>
-                tenant = 1 <i class="conum" data-value="5"></i><b>(5)</b>
+                clearEmail = true <i class="conum" data-value="5"></i><b>(5)</b>
+                tenant = 1 <i class="conum" data-value="6"></i><b>(6)</b>
             }
         }
     }
@@ -857,7 +858,7 @@ Future email campaign can ignore contacts tagged as invalid. Or you can query an
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>GMail users, generate an app specific password in Google Admin Console</td>
+<td>GMail users, you can generate an app specific password in Google Admin Console</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
@@ -865,10 +866,14 @@ Future email campaign can ignore contacts tagged as invalid. Or you can query an
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Contacts will be tagged with this value, exclude or set to null if you don&#8217;t want to use tagging</td>
+<td>Contacts will be tagged with this value, exclude or set to <code>null</code> if you don&#8217;t want to use tagging</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>If <code>true</code> the email property of the recipient will be set to <code>null</code> (to make it impossible to send email to this recipient again)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
 <td>The tenant to process in a multi-teant environment</td>
 </tr>
 </table>
@@ -882,6 +887,10 @@ Future email campaign can ignore contacts tagged as invalid. Or you can query an
 <div class="sectionbody">
 <div class="dlist">
 <dl>
+<dt class="hdlist1">2.4.4</dt>
+<dd>
+<p>Better support for supplying custom model to email templates</p>
+</dd>
 <dt class="hdlist1">2.4.3</dt>
 <dd>
 <p>Fixed bug that caused the link between recipient and contact to be missing when sending emails</p>
@@ -928,8 +937,8 @@ Future email campaign can ignore contacts tagged as invalid. Or you can query an
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.4.3<br>
-Last updated 2016-02-09 23:40:19 CET
+Version 2.4.4<br>
+Last updated 2016-02-19 12:01:54 CET
 </div>
 </div>
 </body>
