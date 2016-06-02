@@ -2,7 +2,7 @@
 Göran Ehrsson <goran@technipelago.se>
 :description: Main documentation site for the GR8 CRM Plugin suite
 :keywords: groovy, grails, crm, gr8crm, documentation
-:toc:
+:toc: left
 :numbered:
 :icons: font
 :imagesdir: ./images
