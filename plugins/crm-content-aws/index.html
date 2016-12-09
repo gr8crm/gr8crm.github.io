@@ -427,7 +427,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.4.0-SNAPSHOT</span>
+<span id="revnumber">version 2.4.0</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -438,11 +438,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#crm-aws-content-plugin">2. AWS Content Plugin</a></li>
-<li><a href="#crm-configuration">3. Configuration</a></li>
-<li><a href="#crm-changes">4. Changes</a></li>
-<li><a href="#crm-license">5. License</a></li>
-<li><a href="#crm-source-code">6. Source Code</a></li>
-<li><a href="#crm-contributing">7. Contributing</a></li>
+<li><a href="#crm-installation">3. Installation</a></li>
+<li><a href="#crm-configuration">4. Configuration</a></li>
+<li><a href="#crm-changes">5. Changes</a></li>
+<li><a href="#crm-license">6. License</a></li>
+<li><a href="#crm-source-code">7. Source Code</a></li>
+<li><a href="#crm-contributing">8. Contributing</a></li>
 </ul>
 </div>
 </div>
@@ -493,7 +494,37 @@ in local file system.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-configuration">3. Configuration</h2>
+<h2 id="crm-installation">3. Installation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Declare the plugin dependency in the <code>BuildConfig.groovy</code> file, as shown here:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">grails.project.dependency.resolution = {
+    inherits "global"
+    log "info"
+    repositories {
+        // your repositories
+    }
+    dependencies {
+        // Workaround to resolve dependency issue with aws-java-sdk and http-builder (dependent on httpcore:4.0)
+        build 'org.apache.httpcomponents:httpcore:4.4.5'
+        build 'org.apache.httpcomponents:httpclient:4.5.2'
+        runtime 'org.apache.httpcomponents:httpcore:4.4.5'
+        runtime 'org.apache.httpcomponents:httpclient:4.5.2'
+    }
+    plugins {
+        // here go your plugin dependencies
+        runtime ':crm-content-aws:2.4.0'
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-configuration">4. Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin uses the excellent <a href="https://grails.org/plugin/aws-sdk">aws-sdk</a> plugin
@@ -517,7 +548,7 @@ grails.plugin.awssdk.region = '&lt;aws region&gt;'</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-changes">4. Changes</h2>
+<h2 id="crm-changes">5. Changes</h2>
 <div class="sectionbody">
 <div class="dlist">
 <dl>
@@ -530,7 +561,7 @@ grails.plugin.awssdk.region = '&lt;aws region&gt;'</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-license">5. License</h2>
+<h2 id="crm-license">6. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -538,7 +569,7 @@ grails.plugin.awssdk.region = '&lt;aws region&gt;'</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">6. Source Code</h2>
+<h2 id="crm-source-code">7. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-content-aws" class="bare">https://github.com/technipelago/grails-crm-content-aws</a></p>
@@ -546,7 +577,7 @@ grails.plugin.awssdk.region = '&lt;aws region&gt;'</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-contributing">7. Contributing</h2>
+<h2 id="crm-contributing">8. Contributing</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Please report <a href="https://github.com/technipelago/grails-crm-content-aws/issues">issues or suggestions</a>.</p>
@@ -559,8 +590,8 @@ grails.plugin.awssdk.region = '&lt;aws region&gt;'</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.4.0-SNAPSHOT<br>
-Last updated 2016-12-09 10:10:28 CET
+Version 2.4.0<br>
+Last updated 2016-12-09 12:11:07 CET
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
