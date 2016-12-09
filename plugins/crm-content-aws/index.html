@@ -441,9 +441,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#crm-installation">3. Installation</a></li>
 <li><a href="#crm-configuration">4. Configuration</a></li>
 <li><a href="#crm-changes">5. Changes</a></li>
-<li><a href="#crm-license">6. License</a></li>
-<li><a href="#crm-source-code">7. Source Code</a></li>
-<li><a href="#crm-contributing">8. Contributing</a></li>
+<li><a href="#crm-roadmap">6. Roadmap</a></li>
+<li><a href="#crm-license">7. License</a></li>
+<li><a href="#crm-source-code">8. Source Code</a></li>
+<li><a href="#crm-contributing">9. Contributing</a></li>
 </ul>
 </div>
 </div>
@@ -561,7 +562,24 @@ grails.plugin.awssdk.region = '&lt;aws region&gt;'</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-license">6. License</h2>
+<h2 id="crm-roadmap">6. Roadmap</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The current (2.4.0) implementation overrides the default <code>ContentProviderFactory</code> with
+<code>AwsContentProviderFactory</code> that always returns an <code>AwsContentProvider</code> instance.
+This means that <strong>all</strong> content in the same Grails application will be stored in Amazon S3.
+It would be nice to be able to store some content in S3, some in local file system and
+(in the future) some content elsewhere depending on business logic.</p>
+</div>
+<div class="paragraph">
+<p>Some kind of generic <code>ContentProviderFactory</code> is needed that knows about all
+<code>ContentProvider</code> implementations avaiable in the application. Then business logic
+would assign a content provider that is most suitable for the type of content read/written.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-license">7. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -569,7 +587,7 @@ grails.plugin.awssdk.region = '&lt;aws region&gt;'</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">7. Source Code</h2>
+<h2 id="crm-source-code">8. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-content-aws" class="bare">https://github.com/technipelago/grails-crm-content-aws</a></p>
@@ -577,7 +595,7 @@ grails.plugin.awssdk.region = '&lt;aws region&gt;'</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-contributing">8. Contributing</h2>
+<h2 id="crm-contributing">9. Contributing</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Please report <a href="https://github.com/technipelago/grails-crm-content-aws/issues">issues or suggestions</a>.</p>
@@ -591,7 +609,7 @@ grails.plugin.awssdk.region = '&lt;aws region&gt;'</pre>
 <div id="footer">
 <div id="footer-text">
 Version 2.4.0<br>
-Last updated 2016-12-09 12:11:07 CET
+Last updated 2016-12-09 13:04:56 CET
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
