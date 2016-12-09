@@ -481,6 +481,15 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 <p>This Grails plugin extends the <a href="https://github.com/technipelago/grails-crm-content">crm-content</a> plugin to store all content in Amazon S3 buckets
 instead of in the local server file system.</p>
 </div>
+<div class="paragraph">
+<p>This plugin is quite thin thanks to two great plugins, <a href="https://grails.org/plugin/aws-sdk">aws-sdk</a>,
+and <a href="https://github.com/technipelago/grails-crm-content">crm-content</a>.
+The AWS plugin makes it easy to store objects in Amazon S3 and the crm-content plugin has
+support for "content providers". So this plugin just adds the <code>AwsContentProvder</code>
+implementation that leverages <strong>aws-sdk</strong> for object storage. All standard GR8 CRM content
+management features works the same was as the default implementation that stores object
+in local file system.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -551,7 +560,7 @@ grails.plugin.awssdk.region = '&lt;aws region&gt;'</pre>
 <div id="footer">
 <div id="footer-text">
 Version 2.4.0-SNAPSHOT<br>
-Last updated 2016-12-09 09:51:23 CET
+Last updated 2016-12-09 10:10:28 CET
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
