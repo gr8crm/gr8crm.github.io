@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.5">
-<meta name="description" content="Main documentation site for the GR8 CRM Plugin suite">
-<meta name="keywords" content="groovy, grails, crm, gr8crm, documentation">
+<meta name="generator" content="Asciidoctor 1.5.3">
+<meta name="description" content="Official documentation for the GR8 CRM AWS Content Plugin">
+<meta name="keywords" content="groovy, grails, crm, gr8crm, aws, s3, documentation">
 <meta name="author" content="Göran Ehrsson">
-<title>GR8 CRM - Great Customer Relationship Management Plugins for the Grails Web Framework</title>
+<title>GR8 CRM - AWS Content Plugin</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -20,6 +20,7 @@ audio:not([controls]){display:none;height:0}
 [hidden],template{display:none}
 script{display:none!important}
 html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+body{margin:0}
 a{background:transparent}
 a:focus{outline:thin dotted}
 a:active,a:hover{outline:0}
@@ -54,7 +55,7 @@ textarea{overflow:auto;vertical-align:top}
 table{border-collapse:collapse;border-spacing:0}
 *,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
 html,body{font-size:100%}
-body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto}
 a:hover{cursor:pointer}
 img,object,embed{max-width:100%;height:auto}
 object,embed{height:100%}
@@ -66,6 +67,7 @@ img{-ms-interpolation-mode:bicubic}
 .text-center{text-align:center!important}
 .text-justify{text-align:justify!important}
 .hide{display:none}
+body{-webkit-font-smoothing:antialiased}
 img,object,svg{display:inline-block;vertical-align:middle}
 textarea{height:auto;min-height:50px}
 select{width:100%}
@@ -120,16 +122,13 @@ table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:
 table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
 table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
 table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+body{tab-size:4}
 h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
 h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
 .clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
 .clearfix:after,.float-group:after{clear:both}
-*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
-*:not(pre)>code.nobreak{word-wrap:normal}
-*:not(pre)>code.nowrap{white-space:nowrap}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
 pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
-em em{font-style:normal}
-strong strong{font-weight:400}
 .keyseq{color:rgba(51,51,51,.8)}
 kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
 .keyseq kbd:first-child{margin-left:0}
@@ -420,363 +419,139 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
-<body class="article toc2 toc-left">
+<body class="article">
 <div id="header">
-<h1>GR8 CRM - Great Customer Relationship Management Plugins for the Grails Web Framework</h1>
+<h1>GR8 CRM - AWS Content Plugin</h1>
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
+<span id="revnumber">version 2.4.0-SNAPSHOT</span>
 </div>
-<div id="toc" class="toc2">
+<div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_introduction">1. Introduction</a>
+<li><a href="#crm-introduction">1. Introduction</a>
 <ul class="sectlevel2">
-<li><a href="#_customer_relationship_management">1.1. Customer Relationship Management</a></li>
+<li><a href="#crm-customer-relationship-management">1.1. Customer Relationship Management</a></li>
 </ul>
 </li>
-<li><a href="#_gr8_crm_plugins">2. GR8 CRM Plugins</a>
-<ul class="sectlevel2">
-<li><a href="#_official_published_plugins">2.1. Official / Published Plugins</a></li>
-<li><a href="#_plugins_not_yet_released">2.2. Plugins not yet released</a></li>
-</ul>
-</li>
-<li><a href="#_presentations_and_talks">3. Presentations and Talks</a></li>
-<li><a href="#_tutorials">4. Tutorials</a>
-<ul class="sectlevel2">
-<li><a href="#_gr8_crm_web_site">4.1. GR8 CRM Web Site</a></li>
-</ul>
-</li>
-<li><a href="#_demo_applications">5. Demo applications</a>
-<ul class="sectlevel2">
-<li><a href="#_gr8_crm_to_do">5.1. GR8 CRM To-Do</a></li>
-<li><a href="#_gr8_contact">5.2. GR8 Contact</a></li>
-<li><a href="#_gr8_crm_web_site_2">5.3. GR8 CRM Web Site</a></li>
-</ul>
-</li>
-<li><a href="#_application_events">6. Application Events</a></li>
+<li><a href="#crm-aws-content-plugin">2. AWS Content Plugin</a></li>
+<li><a href="#crm-configuration">3. Configuration</a></li>
+<li><a href="#crm-changes">4. Changes</a></li>
+<li><a href="#crm-license">5. License</a></li>
+<li><a href="#crm-source-code">6. Source Code</a></li>
+<li><a href="#crm-contributing">7. Contributing</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_introduction">1. Introduction</h2>
+<h2 id="crm-introduction">1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>GR8 CRM is a set of <a href="http://www.grails.org/">Grails Web Application Framework</a>
 plugins that makes it easy to develop web applications with CRM functionality.</p>
 </div>
+<div class="paragraph">
+<p>You can find more information about GR8 CRM on the main documentation site <a href="http://gr8crm.github.io" class="bare">http://gr8crm.github.io</a>.</p>
+</div>
 <div class="sect2">
-<h3 id="_customer_relationship_management">1.1. Customer Relationship Management</h3>
+<h3 id="crm-customer-relationship-management">1.1. Customer Relationship Management</h3>
 <div class="paragraph">
 <p>Customer relationship management (CRM) is a system for managing a company’s interactions with current and future customers.
 It involves using technology to organize, automate and synchronize sales, marketing, customer service, and technical support.
 <a href="http://en.wikipedia.org/wiki/Customer_relationship_management">Wikipedia</a></p>
 </div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_gr8_crm_plugins">2. GR8 CRM Plugins</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>The GR8 CRM "Ecosystem" currently contains over 40 Grails plugins.</p>
+<p>The GR8 CRM "Ecosystem" currently contains over 40 Grails plugins. For a complete list of plugins see <a href="http://gr8crm.github.io" class="bare">http://gr8crm.github.io</a>.</p>
 </div>
 <div class="paragraph">
 <p>Each GR8 CRM plugin defines a <a href="http://martinfowler.com/bliki/BoundedContext.html">Bounded Context</a>
 that focus on one specific domain, for example <strong>contact</strong>, <strong>project</strong> or <strong>document</strong>.</p>
 </div>
-<div class="sect2">
-<h3 id="_official_published_plugins">2.1. Official / Published Plugins</h3>
-<div class="paragraph">
-<p>The following plugins are available in Grails Central plugin repository. This means you can install them in your Grails application
-the same way as you install other plugins, by adding them to BuildConfig.groovy</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Plugin Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-core/index.html">crm-core</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Core features like multi tenancy (used by most other plugins)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-i18n/index.html">crm-i18n</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Store localized messages in database to support runtime changes</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-feature/index.html">crm-feature</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Turn application features on/off for specific users or roles</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-security/index.html">crm-security</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Core security services</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-security-shiro/index.html">crm-security-shiro</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Apache Shiro security implementation</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-ui-bootstrap/index.html">crm-ui-bootstrap</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Twitter Bootstrap user interface (used by most -ui plugins)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-notes/index.html">crm-notes</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Add short notes (subject+body) to any domain instance</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-tags/index.html">crm-tags</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Tag any domain instance</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-contact/index.html">crm-contact</a> + <a href="plugins/crm-contact-ui/index.html">crm-contact-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contact Management (companies and individuals)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-content/index.html">crm-content</a> + <a href="plugins/crm-content-ui/index.html">crm-content-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Content Management and authoring (-ui)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-blog/index.html">crm-blog</a> + <a href="plugins/crm-blog-ui/index.html">crm-blog-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Blog presentation and authoring (-ui)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-task/index.html">crm-task</a> + <a href="plugins/crm-task-ui/index.html">crm-task-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Task/Calendar Management</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-email/index.html">crm-email</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Send emails using Grails events</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-product/index.html">crm-product</a> + <a href="plugins/crm-product-ui/index.html">crm-product-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Product and inventory management including administration (-ui)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-order/index.html">crm-order</a> + <a href="plugins/crm-order-ui/index.html">crm-order-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Order Management including administration user interface (-ui)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-invoice/index.html">crm-invoice</a> + <a href="plugins/crm-invoice-ui/index.html">crm-invoice-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Invoice Management including administration user interface (-ui)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-sales/index.html">crm-sales</a> + <a href="plugins/crm-sales-ui/index.html">crm-sales-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sales lead/opportunity management</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-campaign/index.html">crm-campaign</a> + <a href="plugins/crm-campaign-ui/index.html">crm-campaign-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Marketing campaign execution and management (-ui)</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_plugins_not_yet_released">2.2. Plugins not yet released</h3>
-<div class="paragraph">
-<p>The following plugins <strong>are not</strong> yet available in Grails Central. If you want to use one of these plugins, create an issue on it&#8217;s
-github project and we will prioritize cleanup and documentation and get it published as soon as we can. You can also contribute by cloning the repos, fix stuff and submit pull requests.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Plugin Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-content-aws/index.html">crm-content-aws</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Store content in Amazon S3 instead of local server file system</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/goeh/grails-crm-invitation">crm-invitation</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Invite external users to your application</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/goeh/grails-crm-notification">crm-notification</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Notify users about stuff with a central notification center</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/goeh/grails-crm-syslog">crm-syslog</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Log application events to database</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">crm-security-ui</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Back Office features for user and role administration</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-project/index.html">crm-project</a> + <a href="plugins/crm-project-ui/index.html">crm-project-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Project Management</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-training/index.html">crm-training</a> + <a href="plugins/crm-training-ui/index.html">crm-training-ui</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Event (course/conference) management</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-user-profile/index.html">crm-user-profile</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Let users update their settings/profile</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="plugins/crm-public-profile/index.html">crm-public-profile</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Let users update their public profile</p></td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_presentations_and_talks">3. Presentations and Talks</h2>
+<h2 id="crm-aws-content-plugin">2. AWS Content Plugin</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This section includes presentations that describe how to use GR8 CRM plugins
-in Grails applications and how to develop modular applications.</p>
-</div>
-<div class="paragraph">
-<p>Presentation <a href="presentations/gr8confeu2015/gr8conf-event-driven-plugins.pdf" target="_blank">Event-driven plugins with Grails 3</a>. Presented at GR8Conf Europe 2015.</p>
-</div>
-<div class="paragraph">
-<p><strong>Presentation <a href="presentations/greach2015/greach-2015-goeh.pdf" target="_blank">Cut your Grails application to pieces - build feature plugins</a>. Presented at Greach 2015 in Madrid.</strong></p>
-</div>
-<div class="paragraph">
-<p>Presentation <a href="presentations/gr8confeu2014/gr8conf-feature-plugins.pdf" target="_blank">Cut your Grails application to pieces - build feature plugins</a>. Presented at GR8Conf Europe 2014.</p>
-</div>
-<div class="paragraph">
-<p>YouTube video <a href="http://youtu.be/LZQ-1f9RGqg" target="_blank">Cut your Grails application to pieces - build feature plugins</a>. Presented at GR8Conf Europe 2014.</p>
+<p>This Grails plugin extends the <a href="https://github.com/technipelago/grails-crm-content">crm-content</a> plugin to store all content in Amazon S3 buckets
+instead of in the local server file system.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_tutorials">4. Tutorials</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_gr8_crm_web_site">4.1. GR8 CRM Web Site</h3>
-<div class="paragraph">
-<p><a href="/tutorials/gr8crm-web/index.html">This guide</a> describes how you can use
-GR8 CRM Grails plugins to develop a simple web site.
-The <a href="plugins/crm-content/index.html">crm-content</a> plugin makes it possible to add HTML pages in a content repository and make the pages publicly accessible.</p>
-</div>
-<div class="paragraph">
-<p>In this tutorial you will create a Grails application that can serve as a public facing web site. It will have built-in content editing features,
-including image uploads.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_demo_applications">5. Demo applications</h2>
+<h2 id="crm-configuration">3. Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This section show demo applications based on GR8 CRM plugins.</p>
+<p>This plugin uses the excellent <a href="https://grails.org/plugin/aws-sdk">aws-sdk</a> plugin
+to communicate with Amazon S3, so all configuration options for <strong>aws-sdk</strong> apply.</p>
 </div>
-<div class="sect2">
-<h3 id="_gr8_crm_to_do">5.1. GR8 CRM To-Do</h3>
-<div class="paragraph">
-<p><a href="https://github.com/technipelago/gr8crm-demo-app">This Grails application</a> uses GR8 CRM plugins to create a simple Contact Management and To-Do application. Clone it and run it, you will have it up and running in a minute or two.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_gr8_contact">5.2. GR8 Contact</h3>
-<div class="paragraph">
-<p>The <a href="https://github.com/gr8crm/gr8contact">GR8 Contact</a> application
-is a simple Contact Management application. It was initially presented at
-GR8Conf Europe 2014 by <a href="https://github.com/goeh">Göran Ehrsson</a> (<a href="https://twitter.com/goeh">@goeh</a>).
-The github repository contains 5 branches, each representing a snapshot in time during development.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>master</strong> A plain Grails application, created with grails create-app</p>
-</li>
-<li>
-<p><strong>m1</strong> The plugin <a href="plugins/crm-contact-ui/index.html">crm-contact-ui</a> was installed and contact (company/person) CRUD features are available.</p>
-</li>
-<li>
-<p><strong>m2</strong> The plugin <a href="plugins/crm-content-ui/index.html">crm-content-ui</a> was installed and documents/files can now be attached to contacts.</p>
-</li>
-<li>
-<p><strong>m3</strong> The plugin <a href="plugins/crm-task-ui/index.html">crm-task-ui</a> was installed and tasks/appointments with contacts can now be scheduled.</p>
-</li>
-<li>
-<p><strong>m4</strong> The plugin cookie-layout was installed and two themes were created to show that UI can change depending on sub-domain.</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Four more branches was added for the <strong>Greach 2015</strong> demo.
-</td>
-</tr>
-</table>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>m1-greach</strong>: Same as <strong>m1</strong> but with Greach theme applied.</p>
-</li>
-<li>
-<p><strong>m2-greach</strong>: Same as <strong>m2</strong> but with Greach theme applied.</p>
-</li>
-<li>
-<p><strong>m3-greach</strong>: Same as <strong>m3</strong> but with Greach theme applied and option to import Greach 2015 speakers as contacts.</p>
-</li>
-<li>
-<p><strong>m4-greach</strong>: Same as <strong>m4</strong> but with Greach theme available. Three themes (Greach, Gr8ConfEU and Gr8ConfUS) available at run-time.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
+<div class="literalblock">
 <div class="content">
-<img src="./images/greach2015/contacts.png" alt="Greach 2015 Demo application">
+<pre>grails.plugin.awssdk.accessKey = '&lt;aws key&gt;'
+grails.plugin.awssdk.secretKey = '&lt;aws secret&gt;'
+grails.plugin.awssdk.region = '&lt;aws region&gt;'</pre>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_gr8_crm_web_site_2">5.3. GR8 CRM Web Site</h3>
 <div class="paragraph">
-<p>A sample application that was created by following the <strong>GR8 CRM Web Site</strong>
-tutorial (see above) can be found at <a href="https://github.com/gr8crm/gr8crm-web" class="bare">https://github.com/gr8crm/gr8crm-web</a></p>
+<p>Currently all GR8 CRM content are stored in the same bucket, configured with:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>crm.content.s3.bucket = '&lt;bucket name&gt;' // default 'grails'</pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_application_events">6. Application Events</h2>
+<h2 id="crm-changes">4. Changes</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">2.4.0</dt>
+<dd>
+<p>First public release</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-license">5. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Most GR8 CRM plugins use application events (synchronous and asynchronous)
-to communicate with the host application and other GR8 CRM plugins.
-In <a href="events.html">this document</a> you can read about some examples where
-application events are used in GR8 CRM applications.
-Looking at all these examples you get an understanding of how to think
-when designing "modular monoliths" with GR8 CRM.</p>
+<p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-source-code">6. Source Code</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-content-aws" class="bare">https://github.com/technipelago/grails-crm-content-aws</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-contributing">7. Contributing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Please report <a href="https://github.com/technipelago/grails-crm-content-aws/issues">issues or suggestions</a>.</p>
+</div>
+<div class="paragraph">
+<p>Want to improve the plugin: Fork the <a href="https://github.com/technipelago/grails-crm-content-aws">repository</a> and send a pull request.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-09 09:55:14 CET
+Version 2.4.0-SNAPSHOT<br>
+Last updated 2016-12-09 09:51:23 CET
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">

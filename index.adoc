@@ -64,6 +64,7 @@ github project and we will prioritize cleanup and documentation and get it publi
 [options="header"]
 |===
 | Plugin Name                                                     | Description
+| link:plugins/crm-content-aws/index.html[crm-content-aws]        | Store content in Amazon S3 instead of local server file system
 | https://github.com/goeh/grails-crm-invitation[crm-invitation]   | Invite external users to your application
 | https://github.com/goeh/grails-crm-notification[crm-notification] | Notify users about stuff with a central notification center
 | https://github.com/goeh/grails-crm-syslog[crm-syslog]           | Log application events to database
