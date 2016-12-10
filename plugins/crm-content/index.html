@@ -427,7 +427,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.4.4</span>
+<span id="revnumber">version 2.4.5</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -562,8 +562,21 @@ Here are some real-wold examples on what type of content that can be stored and 
 <p>The <code>crm-content</code> plugin has configurable <strong>storage providers</strong>. The default storage provider store
 content in the web server filesystem. Files on disc can optionally be encrypted for increased security.
 Custom storage providers can be developed to integrate with content services like Amazon S3, Google Drive or Dropbox.
-One application can have multiple storage providers and select the best storage provides based on some business logic.
-Maybe HTML files should be stored in a S3 bucket and customer contracts encrypted on  a local disc.</p>
+One application can have multiple storage providers and select the best storage provider based on some business logic.
+Maybe HTML files should be stored in a S3 bucket and customer contracts encrypted on a local disc.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The <a href="https://github.com/technipelago/grails-crm-content-aws">crm-content-aws</a> plugin is a storage provider
+that store content in Amazon S3 buckets. This is a must-have plugin in cloud environments.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -622,6 +635,10 @@ possible status a content instance can have. The constants are listed below.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CrmResourceRef.STATUS_PUBLISHED</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Content is active/current but only accessible by authenticated users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CrmResourceRef.STATUS_RESTRICTED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Content is only accessible by a restricted group of people (application specific)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CrmResourceRef.STATUS_SHARED</p></td>
@@ -1215,6 +1232,10 @@ One of the following algorithms can be used:</p>
 <div class="sectionbody">
 <div class="dlist">
 <dl>
+<dt class="hdlist1">2.4.5</dt>
+<dd>
+<p>Make it easier to use multiple storage providers in the same application</p>
+</dd>
 <dt class="hdlist1">2.4.4</dt>
 <dd>
 <p>withInputStream now returns what the closure returns (was void).</p>
@@ -1291,8 +1312,8 @@ CrmContentImportService#importFiles(&#8230;&#8203;) now works on Windows.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.4.4<br>
-Last updated 2016-08-14 21:44:25 CEST
+Version 2.4.5<br>
+Last updated 2016-12-10 10:24:43 +01:00
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
