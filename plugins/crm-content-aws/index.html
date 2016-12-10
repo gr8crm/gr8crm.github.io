@@ -427,7 +427,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.4.0</span>
+<span id="revnumber">version 2.4.1-SNAPSHOT</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -440,8 +440,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#crm-aws-content-plugin">2. AWS Content Plugin</a></li>
 <li><a href="#crm-installation">3. Installation</a></li>
 <li><a href="#crm-configuration">4. Configuration</a></li>
-<li><a href="#crm-changes">5. Changes</a></li>
-<li><a href="#crm-roadmap">6. Roadmap</a></li>
+<li><a href="#crm-extensions">5. Extensions</a></li>
+<li><a href="#crm-changes">6. Changes</a></li>
 <li><a href="#crm-license">7. License</a></li>
 <li><a href="#crm-source-code">8. Source Code</a></li>
 <li><a href="#crm-contributing">9. Contributing</a></li>
@@ -517,7 +517,7 @@ in local file system.</p>
     }
     plugins {
         // here go your plugin dependencies
-        runtime ':crm-content-aws:2.4.0'
+        runtime ':crm-content-aws:2.4.1-SNAPSHOT'
     }
 }</code></pre>
 </div>
@@ -549,32 +549,74 @@ grails.plugin.awssdk.region = '&lt;aws region&gt;'</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-changes">5. Changes</h2>
+<h2 id="crm-extensions">5. Extensions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can write business logic that decides what content provider to use.
+You do this by replacing the bean named <code>crmContentRouter</code> with an implementation
+that can use content name, content length, domain instance that the content is attached to, or the current user to
+decide what content provider to route to.</p>
+</div>
+<div class="paragraph">
+<p>The following example route all images to Amazon S3 and all other content
+to the default <code>crmFileContentProvider</code> that store files in the local file system.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/groovy/my/package/ImageContentRouter.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">import grails.plugins.crm.content.CrmContentProvider
+import grails.plugins.crm.content.CrmContentRouter
+
+/**
+ * Route all images to Amazon S3.
+ */
+class ImageContentRouter implements CrmContentRouter {
+
+    def crmFileContentProvider
+    def awsContentProvider
+
+    @Override
+    CrmContentProvider getProvider(String filename, long length, Object reference, String username) {
+        isImage(filename) ? awsContentProvider : crmFileContentProvider
+    }
+
+    private boolean isImage(String filename) {
+        for (ext in [".png", ".jpg", ".jpeg", ".gif"]) {
+            if (filename.toLowerCase().endsWith(ext)) {
+                return true
+            }
+        }
+        return false
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/conf/spring/resources.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">beans = {
+    crmContentRouter(my.package.ImageContentRouter) { bean -&gt;
+        bean.autowire = 'byName'
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-changes">6. Changes</h2>
 <div class="sectionbody">
 <div class="dlist">
 <dl>
+<dt class="hdlist1">2.4.1</dt>
+<dd>
+<p>Support for multiple content providers in the same application (requires crm-content plugin version 2.4.5)</p>
+</dd>
 <dt class="hdlist1">2.4.0</dt>
 <dd>
 <p>First public release</p>
 </dd>
 </dl>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="crm-roadmap">6. Roadmap</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The current (2.4.0) implementation overrides the default <code>ContentProviderFactory</code> with
-<code>AwsContentProviderFactory</code> that always returns an <code>AwsContentProvider</code> instance.
-This means that <strong>all</strong> content in the same Grails application will be stored in Amazon S3.
-It would be nice to be able to store some content in S3, some in local file system and
-(in the future) some content elsewhere depending on business logic.</p>
-</div>
-<div class="paragraph">
-<p>Some kind of generic <code>ContentProviderFactory</code> is needed that knows about all
-<code>ContentProvider</code> implementations avaiable in the application. Then business logic
-would assign a content provider that is most suitable for the type of content read/written.</p>
 </div>
 </div>
 </div>
@@ -608,8 +650,8 @@ would assign a content provider that is most suitable for the type of content re
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.4.0<br>
-Last updated 2016-12-09 13:04:56 CET
+Version 2.4.1-SNAPSHOT<br>
+Last updated 2016-12-10 10:04:08 +01:00
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
