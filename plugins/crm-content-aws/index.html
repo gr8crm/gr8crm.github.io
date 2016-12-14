@@ -427,7 +427,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.4.1-SNAPSHOT</span>
+<span id="revnumber">version 2.4.1</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -487,7 +487,7 @@ instead of in the local server file system.</p>
 <p>This plugin is quite thin thanks to two great plugins, <a href="https://grails.org/plugin/aws-sdk">aws-sdk</a>,
 and <a href="https://github.com/technipelago/grails-crm-content">crm-content</a>.
 The AWS plugin makes it easy to store objects in Amazon S3 and the crm-content plugin has
-support for "content providers". So this plugin just adds the <code>AwsContentProvder</code>
+support for "storage providers". So this plugin just adds the <code>AwsContentProvider</code>
 implementation that leverages <strong>aws-sdk</strong> for object storage. All standard GR8 CRM content
 management features works the same was as the default implementation that stores object
 in local file system.</p>
@@ -517,7 +517,7 @@ in local file system.</p>
     }
     plugins {
         // here go your plugin dependencies
-        runtime ':crm-content-aws:2.4.1-SNAPSHOT'
+        runtime ':crm-content-aws:2.4.1'
     }
 }</code></pre>
 </div>
@@ -610,10 +610,6 @@ class ImageContentRouter implements CrmContentRouter {
 <dl>
 <dt class="hdlist1">2.4.1</dt>
 <dd>
-<p>Support for multiple content providers in the same application (requires crm-content plugin version 2.4.5)</p>
-</dd>
-<dt class="hdlist1">2.4.0</dt>
-<dd>
 <p>First public release</p>
 </dd>
 </dl>
@@ -650,8 +646,8 @@ class ImageContentRouter implements CrmContentRouter {
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.4.1-SNAPSHOT<br>
-Last updated 2016-12-10 10:04:08 +01:00
+Version 2.4.1<br>
+Last updated 2016-12-14 10:47:24 +01:00
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
