@@ -46,6 +46,7 @@ the same way as you install other plugins, by adding them to BuildConfig.groovy
 | link:plugins/crm-tags/index.html[crm-tags]                     | Tag any domain instance
 | link:plugins/crm-contact/index.html[crm-contact] + link:plugins/crm-contact-ui/index.html[crm-contact-ui]                 | Contact Management (companies and individuals)
 | link:plugins/crm-content/index.html[crm-content] + link:plugins/crm-content-ui/index.html[crm-content-ui]                 | Content Management and authoring (-ui)
+| link:plugins/crm-content-aws/index.html[crm-content-aws]        | Store content in Amazon S3 instead of local server file system
 | link:plugins/crm-blog/index.html[crm-blog] + link:plugins/crm-blog-ui/index.html[crm-blog-ui] | Blog presentation and authoring (-ui)
 | link:plugins/crm-task/index.html[crm-task] + link:plugins/crm-task-ui/index.html[crm-task-ui] | Task/Calendar Management
 | link:plugins/crm-email/index.html[crm-email]                   | Send emails using Grails events
@@ -64,7 +65,6 @@ github project and we will prioritize cleanup and documentation and get it publi
 [options="header"]
 |===
 | Plugin Name                                                     | Description
-| link:plugins/crm-content-aws/index.html[crm-content-aws]        | Store content in Amazon S3 instead of local server file system
 | https://github.com/goeh/grails-crm-invitation[crm-invitation]   | Invite external users to your application
 | https://github.com/goeh/grails-crm-notification[crm-notification] | Notify users about stuff with a central notification center
 | https://github.com/goeh/grails-crm-syslog[crm-syslog]           | Log application events to database
