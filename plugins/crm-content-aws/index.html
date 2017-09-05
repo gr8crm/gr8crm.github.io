@@ -427,7 +427,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.4.1</span>
+<span id="revnumber">version 2.4.2</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -517,7 +517,7 @@ in local file system.</p>
     }
     plugins {
         // here go your plugin dependencies
-        runtime ':crm-content-aws:2.4.1'
+        runtime ':crm-content-aws:2.4.2'
     }
 }</code></pre>
 </div>
@@ -554,8 +554,8 @@ grails.plugin.awssdk.region = '&lt;aws region&gt;'</pre>
 <div class="paragraph">
 <p>You can write business logic that decides what content provider to use.
 You do this by replacing the bean named <code>crmContentRouter</code> with an implementation
-that can use content name, content length, domain instance that the content is attached to, or the current user to
-decide what content provider to route to.</p>
+that can use <strong>content name</strong>, <strong>content length</strong>, <strong>domain instance</strong> that the content is attached to,
+or the <strong>current user</strong> to decide what content provider to route to.</p>
 </div>
 <div class="paragraph">
 <p>The following example route all images to Amazon S3 and all other content
@@ -564,7 +564,9 @@ to the default <code>crmFileContentProvider</code> that store files in the local
 <div class="listingblock">
 <div class="title">src/groovy/my/package/ImageContentRouter.groovy</div>
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">import grails.plugins.crm.content.CrmContentProvider
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">package my.package
+
+import grails.plugins.crm.content.CrmContentProvider
 import grails.plugins.crm.content.CrmContentRouter
 
 /**
@@ -608,6 +610,10 @@ class ImageContentRouter implements CrmContentRouter {
 <div class="sectionbody">
 <div class="dlist">
 <dl>
+<dt class="hdlist1">2.4.2</dt>
+<dd>
+<p>Make sure S3Object is closed after use. Adds method withObjects(Closure).</p>
+</dd>
 <dt class="hdlist1">2.4.1</dt>
 <dd>
 <p>First public release</p>
@@ -646,8 +652,8 @@ class ImageContentRouter implements CrmContentRouter {
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.4.1<br>
-Last updated 2016-12-14 10:47:24 +01:00
+Version 2.4.2<br>
+Last updated 2017-09-05 14:00:23 +02:00
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
