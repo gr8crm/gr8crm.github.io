@@ -427,7 +427,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.4.5</span>
+<span id="revnumber">version 2.4.6</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -470,6 +470,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#crm-create-a-folder">10.1. Create a folder</a></li>
 <li><a href="#crm-create-a-file">10.2. Create a file</a></li>
+<li><a href="#crm-save-photos-to-amazon-s3">10.3. Save photos to Amazon S3</a></li>
 </ul>
 </li>
 <li><a href="#crm-tag-library">11. Tag Library</a>
@@ -1045,10 +1046,10 @@ def subFolder = crmContentService.createFolder(rootFolder, "powerpoint")</code><
 </div>
 <div class="sect2">
 <h3 id="crm-create-a-file">10.2. Create a file</h3>
-<div class="listingblock groovy">
+<div class="listingblock">
 <div class="title">CreateFile.groovy</div>
 <div class="content">
-<pre class="prettyprint highlight"><code>def bytes = "Hello World".getBytes()
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">def bytes = "Hello World".getBytes()
 def inputStream = new ByteArrayInputStream(bytes) <i class="conum" data-value="1"></i><b>(1)</b>
 def folder = crmContentService.createFolder(null, "files")
 def doc = crmContentService.createResource(inputStream, "hello.txt", bytes.length, "text/plain", folder)
@@ -1076,6 +1077,33 @@ You can look at the source code for the <a href="https://github.com/technipelago
 </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crm-save-photos-to-amazon-s3">10.3. Save photos to Amazon S3</h3>
+<div class="paragraph">
+<p>The bean <code>crmContentRouter</code> is responsible for routing content from/to a <code>CrmContentProvider</code> when reading and writing content.
+The following example replaces the default content router with an implementation that looks at the content type and size.
+All large images attached to contacts (<code>CrmContact</code>) are stored in Amazon S3 and all other content are stored by the default content provider (the local file system).
+The <code>awsContentProvider</code> bean is provided by <code>crm-content-aws</code> plugin.</p>
+</div>
+<div class="listingblock">
+<div class="title">grails-app/conf/spring/resources.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">import grails.plugins.crm.contact.CrmContact
+
+beans = {
+    crmContentRouter(grails.plugins.crm.content.PatternContentRouter, ref("crmCoreService")) { bean -&gt;
+        bean.autowire = 'byName'
+
+        pattern = /.*\.(jpg|jpeg|png)$/
+        minLength = 131072
+        referenceClass = CrmContact
+        defaultProvider = ref("crmFileContentProvider")
+        provider = ref("awsContentProvider")
+    }
+}</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -1232,6 +1260,10 @@ One of the following algorithms can be used:</p>
 <div class="sectionbody">
 <div class="dlist">
 <dl>
+<dt class="hdlist1">2.4.6</dt>
+<dd>
+<p>Content-Disposition filename is now URL encoded. Content router can be replaced with custom impl to store content in other locations.</p>
+</dd>
 <dt class="hdlist1">2.4.5</dt>
 <dd>
 <p>Make it easier to use multiple storage providers in the same application</p>
@@ -1312,8 +1344,8 @@ CrmContentImportService#importFiles(&#8230;&#8203;) now works on Windows.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.4.5<br>
-Last updated 2016-12-10 10:24:43 +01:00
+Version 2.4.6<br>
+Last updated 2017-09-05 13:26:39 +02:00
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
