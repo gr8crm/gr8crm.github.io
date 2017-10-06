@@ -435,14 +435,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#crm-introduction">1. Introduction</a>
 <ul class="sectlevel2">
 <li><a href="#crm-customer-relationship-management">1.1. Customer Relationship Management</a></li>
+<li><a href="#crm-custom-properties-plugin">1.2. Custom Properties Plugin</a></li>
 </ul>
 </li>
-<li><a href="#crm-custom-properties-plugin">2. Custom Properties Plugin</a></li>
-<li><a href="#crm-add-custom-properties">3. Add custom properties</a></li>
-<li><a href="#crm-changes">4. Changes</a></li>
-<li><a href="#crm-license">5. License</a></li>
-<li><a href="#crm-source-code">6. Source Code</a></li>
-<li><a href="#crm-contributing">7. Contributing</a></li>
+<li><a href="#crm-add-custom-properties">2. Add custom properties</a></li>
+<li><a href="#crm-crmpropertyservice">3. CrmPropertyService</a></li>
+<li><a href="#crm-instance-methods">4. Instance methods</a></li>
+<li><a href="#crm-changes">5. Changes</a></li>
+<li><a href="#crm-license">6. License</a></li>
+<li><a href="#crm-source-code">7. Source Code</a></li>
+<li><a href="#crm-contributing">8. Contributing</a></li>
 </ul>
 </div>
 </div>
@@ -472,18 +474,17 @@ It involves using technology to organize, automate and synchronize sales, market
 that focus on one specific domain, for example <strong>contact</strong>, <strong>project</strong> or <strong>document</strong>.</p>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="crm-custom-properties-plugin">2. Custom Properties Plugin</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="crm-custom-properties-plugin">1.2. Custom Properties Plugin</h3>
 <div class="paragraph">
-<p>This plugin makes is possible to an application super-user to define custom properties for domain classes.</p>
+<p>This plugin makes is possible for an application super-user to define custom properties for domain classes.
+A custom property can be of type <strong>string</strong>, <strong>number</strong> and <strong>date</strong>.</p>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-add-custom-properties">3. Add custom properties</h2>
+<h2 id="crm-add-custom-properties">2. Add custom properties</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Two user-facing views are provided by the plugin. One displayed in the show-contact view and one displayed in the edit-contact view.
@@ -526,7 +527,39 @@ The views are not added automatically but you can easily add them in BootStrap.g
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-changes">4. Changes</h2>
+<h2 id="crm-crmpropertyservice">3. CrmPropertyService</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>crmPropertyService</code> bean provides methods for configuring and working with custom property values.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">crmPropertyService.createStringConfig(CrmContact, "team", "Team name")
+crmPropertyService.createNumberConfig(CrmContact, "weight", "Weight (kg)")
+crmPropertyService.createDateConfig(CrmContact, "birthDate", "Birth date")</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-instance-methods">4. Instance methods</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each domain class that has a static property called <code>customProperties</code> will have instance methods for setting and getting custom property values.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">def person = CrmContact.findByName("Mr Groovy")
+
+person.setCustomProperty('team', 'Grails')
+person.setCustomProperty('weight', 82)
+person.setCustomProperty('birthDate', '1992-05-23')</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crm-changes">5. Changes</h2>
 <div class="sectionbody">
 <div class="dlist">
 <dl>
@@ -539,7 +572,7 @@ The views are not added automatically but you can easily add them in BootStrap.g
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-license">5. License</h2>
+<h2 id="crm-license">6. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This plugin is licensed with <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License version 2.0</a></p>
@@ -547,7 +580,7 @@ The views are not added automatically but you can easily add them in BootStrap.g
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-source-code">6. Source Code</h2>
+<h2 id="crm-source-code">7. Source Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The source code for this plugin is available at <a href="https://github.com/technipelago/grails-crm-property" class="bare">https://github.com/technipelago/grails-crm-property</a></p>
@@ -555,7 +588,7 @@ The views are not added automatically but you can easily add them in BootStrap.g
 </div>
 </div>
 <div class="sect1">
-<h2 id="crm-contributing">7. Contributing</h2>
+<h2 id="crm-contributing">8. Contributing</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Please report <a href="https://github.com/technipelago/grails-crm-property/issues">issues or suggestions</a>.</p>
@@ -569,7 +602,7 @@ The views are not added automatically but you can easily add them in BootStrap.g
 <div id="footer">
 <div id="footer-text">
 Version 2.4.0-SNAPSHOT<br>
-Last updated 2017-10-06 13:16:13 +02:00
+Last updated 2017-10-06 15:52:58 +02:00
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
