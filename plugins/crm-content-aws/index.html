@@ -427,7 +427,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Göran Ehrsson</span><br>
 <span id="email" class="email"><a href="mailto:goran@technipelago.se">goran@technipelago.se</a></span><br>
-<span id="revnumber">version 2.4.2</span>
+<span id="revnumber">version 2.4.3</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -484,13 +484,9 @@ that focus on one specific domain, for example <strong>contact</strong>, <strong
 instead of in the local server file system.</p>
 </div>
 <div class="paragraph">
-<p>This plugin is quite thin thanks to two great plugins, <a href="https://grails.org/plugin/aws-sdk">aws-sdk</a>,
-and <a href="https://github.com/technipelago/grails-crm-content">crm-content</a>.
-The AWS plugin makes it easy to store objects in Amazon S3 and the crm-content plugin has
-support for "storage providers". So this plugin just adds the <code>AwsContentProvider</code>
-implementation that leverages <strong>aws-sdk</strong> for object storage. All standard GR8 CRM content
-management features works the same was as the default implementation that stores object
-in local file system.</p>
+<p>This plugin adds a <code>AwsContentProvider</code> implementation that uses <strong>AWS Java SDK</strong> for object storage.
+All standard GR8 CRM content management features works the same was as the default implementation
+that stores object in local file system.</p>
 </div>
 </div>
 </div>
@@ -517,7 +513,7 @@ in local file system.</p>
     }
     plugins {
         // here go your plugin dependencies
-        runtime ':crm-content-aws:2.4.2'
+        runtime ':crm-content-aws:2.4.3'
     }
 }</code></pre>
 </div>
@@ -528,15 +524,23 @@ in local file system.</p>
 <h2 id="crm-configuration">4. Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This plugin uses the excellent <a href="https://grails.org/plugin/aws-sdk">aws-sdk</a> plugin
-to communicate with Amazon S3, so all configuration options for <strong>aws-sdk</strong> apply.</p>
+<p>This plugin uses the same configuration parameters as the <a href="https://grails.org/plugin/aws-sdk">aws-sdk</a> plugin.</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>grails.plugin.awssdk.accessKey = '&lt;aws key&gt;'
-grails.plugin.awssdk.secretKey = '&lt;aws secret&gt;'
-grails.plugin.awssdk.region = '&lt;aws region&gt;'</pre>
+<pre>    grails.plugin.awssdk.endpoint = 'https://s3.us-east-1.amazonaws.com' <i class="conum" data-value="1"></i><b>(1)</b>
+    grails.plugin.awssdk.accessKey = '&lt;aws key&gt;'
+    grails.plugin.awssdk.secretKey = '&lt;aws secret&gt;'
+    grails.plugin.awssdk.region = 'us-east-1'</pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>List of <a href="https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region">AWS S3 Regions</a></td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Currently all GR8 CRM content are stored in the same bucket, configured with:</p>
@@ -610,6 +614,10 @@ class ImageContentRouter implements CrmContentRouter {
 <div class="sectionbody">
 <div class="dlist">
 <dl>
+<dt class="hdlist1">2.4.3</dt>
+<dd>
+<p>Use <code>aws-java-sdk-s3</code> directly instead of the aws-sdk plugin (to make it easier to use minio.io)</p>
+</dd>
 <dt class="hdlist1">2.4.2</dt>
 <dd>
 <p>Make sure S3Object is closed after use. Adds method withObjects(Closure).</p>
@@ -652,8 +660,8 @@ class ImageContentRouter implements CrmContentRouter {
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.4.2<br>
-Last updated 2017-09-05 14:00:23 +02:00
+Version 2.4.3<br>
+Last updated 2019-07-12 16:58:42 +02:00
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
